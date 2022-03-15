@@ -4,26 +4,43 @@ import org.apache.jena.rdf.model.*;
 import org.apache.jena.rdf.model.impl.PropertyImpl;
 import org.codehaus.plexus.util.StringUtils;
 import xyz.ottr.lutra.OTTR;
-import xyz.ottr.lutra.model.Argument;
-import xyz.ottr.lutra.model.Instance;
+import xyz.ottr.lutra.model.Parameter;
 import xyz.ottr.lutra.model.terms.*;
 import org.apache.jena.vocabulary.RDF;
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
 
 public class RDFToOTTR {
 
-    public static Instance asNullableTriple(Statement s, Model model) {
-        Term sub = asTerm(s.getSubject(), model);
-        Term pred = asTerm(s.getPredicate(), model);
-        Term obj = asTerm(s.getObject(), model);
+    public static Set<Map<Term, Term>> asResultSet(Model model, boolean nullable) {
+        List<Parameter> params = OTTR.BaseTemplate.Triple.getParameters();
 
-        return Instance.builder()
-                .iri(OTTR.BaseURI.NullableTriple)
-                .argument(Argument.builder().term(sub).build())
-                .argument(Argument.builder().term(pred).build())
-                .argument(Argument.builder().term(obj).build())
-                .build();
+        if (nullable) {
+            params = OTTR.BaseTemplate.NullableTriple.getParameters();
+        }
+
+        Term subVar = params.get(0).getTerm();
+        Term predVar = params.get(1).getTerm();
+        Term objVar = params.get(2).getTerm();
+
+        List<Statement> list = model.listStatements().toList();
+
+        Set<Map<Term, Term>> resultSet = new HashSet<>();
+
+        for (Statement s : list) {
+            Term sub = asTerm(s.getSubject(), model);
+            Term pred = asTerm(s.getPredicate(), model);
+            Term obj = asTerm(s.getObject(), model);
+
+            Map<Term, Term> map = new HashMap<>();
+            map.put(subVar, sub);
+            map.put(predVar, pred);
+            map.put(objVar, obj);
+
+            resultSet.add(map);
+        }
+
+        return resultSet;
     }
 
     public static Term asTerm(RDFNode node, Model model) {
@@ -51,15 +68,11 @@ public class RDFToOTTR {
 
     private static Term asLiteral(RDFNode node) {
         Literal lit = node.asLiteral();
-        String datatype = lit.getDatatypeURI();
         String language = lit.getLanguage();
         String value = String.valueOf(lit.getValue());
 
         if (StringUtils.isNotEmpty(language)) {
             return LiteralTerm.createLanguageTagLiteral(value, language);
-
-        } else if (StringUtils.isNotEmpty(datatype)) {
-            return LiteralTerm.createTypedLiteral(value, datatype);
 
         } else {
             return LiteralTerm.createPlainLiteral(value);
