@@ -50,120 +50,16 @@ public class Evaluator {
         return null;
     }
 
-    private Set<Map<Term, Term>> filtertwo(Set<Map<Term, Term>> set, Map<Term, Term> argMap) {
+    private Set<Map<Term, Term>> filter(Set<Map<Term, Term>> set, Map<Term, Term> argMap) {
         Set<Map<Term, Term>> resultSet = new HashSet<>();
 
-        for (Map<Term, Term> map : resultSet) {
+        for (Map<Term, Term> map : set) {
             if (Mapping.innerCompatible(map, argMap)) {
-
+                resultSet.add(Mapping.transform(map, argMap));
             }
         }
 
         return resultSet;
-    }
-
-
-
-    private Set<Map<Term, Term>> filter(Set<Map<Term, Term>> set, Map<Term, Argument> argMap) {
-        Set<Map<Term, Term>> result = new HashSet<>();
-
-        for (Map<Term, Term> map : set) {
-            Map<Term, Term> resultMap = new HashMap<>();
-            boolean keep = true;
-
-            for (Term key : argMap.keySet()) {
-                Term argVal = argMap.get(key).getTerm();
-                Term val = map.get(key);
-
-                if (argVal.isVariable()) {
-                    resultMap.put(argVal, val);
-
-                } else if (argVal instanceof ListTerm) {
-                    if (val instanceof ListTerm) {
-                        Map<Term, Term> listMap =
-                                filterLists(((ListTerm) argVal).asList(), ((ListTerm) val).asList());
-
-                        if (listMap == null) {
-                            keep = false;
-
-                        } else {
-                            Map<Term, Term> newMap = combineLeft(resultMap, listMap);
-
-                            if (newMap == null) {
-                                keep = false;
-
-                            } else {
-                                resultMap = newMap;
-                            }
-                        }
-
-                    } else {
-                        keep = false;
-                    }
-
-                } else if (!argVal.equals(val)) {
-                    keep = false;
-                }
-            }
-
-            if (keep) {
-                result.add(resultMap);
-            }
-        }
-
-        return result;
-    }
-
-    private Map<Term, Term> filterLists(List<Term> argList, List<Term> list) {
-        if (argList.size() != list.size()) {
-            return null;
-        }
-
-        Map<Term, Term> result = new HashMap<>();
-
-        for (int i = 0; i < argList.size(); i++) {
-            Term key = argList.get(i);
-            Term value = list.get(i);
-
-            if (key.isVariable()) {
-                Term existingValue = result.putIfAbsent(key, value);
-
-                if (existingValue != null && existingValue != value) {
-                    return null;
-                }
-
-            } else if (key instanceof ListTerm && value instanceof ListTerm) {
-                Map<Term, Term> innerMap =
-                        filterLists(((ListTerm) key).asList(), ((ListTerm) value).asList());
-
-                if (innerMap == null) {
-                    return null;
-                }
-
-                result = combineLeft(result, innerMap);
-                if (result == null) {
-                    return null;
-                }
-
-            } else if (!key.equals(value)) {
-                return null;
-            }
-        }
-
-        return result;
-    }
-
-    private Map<Term, Term> combineLeft(Map<Term, Term> m1, Map<Term, Term> m2) {
-        for (Term innerKey : m2.keySet()) {
-            Term innerValue = m2.get(innerKey);
-            Term existingValue = m1.putIfAbsent(innerKey, innerValue);
-
-            if (existingValue != null && existingValue != innerValue) {
-                return null;
-            }
-        }
-
-        return m1;
     }
 
     public static void main(String[] args) {
@@ -200,8 +96,13 @@ public class Evaluator {
         map.put(predVar, pred);
         map.put(objVar, obj);
 
+        Map<Term, Term> map2 = new HashMap<>();
+        map2.put(subVar, subVal);
+        map2.put(predVar, predVal);
+        map2.put(objVar, objVal);
+
         //e.resultSet.forEach(System.out::println);
 
-        e.filter(e.nullableResultSet, map).forEach(System.out::println);
+        e.filter(e.resultSet, map2).forEach(System.out::println);
     }
 }

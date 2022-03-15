@@ -60,21 +60,27 @@ public class Mapping {
                 Term argValue = argMap.get(key);
                 Term termValue = termMap.get(key);
 
-                if (argValue.isVariable()) {
-                    result.put(argValue, termValue);
+                Map<Term, Term> tempMap = termTransform(termValue, argValue);
 
-                } else if (argValue instanceof ListTerm && termValue instanceof ListTerm) {
-                    List<Term> argList = ((ListTerm) argValue).asList();
-                    List<Term> termList = ((ListTerm) termValue).asList();
+                if (compatible(result, tempMap)) result = union(result, tempMap);
+            }
+        }
 
-                    if (listCompatible(termList, argList)) {
-                        Map<Term, Term> listMap = listTransform(termList, argList);
+        return result;
+    }
 
-                        if (compatible(result, listMap)) {
-                            result = union(result, listMap);
-                        }
-                    }
-                }
+    public static Map<Term, Term> termTransform(Term term, Term arg) {
+        Map<Term, Term> result = new HashMap<>();
+
+        if (termCompatible(term, arg)) {
+            if (arg instanceof ListTerm && term instanceof ListTerm) {
+                List<Term> argList = ((ListTerm) arg).asList();
+                List<Term> termList = ((ListTerm) term).asList();
+
+                return listTransform(termList, argList);
+
+            } else if (arg.isVariable()) {
+                result.put(arg, term);
             }
         }
 
@@ -83,6 +89,19 @@ public class Mapping {
 
     public static Map<Term, Term> listTransform(List<Term> termList, List<Term> argList) {
         Map<Term, Term> result = new HashMap<>();
+
+        if (listCompatible(termList, argList)) {
+            for (int i = 0; i < argList.size(); i++) {
+                Term arg = argList.get(i);
+                Term term = termList.get(i);
+
+                Map<Term, Term> tempMap = termTransform(term, arg);
+
+                if (compatible(result, tempMap)) {
+                    result = union(result, tempMap);
+                }
+            }
+        }
 
         return result;
     }
@@ -94,7 +113,7 @@ public class Mapping {
             Term argValue = argMap.get(key);
             Term termValue = termMap.get(key);
 
-            if (!argValue.isVariable() && !argValue.equals(termValue)) {
+            if (!termCompatible(termValue, argValue)) {
                 return false;
             }
         }
@@ -102,11 +121,28 @@ public class Mapping {
         return true;
     }
 
+    public static boolean termCompatible(Term term, Term arg) {
+        if (arg instanceof ListTerm && term instanceof ListTerm) {
+            List<Term> argList = ((ListTerm) arg).asList();
+            List<Term> termList = ((ListTerm) term).asList();
+
+            return listCompatible(termList, argList);
+
+        } else {
+            return arg.isVariable() || arg.equals(term);
+        }
+    }
+
     public static boolean listCompatible(List<Term> termList, List<Term> argList) {
         if (termList.size() != argList.size()) return false;
 
         for (int i = 0; i < argList.size(); i++) {
-            
+            Term key = argList.get(i);
+            Term value = termList.get(i);
+
+            if (!termCompatible(value, key)) {
+                return false;
+            }
         }
 
         return true;
