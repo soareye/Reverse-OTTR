@@ -50,6 +50,20 @@ public class Evaluator {
         return null;
     }
 
+    private Set<Map<Term, Term>> filtertwo(Set<Map<Term, Term>> set, Map<Term, Term> argMap) {
+        Set<Map<Term, Term>> resultSet = new HashSet<>();
+
+        for (Map<Term, Term> map : resultSet) {
+            if (Mapping.innerCompatible(map, argMap)) {
+
+            }
+        }
+
+        return resultSet;
+    }
+
+
+
     private Set<Map<Term, Term>> filter(Set<Map<Term, Term>> set, Map<Term, Argument> argMap) {
         Set<Map<Term, Term>> result = new HashSet<>();
 
