@@ -2,10 +2,13 @@ package reverseottr.evaluation;
 
 import xyz.ottr.lutra.model.terms.ListTerm;
 import xyz.ottr.lutra.model.terms.Term;
-
 import java.util.*;
 
 public class Mapping {
+
+    public static Set<Map<Term, Term>> joinAll(Set<Set<Map<Term, Term>>> sets) {
+        return sets.stream().reduce(new HashSet<>(), Mapping::join);
+    }
 
     public static Set<Map<Term, Term>> join(Set<Map<Term, Term>> a, Set<Map<Term, Term>> b) {
         Set<Map<Term, Term>> resultSet = new HashSet<>();

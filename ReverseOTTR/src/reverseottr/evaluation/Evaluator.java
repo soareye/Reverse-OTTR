@@ -5,16 +5,13 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.vocabulary.RDF;
 import reverseottr.reader.GraphReader;
 import xyz.ottr.lutra.OTTR;
-import xyz.ottr.lutra.model.Argument;
-import xyz.ottr.lutra.model.Instance;
-import xyz.ottr.lutra.model.Parameter;
-import xyz.ottr.lutra.model.Template;
-import xyz.ottr.lutra.model.terms.BlankNodeTerm;
-import xyz.ottr.lutra.model.terms.IRITerm;
-import xyz.ottr.lutra.model.terms.ListTerm;
-import xyz.ottr.lutra.model.terms.Term;
+import xyz.ottr.lutra.model.*;
+import xyz.ottr.lutra.model.terms.*;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class Evaluator {
 
@@ -34,14 +31,37 @@ public class Evaluator {
             return this.nullableResultSet;
 
         } else {
+            List<Parameter> parameters = template.getParameters();
+            List<Term> nonOptVars = paramsToVarsFilter(parameters, p -> !p.isOptional());
+            List<Term> defaultVars = paramsToVarsFilter(parameters, Parameter::hasDefaultValue);
+            List<Term> nonBlankVars = paramsToVarsFilter(parameters, Parameter::isNonBlank);
+
+
+
+            // join all of generate possible solutions of eval of each instance in pattern.
             return null;
         }
     }
 
+    private List<Term> paramsToVarsFilter(List<Parameter> parameters,
+                                          Predicate<Parameter> predicate) {
+        return parameters.stream()
+                .filter(predicate)
+                .map(Parameter::getTerm)
+                .collect(Collectors.toList());
+    }
+
     public Set<Map<Term, Term>> evaluateInstance(Instance instance) {
-
         if (instance.hasListExpander()) {
+            if (instance.getListExpander().equals(ListExpander.zipMin)) {
+                // filter of unzipMin of eval of template
 
+            } else if (instance.getListExpander().equals(ListExpander.zipMax)) {
+                // filter of unzipMax of eval of template
+
+            } else {
+                // filter of uncross of eval of template
+            }
 
         } else {
             // return filter(evaluateTemplate(instance.getIri()));
@@ -50,7 +70,7 @@ public class Evaluator {
         return null;
     }
 
-    private Set<Map<Term, Term>> filter(Set<Map<Term, Term>> set, Map<Term, Term> argMap) {
+    private Set<Map<Term, Term>> argFilter(Set<Map<Term, Term>> set, Map<Term, Term> argMap) {
         Set<Map<Term, Term>> resultSet = new HashSet<>();
 
         for (Map<Term, Term> map : set) {
@@ -58,6 +78,49 @@ public class Evaluator {
                 resultSet.add(Mapping.transform(map, argMap));
             }
         }
+
+        return resultSet;
+    }
+
+    private Set<Map<Term, Term>> nonOptSolutions(Map<Term, Term> map, List<Term> nonOptVars) {
+        Set<Map<Term, Term>> resultSet = new HashSet<>();
+
+        Map<Term, Term> baseMap = new HashMap<>();
+
+        for (Term var : map.keySet()) {
+            if (nonOptVars.contains(var) && map.get(var) instanceof NoneTerm) {
+
+            } else {
+                baseMap.put(var, map.get(var));
+            }
+        }
+
+        return resultSet;
+    }
+
+    private Set<Map<Term, Term>> allSolutions(Map<Term, Term> map) {
+        if (map.size() == 0) {
+            return new HashSet<>();
+        } else {
+            Set<Map<Term, Term>> resultSet = new HashSet<>();
+            Set<Map<Term, Term>> subSet = allSolutions(next(map));
+
+            for (Map<Term, Term> m : subSet) {
+                temp1 = copy(m);
+                temp1.put(var, map.get(var));
+                temp2 = copy(m);
+                temp2.put(var, new NoneTerm());
+
+                resultSet.add(temp1);
+                resultSet.add(temp2);
+            }
+
+            return resultSet;
+        }
+    }
+
+    private Set<Map<Term, Term>> defaultSolutions(Map<Term, Term> map, List<Parameter> defaultVars) {
+        Set<Map<Term, Term>> resultSet = new HashSet<>();
 
         return resultSet;
     }
@@ -101,8 +164,6 @@ public class Evaluator {
         map2.put(predVar, predVal);
         map2.put(objVar, objVal);
 
-        //e.resultSet.forEach(System.out::println);
-
-        e.filter(e.resultSet, map2).forEach(System.out::println);
+        e.argFilter(e.resultSet, map2).forEach(System.out::println);
     }
 }
