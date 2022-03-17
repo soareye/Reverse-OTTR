@@ -13,6 +13,9 @@ public class Mapping {
     public static Set<Map<Term, Term>> join(Set<Map<Term, Term>> a, Set<Map<Term, Term>> b) {
         Set<Map<Term, Term>> resultSet = new HashSet<>();
 
+        if (a.size() == 0) return b;
+        if (b.size() == 0) return a;
+
         for (Map<Term, Term> mapA : a) {
             for (Map<Term, Term> mapB : b) {
                 if (compatible(mapA, mapB)) {

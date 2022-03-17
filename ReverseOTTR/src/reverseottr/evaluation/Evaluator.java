@@ -1,15 +1,11 @@
 package reverseottr.evaluation;
 
-import org.apache.commons.validator.Arg;
 import org.apache.jena.rdf.model.Model;
-import org.apache.jena.vocabulary.RDF;
 import reverseottr.reader.GraphReader;
 import xyz.ottr.lutra.OTTR;
 import xyz.ottr.lutra.model.*;
 import xyz.ottr.lutra.model.terms.*;
-
 import java.util.*;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -32,23 +28,17 @@ public class Evaluator {
 
         } else {
             List<Parameter> parameters = template.getParameters();
-            List<Term> nonOptVars = paramsToVarsFilter(parameters, p -> !p.isOptional());
-            List<Term> defaultVars = paramsToVarsFilter(parameters, Parameter::hasDefaultValue);
-            List<Term> nonBlankVars = paramsToVarsFilter(parameters, Parameter::isNonBlank);
+
+            List<Term> nonBlankVars = parameters.stream()
+                    .filter(Parameter::isNonBlank)
+                    .map(Parameter::getTerm)
+                    .collect(Collectors.toList());
 
 
 
             // join all of generate possible solutions of eval of each instance in pattern.
             return null;
         }
-    }
-
-    private List<Term> paramsToVarsFilter(List<Parameter> parameters,
-                                          Predicate<Parameter> predicate) {
-        return parameters.stream()
-                .filter(predicate)
-                .map(Parameter::getTerm)
-                .collect(Collectors.toList());
     }
 
     public Set<Map<Term, Term>> evaluateInstance(Instance instance) {
@@ -82,7 +72,12 @@ public class Evaluator {
         return resultSet;
     }
 
-    private Set<Map<Term, Term>> nonOptSolutions(Map<Term, Term> map, List<Term> nonOptVars) {
+    private Set<Map<Term, Term>> nonOptSolutions(Map<Term, Term> map, List<Parameter> parameters) {
+        List<Term> nonOptVars = parameters.stream()
+                .filter(p -> !p.isOptional())
+                .map(Parameter::getTerm)
+                .collect(Collectors.toList());
+
         Set<Map<Term, Term>> resultSet = new HashSet<>();
 
         Map<Term, Term> baseMap = new HashMap<>();
@@ -98,31 +93,65 @@ public class Evaluator {
         return resultSet;
     }
 
-    private Set<Map<Term, Term>> allSolutions(Map<Term, Term> map) {
-        if (map.size() == 0) {
-            return new HashSet<>();
-        } else {
-            Set<Map<Term, Term>> resultSet = new HashSet<>();
-            Set<Map<Term, Term>> subSet = allSolutions(next(map));
+    private Set<Map<Term, Term>> defaultSolutionsAll(Set<Map<Term, Term>> maps, List<Parameter> parameters) {
+        List<Parameter> defaultParams = parameters.stream()
+                .filter(Parameter::hasDefaultValue)
+                .collect(Collectors.toList());
 
-            for (Map<Term, Term> m : subSet) {
-                temp1 = copy(m);
-                temp1.put(var, map.get(var));
-                temp2 = copy(m);
-                temp2.put(var, new NoneTerm());
-
-                resultSet.add(temp1);
-                resultSet.add(temp2);
-            }
-
-            return resultSet;
-        }
-    }
-
-    private Set<Map<Term, Term>> defaultSolutions(Map<Term, Term> map, List<Parameter> defaultVars) {
         Set<Map<Term, Term>> resultSet = new HashSet<>();
+        maps.forEach(m -> resultSet.addAll(defaultSolutions(m, defaultParams)));
 
         return resultSet;
+    }
+
+    private Set<Map<Term, Term>> defaultSolutions(Map<Term, Term> map, List<Parameter> parameters) {
+        List<Term> defaultVars = new LinkedList<>();
+
+        for (Parameter param : parameters) {
+            Term var = param.getTerm();
+            if (map.containsKey(var) && map.get(var).equals(param.getDefaultValue())) {
+                defaultVars.add(var);
+            }
+        }
+
+        return altSolutions(map, defaultVars);
+    }
+
+    private Set<Map<Term, Term>> altSolutions(Map<Term, Term> map, List<Term> vars) {
+        Map<Term, Term> baseMap = new HashMap<>();
+        Map<Term, Term> subMap = new HashMap<>();
+
+        for (Term var : map.keySet()) {
+            if (vars.contains(var)) {
+                subMap.put(var, map.get(var));
+            } else {
+                baseMap.put(var, map.get(var));
+            }
+        }
+
+        return allCombinationsNone(subMap).stream()
+                .map(m -> Mapping.union(m, baseMap))
+                .collect(Collectors.toSet());
+    }
+
+    private Set<Map<Term, Term>> allCombinationsNone(Map<Term, Term> map) {
+        Set<Set<Map<Term, Term>>> combinations = new HashSet<>();
+
+        for (Term var : map.keySet()) {
+            Map<Term, Term> subMap = new HashMap<>();
+            subMap.put(var, map.get(var));
+
+            Map<Term, Term> noneMap = new HashMap<>();
+            noneMap.put(var, new NoneTerm());
+
+            Set<Map<Term, Term>> combination = new HashSet<>();
+            combination.add(subMap);
+            combination.add(noneMap);
+
+            combinations.add(combination);
+        }
+
+        return Mapping.joinAll(combinations);
     }
 
     public static void main(String[] args) {
@@ -164,6 +193,8 @@ public class Evaluator {
         map2.put(predVar, predVal);
         map2.put(objVar, objVal);
 
-        e.argFilter(e.resultSet, map2).forEach(System.out::println);
+        // e.argFilter(e.resultSet, map2).forEach(System.out::println);
+
+        e.allCombinationsNone(map2).forEach(System.out::println);
     }
 }
