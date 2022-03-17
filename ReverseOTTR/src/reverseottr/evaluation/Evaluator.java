@@ -15,6 +15,7 @@ public class Evaluator {
     private Set<Map<Term, Term>> nullableResultSet;
 
     public Evaluator(Model model) {
+        // TODO: apply nonOptSolutionsAll to resultSet.
         this.resultSet = RDFToOTTR.asResultSet(model, false);
         this.nullableResultSet = RDFToOTTR.asResultSet(model, true);
     }
@@ -29,15 +30,15 @@ public class Evaluator {
         } else {
             List<Parameter> parameters = template.getParameters();
 
-            List<Term> nonBlankVars = parameters.stream()
-                    .filter(Parameter::isNonBlank)
-                    .map(Parameter::getTerm)
-                    .collect(Collectors.toList());
+            Set<Set<Map<Term, Term>>> instanceEvaluations =
+                    template.getPattern().stream()
+                            .map(this::evaluateInstance)
+                            .map(s -> paramFilter(s, parameters))
+                            .map(s -> defaultSolutionsAll(s, parameters))
+                            // TODO: for each set of mappings, do nonOptSolutionsAll(mappings)
+                            .collect(Collectors.toSet());
 
-
-
-            // join all of generate possible solutions of eval of each instance in pattern.
-            return null;
+            return Mapping.joinAll(instanceEvaluations);
         }
     }
 
@@ -70,6 +71,27 @@ public class Evaluator {
         }
 
         return resultSet;
+    }
+
+    private Set<Map<Term, Term>> paramFilter(Set<Map<Term, Term>> maps, List<Parameter> parameters) {
+        return maps.stream()
+                .filter(m -> conforms(m, parameters))
+                .collect(Collectors.toSet());
+    }
+
+    private boolean conforms(Map<Term, Term> map, List<Parameter> parameters) {
+        for (Parameter param : parameters) {
+            Term var = param.getTerm();
+            if (map.containsKey(var)) {
+                if ((map.get(var) instanceof NoneTerm
+                        && (param.hasDefaultValue() || !param.isOptional()))
+                        || (param.isNonBlank() && map.get(var) instanceof BlankNodeTerm)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private Set<Map<Term, Term>> nonOptSolutions(Map<Term, Term> map, List<Parameter> parameters) {
