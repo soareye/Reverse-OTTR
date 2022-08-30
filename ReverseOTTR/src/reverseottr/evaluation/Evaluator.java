@@ -104,7 +104,8 @@ public class Evaluator {
                 return null;
 
             } else if (instance.getListExpander().equals(ListExpander.zipMax)) {
-                return argFilter(listUnexpander.unzipMax(templateResult), argMap);
+                Set<Mapping> unexpanded = listUnexpander.unzipMax(templateResult);
+                return argFilter(unexpanded, argMap);
 
             } else {
                 // filter of uncross of eval of template
@@ -255,7 +256,7 @@ public class Evaluator {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("{");
             for (Term var : m.domain()) {
-                stringBuilder.append(var.toString());
+                stringBuilder.append(var.getIdentifier().toString());
                 stringBuilder.append("=");
                 stringBuilder.append(m.get(var).toString(prefixes));
                 stringBuilder.append(",");

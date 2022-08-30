@@ -81,9 +81,9 @@ public enum TermRegistry {
     public static boolean lessOrEqual(Term t1, Term t2) {
         if (t1.equals(t2)) return true;
 
-        if (t1 instanceof NoneTerm && t2 instanceof NoneTerm) return true;
-
         if (lattice.contains(new Mapping(t1, t2))) return true;
+
+        if (t1 instanceof NoneTerm && t2 instanceof NoneTerm) return true;
 
         if (t1 instanceof NoneTerm && lessOrEqual(any_nb, t2)) return true;
 

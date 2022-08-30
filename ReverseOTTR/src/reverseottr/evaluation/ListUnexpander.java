@@ -1,8 +1,8 @@
 package reverseottr.evaluation;
 
 import reverseottr.model.Mapping;
+import reverseottr.model.TermRegistry;
 import xyz.ottr.lutra.model.Argument;
-import xyz.ottr.lutra.model.Instance;
 import xyz.ottr.lutra.model.Parameter;
 import xyz.ottr.lutra.model.terms.ListTerm;
 import xyz.ottr.lutra.model.terms.Term;
@@ -108,17 +108,40 @@ public class ListUnexpander {
 
         Set<Mapping> unzipped = unzip(mappings);
 
-
-
-        return unzipped;
+        return unzipped.stream().map(this::mappingPermutations)
+                .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
+                .orElse(null);
+        /*
+        return unzipped.stream().map(this::mappingPermutations)
+                .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
+                .orElse(null);*/
     }
 
-    private Set<Mapping> allOrdersMap(Mapping mapping) {
+    private Set<Mapping> mappingPermutations(Mapping mapping) {
         Set<Mapping> result = new HashSet<>();
 
-        int size = 0;
+        //TODO: check if markedVariables is empty and deal with this case.
 
+        int size = ((ListTerm) mapping.get(markedVariables.get(0))).asList().size();
 
+        Set<List<Integer>> orders = permutedSublists(size);
+
+        for (List<Integer> order : orders) {
+            Mapping permutation = new Mapping();
+            for (Term var : mapping.domain()) {
+                Term term = mapping.get(var);
+                if (markedVariables.contains(var)) {
+                    List<Term> permutedList = applyOrder(order, ((ListTerm) term).asList());
+                    ListTerm permutedTerm = new ListTerm(permutedList);
+                    permutation.put(var, permutedTerm);
+
+                } else {
+                    permutation.put(var, term);
+                }
+            }
+
+            result.add(permutation);
+        }
 
         return result;
     }
@@ -127,16 +150,39 @@ public class ListUnexpander {
         return order.stream().map(list::get).collect(Collectors.toList());
     }
 
-    private Set<List<Integer>> allOrders(int size) {
+    private Set<List<Integer>> permutedSublists(int size) {
+        return permutations(size).stream().map(this::sublists)
+                .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
+                .orElse(null);
+    }
+
+    private Set<List<Integer>> sublists(List<Integer> list) {
+        Set<List<Integer>> result = new HashSet<>();
+
+        for (int i = 1; i <= list.size(); i++) {
+            List<Integer> sublist = new LinkedList<>(list.subList(0, i));
+            result.add(sublist);
+        }
+
+        return result;
+    }
+
+    private Set<List<Integer>> permutations(int size) {
         Set<List<Integer>> result = new HashSet<>();
 
         if (size == 1) {
             List<Integer> list = new LinkedList<>();
-            list.add(1);
+            list.add(0);
+            result.add(list);
+            return result;
         }
 
-        for (List<Integer> order : allOrders(size - 1)) {
-
+        for (List<Integer> list : permutations(size - 1)) {
+            for (int i = 0; i <= list.size(); i++) {
+                List<Integer> newList = new LinkedList<>(list);
+                newList.add(i, size - 1);
+                result.add(newList);
+            }
         }
 
         return result;
@@ -180,22 +226,34 @@ public class ListUnexpander {
         return result;
     }
 
-    private Set<Mapping> findEqualForVars
-            (Set<Mapping> mappings, Mapping map) {
+    private Set<Mapping> findEqualForVars(Set<Mapping> mappings, Mapping map) {
+        Set<Mapping> result = new HashSet<>();
 
-        return mappings.stream()
-                .filter(m -> equalForVars(m, map))
-                .collect(Collectors.toSet());
-    }
+        Mapping current = map;
 
-    private boolean equalForVars(Mapping m1, Mapping m2) {
-        for (Term var : unmarkedVariables) {
-            if (!m1.get(var).equals(m2.get(var))) {
-                return false;
+        for (Mapping other : mappings) {
+            Mapping GLB = GLBMapping(current, other);
+            if (GLB != null) {
+                result.add(other);
+                current = GLB;
             }
         }
 
-        return true;
+        return result;
+    }
+
+    private Mapping GLBMapping(Mapping m1, Mapping m2) {
+        Mapping result = new Mapping();
+        for (Term var : unmarkedVariables) {
+            Term GLB = TermRegistry.GLB(m1.get(var), m2.get(var));
+            if (GLB != null) {
+                result.put(var, GLB);
+            } else {
+                return null;
+            }
+        }
+
+        return result;
     }
 
     private List<Term> getMarkedVars(List<Parameter> parameters, List<Argument> arguments) {

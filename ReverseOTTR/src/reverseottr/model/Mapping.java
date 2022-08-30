@@ -289,6 +289,15 @@ public class Mapping {
 
     @Override
     public int hashCode() {
-        return Objects.hash(map);
+        List<Object> list = new LinkedList<>();
+        for (Term var : domain()) {
+            Term term = get(var);
+            if (term instanceof ListTerm) list.add(((ListTerm) term).asList());
+            else list.add(term);
+        }
+
+        return Objects.hash(list);
     }
+
+
 }

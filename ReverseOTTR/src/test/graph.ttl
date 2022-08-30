@@ -1,7 +1,9 @@
 @prefix ottr: <http://ns.ottr.xyz/0.4/> .
 @prefix test: <http://test.com/> .
 
-test:s test:p test:o .
-ottr:none test:p test:o .
-test:s test:p test:d .
-test:s test:p ottr:none .
+test:s test:p test:o1 .
+test:s test:p test:o2 .
+
+
+# test:s test:p ottr:none .
+# ottr:none test:p test:o .
