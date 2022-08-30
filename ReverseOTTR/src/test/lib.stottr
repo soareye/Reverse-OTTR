@@ -1,0 +1,19 @@
+@prefix ottr: <http://ns.ottr.xyz/0.4/> .
+@prefix test: <http://test.com/> .
+
+test:Test[?x, ?y] :: {
+	zipMax | ottr:NullableTriple(test:s, ++?x, ++?y)
+}
+
+test:Test3[?x, ?y] :: {
+	test:Test1(?x),
+	test:Test2(?x, ?y)
+} .
+
+test:Test1[?x] :: {
+	ottr:Triple(?x, test:p, test:o)
+} .
+
+test:Test2[?x, ?y=test:d] :: {
+	ottr:Triple(?x, test:p, ?y)
+} .

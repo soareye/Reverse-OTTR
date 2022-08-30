@@ -1,154 +1,206 @@
 package reverseottr.evaluation;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.shared.PrefixMapping;
+import reverseottr.model.Mapping;
+import reverseottr.model.Placeholder;
+import reverseottr.model.TermRegistry;
 import reverseottr.reader.GraphReader;
+import reverseottr.reader.RDFToOTTR;
 import xyz.ottr.lutra.OTTR;
+import xyz.ottr.lutra.TemplateManager;
+import xyz.ottr.lutra.api.StandardFormat;
+import xyz.ottr.lutra.api.StandardTemplateManager;
 import xyz.ottr.lutra.model.*;
 import xyz.ottr.lutra.model.terms.*;
+
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Evaluator {
 
-    private Set<Map<Term, Term>> resultSet;
-    private Set<Map<Term, Term>> nullableResultSet;
+    private Set<Mapping> triples;
+    private Set<Mapping> nullableTriples;
+    private TemplateManager templateManager;
+    private int maxRepetitions;
 
-    public Evaluator(Model model) {
-        // TODO: apply nonOptSolutionsAll to resultSet.
-        this.resultSet = RDFToOTTR.asResultSet(model, false);
-        this.nullableResultSet = RDFToOTTR.asResultSet(model, true);
+    public Evaluator(Model model, TemplateManager templateManager) {
+        this.triples = RDFToOTTR.asResultSet(model, false);
+        this.nullableTriples = RDFToOTTR.asResultSet(model, true);
+        this.templateManager = templateManager;
     }
 
-    public Set<Map<Term, Term>> evaluateTemplate(Template template) {
+    public Set<Mapping> evaluateTemplate(Template template) {
+        Set<Mapping> templateMappings;
+
         if (template.getIri().equals(OTTR.BaseURI.Triple)) {
-            return this.resultSet;
+            templateMappings = this.triples;
 
         } else if (template.getIri().equals(OTTR.BaseURI.NullableTriple)) {
-            return this.nullableResultSet;
+            templateMappings = this.nullableTriples;
 
         } else {
-            List<Parameter> parameters = template.getParameters();
-
-            Set<Set<Map<Term, Term>>> instanceEvaluations =
+            Set<Set<Mapping>> instanceEvaluations =
                     template.getPattern().stream()
                             .map(this::evaluateInstance)
-                            .map(s -> paramFilter(s, parameters))
-                            .map(s -> defaultSolutionsAll(s, parameters))
-                            // TODO: for each set of mappings, do nonOptSolutionsAll(mappings)
                             .collect(Collectors.toSet());
 
-            return Mapping.joinAll(instanceEvaluations);
+            templateMappings = Mapping.joinAll(instanceEvaluations);
         }
+
+        List<Parameter> parameters = template.getParameters();
+
+        Set<Mapping> result = paramFilter(templateMappings, parameters);
+
+        result = defaultAlternativesAll(result, parameters);
+
+        result = placeholderFilter(result, parameters);
+
+        result.addAll(generateNonOptSolutions(parameters));
+        // TODO: Filter placeholders in nonOptSolutions.
+        return result;
     }
 
-    public Set<Map<Term, Term>> evaluateInstance(Instance instance) {
+    private Set<Mapping> placeholderFilter(Set<Mapping> mappings, List<Parameter> parameters) {
+        Set<Mapping> result = new HashSet<>();
+        for (Mapping mapping : mappings) {
+            Mapping resultMap = new Mapping();
+            for (Parameter parameter : parameters) {
+                Term var = parameter.getTerm();
+                if (mapping.get(var) instanceof Placeholder) {
+                    resultMap.put(var, TermRegistry.GLB(mapping.get(var),
+                            TermRegistry.paramPlaceholder(parameter)));
+                } else {
+                    resultMap.put(var, mapping.get(var));
+                }
+            }
+
+            result.add(resultMap);
+        }
+
+        return result;
+    }
+
+    public Set<Mapping> evaluateInstance(Instance instance) {
+        Template template = templateManager.getTemplateStore()
+                .getTemplate(instance.getIri()).get();
+
+        Set<Mapping> templateResult = evaluateTemplate(template);
+
+        List<Term> paramVars = template.getParameters().stream()
+                .map(Parameter::getTerm).collect(Collectors.toList());
+
+        List<Term> argTerms = instance.getArguments().stream()
+                .map(Argument::getTerm).collect(Collectors.toList());
+
+        Mapping argMap = new Mapping(paramVars, argTerms);
+
         if (instance.hasListExpander()) {
+            ListUnexpander listUnexpander =
+                    new ListUnexpander(template.getParameters(), instance.getArguments());
+
             if (instance.getListExpander().equals(ListExpander.zipMin)) {
                 // filter of unzipMin of eval of template
+                return null;
 
             } else if (instance.getListExpander().equals(ListExpander.zipMax)) {
-                // filter of unzipMax of eval of template
+                return argFilter(listUnexpander.unzipMax(templateResult), argMap);
 
             } else {
                 // filter of uncross of eval of template
+                return null;
             }
 
         } else {
-            // return filter(evaluateTemplate(instance.getIri()));
+            return argFilter(templateResult, argMap);
         }
-
-        return null;
     }
 
-    private Set<Map<Term, Term>> argFilter(Set<Map<Term, Term>> set, Map<Term, Term> argMap) {
-        Set<Map<Term, Term>> resultSet = new HashSet<>();
+    private Set<Mapping> argFilter(Set<Mapping> maps, Mapping argMap) {
+        Set<Mapping> resultMaps = new HashSet<>();
 
-        for (Map<Term, Term> map : set) {
+        for (Mapping map : maps) {
             if (Mapping.innerCompatible(map, argMap)) {
-                resultSet.add(Mapping.transform(map, argMap));
+                resultMaps.add(Mapping.transform(map, argMap));
             }
         }
 
-        return resultSet;
+        return resultMaps;
     }
 
-    private Set<Map<Term, Term>> paramFilter(Set<Map<Term, Term>> maps, List<Parameter> parameters) {
+    /** Generates additional mappings which have ottr:none for non-optional vars
+     * and thus are ignored in forward OTTR **/
+    private Set<Mapping> generateNonOptSolutions(List<Parameter> parameters) {
+        Set<Mapping> result = new HashSet<>();
+
+        for (Parameter noParam : parameters) {
+            if (!noParam.isOptional()) {
+                Mapping m = new Mapping();
+                m.put(noParam.getTerm(), new NoneTerm());
+                for (Parameter parameter : parameters) {
+                    if (!parameter.equals(noParam)) {
+                        if (parameter.isNonBlank()) {
+                            m.put(parameter.getTerm(), TermRegistry.any_nb);
+                        } else {
+                            m.put(parameter.getTerm(), TermRegistry.any);
+                        }
+                    }
+                }
+
+                result.add(m);
+            }
+        }
+
+        return result;
+    }
+
+    /** Filters mappings according to parameter modifiers **/
+    private Set<Mapping> paramFilter(Set<Mapping> maps, List<Parameter> parameters) {
         return maps.stream()
                 .filter(m -> conforms(m, parameters))
                 .collect(Collectors.toSet());
     }
 
-    private boolean conforms(Map<Term, Term> map, List<Parameter> parameters) {
+    /** Checks if a mapping conforms to a list of parameters **/
+    private boolean conforms(Mapping map, List<Parameter> parameters) {
         for (Parameter param : parameters) {
             Term var = param.getTerm();
-            if (map.containsKey(var)) {
-                if ((map.get(var) instanceof NoneTerm
-                        && (param.hasDefaultValue() || !param.isOptional()))
+            if (map.containsVar(var)) {
+                if ((map.get(var) instanceof NoneTerm && !param.isOptional())
                         || (param.isNonBlank() && map.get(var) instanceof BlankNodeTerm)) {
                     return false;
                 }
             }
         }
-
         return true;
     }
 
-    private Set<Map<Term, Term>> nonOptSolutions(Map<Term, Term> map, List<Parameter> parameters) {
-        List<Term> nonOptVars = parameters.stream()
-                .filter(p -> !p.isOptional())
-                .map(Parameter::getTerm)
-                .collect(Collectors.toList());
+    private Set<Mapping> defaultAlternativesAll(Set<Mapping> maps, List<Parameter> parameters) {
+        Set<Mapping> resultMaps = new HashSet<>();
+        maps.forEach(m -> resultMaps.addAll(defaultAlternatives(m, parameters)));
 
-        Set<Map<Term, Term>> resultSet = new HashSet<>();
-
-        Map<Term, Term> baseMap = new HashMap<>();
-
-        for (Term var : map.keySet()) {
-            if (nonOptVars.contains(var) && map.get(var) instanceof NoneTerm) {
-
-            } else {
-                baseMap.put(var, map.get(var));
-            }
-        }
-
-        return resultSet;
+        return resultMaps;
     }
 
-    private Set<Map<Term, Term>> defaultSolutionsAll(Set<Map<Term, Term>> maps, List<Parameter> parameters) {
-        List<Parameter> defaultParams = parameters.stream()
-                .filter(Parameter::hasDefaultValue)
-                .collect(Collectors.toList());
-
-        Set<Map<Term, Term>> resultSet = new HashSet<>();
-        maps.forEach(m -> resultSet.addAll(defaultSolutions(m, defaultParams)));
-
-        return resultSet;
-    }
-
-    private Set<Map<Term, Term>> defaultSolutions(Map<Term, Term> map, List<Parameter> parameters) {
-        List<Term> defaultVars = new LinkedList<>();
+    private Set<Mapping> defaultAlternatives(Mapping map, List<Parameter> parameters) {
+        Mapping baseMap = new Mapping();
+        Mapping subMap = new Mapping();
 
         for (Parameter param : parameters) {
             Term var = param.getTerm();
-            if (map.containsKey(var) && map.get(var).equals(param.getDefaultValue())) {
-                defaultVars.add(var);
-            }
-        }
-
-        return altSolutions(map, defaultVars);
-    }
-
-    private Set<Map<Term, Term>> altSolutions(Map<Term, Term> map, List<Term> vars) {
-        Map<Term, Term> baseMap = new HashMap<>();
-        Map<Term, Term> subMap = new HashMap<>();
-
-        for (Term var : map.keySet()) {
-            if (vars.contains(var)) {
+            if (param.hasDefaultValue()
+                    && map.get(var).equals(param.getDefaultValue())) {
                 subMap.put(var, map.get(var));
+
             } else {
                 baseMap.put(var, map.get(var));
             }
+        }
+
+        if (subMap.domain().isEmpty()) {
+            Set<Mapping> result = new HashSet<>();
+            result.add(baseMap);
+            return result;
         }
 
         return allCombinationsNone(subMap).stream()
@@ -156,17 +208,17 @@ public class Evaluator {
                 .collect(Collectors.toSet());
     }
 
-    private Set<Map<Term, Term>> allCombinationsNone(Map<Term, Term> map) {
-        Set<Set<Map<Term, Term>>> combinations = new HashSet<>();
+    private Set<Mapping> allCombinationsNone(Mapping map) {
+        Set<Set<Mapping>> combinations = new HashSet<>();
 
-        for (Term var : map.keySet()) {
-            Map<Term, Term> subMap = new HashMap<>();
+        for (Term var : map.domain()) {
+            Mapping subMap = new Mapping();
             subMap.put(var, map.get(var));
 
-            Map<Term, Term> noneMap = new HashMap<>();
+            Mapping noneMap = new Mapping();
             noneMap.put(var, new NoneTerm());
 
-            Set<Map<Term, Term>> combination = new HashSet<>();
+            Set<Mapping> combination = new HashSet<>();
             combination.add(subMap);
             combination.add(noneMap);
 
@@ -178,45 +230,39 @@ public class Evaluator {
 
     public static void main(String[] args) {
 
-        Evaluator e = new Evaluator(GraphReader.read(args[0]));
+        String graphPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/graph.ttl";
+        String libPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/lib.stottr";
 
-        List<Parameter> params = OTTR.BaseTemplate.NullableTriple.getParameters();
+        Model model = GraphReader.read(graphPath);
+        TemplateManager templateManager = new StandardTemplateManager();
+        templateManager.readLibrary(templateManager.getFormat(StandardFormat.stottr.name()), libPath);
 
-        Term subVar = params.get(0).getTerm();
-        Term predVar = params.get(1).getTerm();
-        Term objVar = params.get(2).getTerm();
+        Evaluator e = new Evaluator(model, templateManager);
 
-        Term subVal = new IRITerm("http://sws.ifi.uio.no/inf3580/v14/oblig/6/racehorse#test");
-        Argument sub = Argument.builder().term(subVal).build();
+        String templateIRI = "http://test.com/Test";
 
-        Term predVal = new IRITerm("http://sws.ifi.uio.no/inf3580/v14/oblig/6/racehorse#is");
-        Argument pred = Argument.builder().term(predVal).build();
+        Set<Mapping> s = e.evaluateTemplate(
+                templateManager.getTemplateStore().getTemplate(templateIRI).get()
+        );
 
-        Term objVal1 = new BlankNodeTerm("x");
-        objVal1.setVariable(true);
+        //s.forEach(System.out::println);
 
-        Term objVal2 = new BlankNodeTerm("y");
-        objVal2.setVariable(true);
+        PrefixMapping prefixes = templateManager.getPrefixes();
+        prefixes.setNsPrefix("ph", TermRegistry.ph_ns);
+        //System.out.println(prefixes);
 
-        Term objVal3 = new BlankNodeTerm("z");
-        objVal3.setVariable(true);
-
-        Term objVal = new ListTerm(objVal1, objVal2, objVal3);
-
-        Argument obj = Argument.builder().term(objVal).build();
-
-        Map<Term, Argument> map = new HashMap<>();
-        map.put(subVar, sub);
-        map.put(predVar, pred);
-        map.put(objVar, obj);
-
-        Map<Term, Term> map2 = new HashMap<>();
-        map2.put(subVar, subVal);
-        map2.put(predVar, predVal);
-        map2.put(objVar, objVal);
-
-        // e.argFilter(e.resultSet, map2).forEach(System.out::println);
-
-        e.allCombinationsNone(map2).forEach(System.out::println);
+        for (Mapping m : s) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("{");
+            for (Term var : m.domain()) {
+                stringBuilder.append(var.toString());
+                stringBuilder.append("=");
+                stringBuilder.append(m.get(var).toString(prefixes));
+                stringBuilder.append(",");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            stringBuilder.append("}");
+            System.out.println(stringBuilder);
+        }
     }
 }
