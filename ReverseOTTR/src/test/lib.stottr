@@ -2,7 +2,7 @@
 @prefix test: <http://test.com/> .
 
 test:Test[?x] :: {
-	zipMax | ottr:Triple(test:s, test:p, ++?x)
+	zipMax | ottr:Triple(test:s, ++?x, (test:o1, test:o2))
 }
 
 test:Test3[?x, ?y] :: {

@@ -1,5 +1,6 @@
 package reverseottr.model;
 
+import org.apache.jena.shared.PrefixMapping;
 import xyz.ottr.lutra.model.terms.ListTerm;
 import xyz.ottr.lutra.model.terms.NoneTerm;
 import xyz.ottr.lutra.model.terms.Term;
@@ -299,5 +300,50 @@ public class Mapping {
         return Objects.hash(list);
     }
 
+    public String toString(PrefixMapping prefixes) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{");
+        for (Term var : domain()) {
+            stringBuilder.append("?");
+            stringBuilder.append(var.getIdentifier());
+            stringBuilder.append("=");
 
+            Term term = get(var);
+            String id;
+            if (term instanceof ListTerm) {
+                id = listToString(term, prefixes);
+            } else {
+                id = prefixes.shortForm(get(var).getIdentifier().toString());
+            }
+
+            stringBuilder.append(id);
+            stringBuilder.append(", ");
+        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        stringBuilder.append("}");
+
+        return stringBuilder.toString();
+    }
+
+    private String listToString(Term term, PrefixMapping prefixes) {
+        List<Term> list = ((ListTerm) term).asList();
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<");
+        for (Term t : list) {
+            String id;
+            if (t instanceof ListTerm) {
+                id = listToString(t, prefixes);
+            } else {
+                id = prefixes.shortForm(t.getIdentifier().toString());
+            }
+
+            stringBuilder.append(id);
+            stringBuilder.append(", ");
+        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        stringBuilder.append(">");
+
+        return stringBuilder.toString();
+    }
 }

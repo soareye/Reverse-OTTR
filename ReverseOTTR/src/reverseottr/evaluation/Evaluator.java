@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 
 public class Evaluator {
 
-    private Set<Mapping> triples;
-    private Set<Mapping> nullableTriples;
-    private TemplateManager templateManager;
-    private int maxRepetitions;
+    private final Set<Mapping> triples;
+    private final Set<Mapping> nullableTriples;
+    private final TemplateManager templateManager;
+    private int maxRepetitions = 0;
 
     public Evaluator(Model model, TemplateManager templateManager) {
         this.triples = RDFToOTTR.asResultSet(model, false);
@@ -51,13 +51,9 @@ public class Evaluator {
         List<Parameter> parameters = template.getParameters();
 
         Set<Mapping> result = paramFilter(templateMappings, parameters);
-
         result = defaultAlternativesAll(result, parameters);
-
         result = placeholderFilter(result, parameters);
-
         result.addAll(generateNonOptSolutions(parameters));
-        // TODO: Filter placeholders in nonOptSolutions.
         return result;
     }
 
@@ -246,24 +242,9 @@ public class Evaluator {
                 templateManager.getTemplateStore().getTemplate(templateIRI).get()
         );
 
-        //s.forEach(System.out::println);
-
         PrefixMapping prefixes = templateManager.getPrefixes();
         prefixes.setNsPrefix("ph", TermRegistry.ph_ns);
-        //System.out.println(prefixes);
 
-        for (Mapping m : s) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("{");
-            for (Term var : m.domain()) {
-                stringBuilder.append(var.getIdentifier().toString());
-                stringBuilder.append("=");
-                stringBuilder.append(m.get(var).toString(prefixes));
-                stringBuilder.append(",");
-            }
-            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-            stringBuilder.append("}");
-            System.out.println(stringBuilder);
-        }
+        s.forEach(m -> System.out.println(m.toString(prefixes)));
     }
 }

@@ -14,6 +14,7 @@ public class ListUnexpander {
 
     private List<Term> markedVariables;
     private List<Term> unmarkedVariables;
+    private int maxRepetitions = 0;
 
     public ListUnexpander(List<Parameter> parameters, List<Argument> arguments) {
         this.markedVariables = getMarkedVars(parameters, arguments);
@@ -104,17 +105,20 @@ public class ListUnexpander {
     }
 
     public Set<Mapping> unzipMax(Set<Mapping> mappings) {
-        Set<Mapping> result = new HashSet<>();
-
-        Set<Mapping> unzipped = unzip(mappings);
-
-        return unzipped.stream().map(this::mappingPermutations)
+        Set<Mapping> result = unzip(mappings).stream().map(this::mappingPermutations)
                 .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
                 .orElse(null);
-        /*
-        return unzipped.stream().map(this::mappingPermutations)
-                .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
-                .orElse(null);*/
+
+        return result;
+    }
+
+    private Set<Mapping> noneTrailAlternatives(Mapping mapping) {
+        for (Term var : mapping.domain()) {
+            Term term = mapping.get(var);
+
+        }
+
+        return null;
     }
 
     private Set<Mapping> mappingPermutations(Mapping mapping) {
@@ -192,8 +196,10 @@ public class ListUnexpander {
         Set<Mapping> resultMaps = new HashSet<>();
 
         for (Mapping map : mappings) {
-            Mapping unzippedMap = semiUnzip(findEqualForVars(mappings, map));
-            unzippedMap.put(unmarkedVariables, map.get(unmarkedVariables));
+            Set<Mapping> compatibleMaps = findEqualForVars(mappings, map);
+            Mapping unzippedMap = semiUnzip(compatibleMaps);
+            Mapping GLB = compatibleMaps.stream().reduce(this::GLBMapping).orElse(null);
+            unzippedMap.put(unmarkedVariables, GLB.get(unmarkedVariables));
 
             resultMaps.add(unzippedMap);
         }
