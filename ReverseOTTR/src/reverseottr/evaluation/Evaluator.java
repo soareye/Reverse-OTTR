@@ -50,6 +50,7 @@ public class Evaluator {
 
         List<Parameter> parameters = template.getParameters();
 
+        // TODO: maybe "streamline" this process.
         Set<Mapping> result = paramFilter(templateMappings, parameters);
         result = defaultAlternativesAll(result, parameters);
         result = placeholderFilter(result, parameters);
@@ -83,6 +84,22 @@ public class Evaluator {
 
         Set<Mapping> templateResult = evaluateTemplate(template);
 
+        if (instance.hasListExpander()) {
+            ListUnexpander unexpander =
+                    new ListUnexpander(template.getParameters(), instance.getArguments());
+
+            if (instance.getListExpander().equals(ListExpander.zipMin)) {
+                templateResult = unexpander.unzipMin(templateResult);
+
+            } else if (instance.getListExpander().equals(ListExpander.zipMax)) {
+                templateResult = unexpander.unzipMax(templateResult);
+
+            } else {
+                templateResult = unexpander.uncross(templateResult);
+                System.out.println(templateResult);
+            }
+        }
+
         List<Term> paramVars = template.getParameters().stream()
                 .map(Parameter::getTerm).collect(Collectors.toList());
 
@@ -91,26 +108,7 @@ public class Evaluator {
 
         Mapping argMap = new Mapping(paramVars, argTerms);
 
-        if (instance.hasListExpander()) {
-            ListUnexpander listUnexpander =
-                    new ListUnexpander(template.getParameters(), instance.getArguments());
-
-            if (instance.getListExpander().equals(ListExpander.zipMin)) {
-                // filter of unzipMin of eval of template
-                return null;
-
-            } else if (instance.getListExpander().equals(ListExpander.zipMax)) {
-                Set<Mapping> unexpanded = listUnexpander.unzipMax(templateResult);
-                return argFilter(unexpanded, argMap);
-
-            } else {
-                // filter of uncross of eval of template
-                return null;
-            }
-
-        } else {
-            return argFilter(templateResult, argMap);
-        }
+        return argFilter(templateResult, argMap);
     }
 
     private Set<Mapping> argFilter(Set<Mapping> maps, Mapping argMap) {
@@ -246,5 +244,7 @@ public class Evaluator {
         prefixes.setNsPrefix("ph", TermRegistry.ph_ns);
 
         s.forEach(m -> System.out.println(m.toString(prefixes)));
+
+        System.out.println(s.size());
     }
 }

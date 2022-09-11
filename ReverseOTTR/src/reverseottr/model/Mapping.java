@@ -218,7 +218,8 @@ public class Mapping {
     public static boolean listCompatible(List<Term> termList, List<Term> argList) {
         int size = argList.size();
 
-        if (termList.get(termList.size() - 1).equals(TermRegistry.any_trail)) {
+
+        if (termList.size() > 0 && termList.get(termList.size() - 1).equals(TermRegistry.any_trail)) {
             size = termList.size() - 1;
 
         } else if (termList.size() != argList.size()) {
@@ -327,6 +328,8 @@ public class Mapping {
 
     private String listToString(Term term, PrefixMapping prefixes) {
         List<Term> list = ((ListTerm) term).asList();
+
+        if (list.size() == 0) return "<>";
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<");

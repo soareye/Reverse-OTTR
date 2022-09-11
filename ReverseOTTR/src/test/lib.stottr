@@ -1,8 +1,12 @@
 @prefix ottr: <http://ns.ottr.xyz/0.4/> .
 @prefix test: <http://test.com/> .
 
-test:Test[?x] :: {
-	zipMax | ottr:Triple(test:s, ++?x, (test:o1, test:o2))
+test:Test8[?x] :: {
+	test:Test(test:s, (test:p, test:p), ?x)
+}
+
+test:Test[?x, ?y, ?z] :: {
+	cross | ottr:NullableTriple(?x, ++?y, ++?z)
 }
 
 test:Test3[?x, ?y] :: {
@@ -16,4 +20,20 @@ test:Test1[?x] :: {
 
 test:Test2[?x, ?y=test:d] :: {
 	ottr:Triple(?x, test:p, ?y)
+} .
+
+test:Test4[?x] :: {
+	ottr:Triple(ottr:none, test:p, ?x)
+} .
+
+test:Test5[?x=test:p, ?y=test:o1] :: {
+	ottr:Triple(test:s, ?x, ?y)
+} .
+
+test:Test6[?x] :: {
+	zipMin | ottr:Triple(test:s, test:p, ++?x)
+} .
+
+test:Test7[?x] :: {
+	zipMin | test:Test6(++?x)
 } .

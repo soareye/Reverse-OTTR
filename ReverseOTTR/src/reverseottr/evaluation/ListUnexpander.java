@@ -5,6 +5,7 @@ import reverseottr.model.TermRegistry;
 import xyz.ottr.lutra.model.Argument;
 import xyz.ottr.lutra.model.Parameter;
 import xyz.ottr.lutra.model.terms.ListTerm;
+import xyz.ottr.lutra.model.terms.NoneTerm;
 import xyz.ottr.lutra.model.terms.Term;
 
 import java.util.*;
@@ -12,8 +13,8 @@ import java.util.stream.Collectors;
 
 public class ListUnexpander {
 
-    private List<Term> markedVariables;
-    private List<Term> unmarkedVariables;
+    private final List<Term> markedVariables;
+    private final List<Term> unmarkedVariables;
     private int maxRepetitions = 0;
 
     public ListUnexpander(List<Parameter> parameters, List<Argument> arguments) {
@@ -21,6 +22,134 @@ public class ListUnexpander {
         this.unmarkedVariables = getUnmarkedVars(parameters, arguments);
     }
 
+    public Set<Mapping> uncross(Set<Mapping> mappings) {
+        Set<Set<Mapping>> compSets = findCompatibleSets(mappings);
+
+        Set<Mapping> result = new HashSet<>();
+
+        for (Set<Mapping> compSet : compSets) {
+            Set<Mapping> uncrossed = weaveAll(compSet);
+
+            Mapping glb = GLBSet(compSet);
+
+            for (Mapping mapping : uncrossed) {
+                Mapping resultMap = Mapping.union(glb, mapping);
+                result.add(resultMap);
+            }
+        }
+
+        return result;
+    }
+
+    private Set<Mapping> weaveAll(Set<Mapping> mappings) {
+        Set<Map<Term, Set<Term>>> weaved = uncrossMin(mappings);
+        //System.out.println(weaved);
+        Set<Map<Term, Set<Term>>> prev = null;
+
+        Set<Map<Term, Set<Term>>> tempResult = new HashSet<>();
+
+        while (!weaved.equals(prev)) {
+            tempResult.addAll(weaved);
+            prev = new HashSet<>(weaved);
+            weaved = weave(weaved);
+            System.out.println(weaved);
+        }
+
+        Set<Mapping> result = new HashSet<>();
+
+        for (Map<Term, Set<Term>> map : tempResult) {
+            Mapping mapping = new Mapping();
+            for (Term var : map.keySet()) {
+                List<Term> termList = new LinkedList<>(map.get(var));
+                mapping.put(var, new ListTerm(termList));
+                result.add(mapping);
+            }
+        }
+
+        return result;
+    }
+
+    private Set<Map<Term, Set<Term>>> weave(Set<Map<Term, Set<Term>>> set) {
+        Set<Map<Term, Set<Term>>> result = new HashSet<>();
+        for (Map<Term, Set<Term>> m1 : set) {
+            for (Map<Term, Set<Term>> m2 : set) {
+                result.addAll(combine(m1, m2));
+            }
+        }
+        return result;
+    }
+
+    private Set<Map<Term, Set<Term>>> combine(Map<Term, Set<Term>> m1, Map<Term, Set<Term>> m2) {
+        Set<Map<Term, Set<Term>>> result = new HashSet<>();
+
+        for (Term var : markedVariables) {
+            Map<Term, Set<Term>> combination = new HashMap<>();
+            combination.put(var, intersection(m1.get(var), m2.get(var)));
+            for (Term otherVar : markedVariables) {
+                if (!otherVar.equals(var)) {
+                    combination.put(otherVar, union(m1.get(otherVar), m2.get(otherVar)));
+                }
+            }
+            result.add(combination);
+        }
+
+        return result;
+    }
+
+    private Set<Term> intersection(Set<Term> s1, Set<Term> s2) {
+        Set<Term> result = new HashSet<>();
+
+        for (Term t1 : s1) {
+            if (s2.contains(t1)) {
+                result.add(t1);
+
+            } else {
+                for (Term t2 : s2) {
+                    Term glb = TermRegistry.GLB(t1, t2);
+                    if (glb != null) {
+                        result.add(glb);
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private Set<Term> union(Set<Term> s1, Set<Term> s2) {
+        Set<Term> result = new HashSet<>();
+
+        for (Term t1 : s1) {
+            for (Term t2 : s2) {
+                Term glb = TermRegistry.GLB(t1, t2);
+                if (glb != null) {
+                    result.add(glb);
+                } else {
+                    result.add(t1);
+                    result.add(t2);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private Set<Map<Term, Set<Term>>> uncrossMin(Set<Mapping> mappings) {
+        Set<Map<Term, Set<Term>>> result = new HashSet<>();
+        for (Mapping mapping : mappings) {
+            Map<Term, Set<Term>> uncrossed = new HashMap<>();
+            for (Term var : markedVariables) {
+                Set<Term> set = new HashSet<>();
+                set.add(mapping.get(var));
+                uncrossed.put(var, set);
+            }
+            result.add(uncrossed);
+        }
+
+        return result;
+    }
+
+    /* All combinations of sublists of the largest possible lists that are crossable, are also solutions
     public Set<Mapping> uncross(Set<Mapping> mappings) {
 
         Set<Mapping> resultSet = new HashSet<>();
@@ -56,7 +185,7 @@ public class ListUnexpander {
 
                 }
             }
-            */
+
 
             Mapping resultMap = new Mapping();
 
@@ -71,6 +200,7 @@ public class ListUnexpander {
 
         return resultSet;
     }
+    */
 
     private boolean hasUncrossedMap(Set<Mapping> mappings, Mapping mapFromUncross) {
         for (Mapping map : mappings) {
@@ -100,75 +230,78 @@ public class ListUnexpander {
         return true;
     }
 
-    public Set<Mapping> unzipMin(Set<Mapping> mappings, List<Argument> args) {
-        return null;
+    public Set<Mapping> unzipMin(Set<Mapping> mappings) {
+        Set<Mapping> result = new HashSet<>();
+
+        Set<Mapping> unzipped = unzip(mappings);
+        for (Mapping mapping : unzipped) {
+            for (Term pick : markedVariables) {
+                Mapping trailing = new Mapping(unmarkedVariables, mapping.get(unmarkedVariables));
+                trailing.put(pick, mapping.get(pick));
+
+                for (Term var : markedVariables) {
+                    if (!pick.equals(var)) {
+                        List<Term> termList = new LinkedList<>(((ListTerm)mapping.get(var)).asList());
+                        termList.add(TermRegistry.any_trail);
+                        trailing.put(var, new ListTerm(termList));
+                    }
+                }
+
+                result.add(trailing);
+            }
+        }
+
+        return result;
     }
 
     public Set<Mapping> unzipMax(Set<Mapping> mappings) {
-        Set<Mapping> result = unzip(mappings).stream().map(this::mappingPermutations)
+        return unzip(mappings).stream().map(this::noneTrailAlternatives)
                 .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
                 .orElse(null);
-
-        return result;
     }
 
     private Set<Mapping> noneTrailAlternatives(Mapping mapping) {
-        for (Term var : mapping.domain()) {
-            Term term = mapping.get(var);
+        Set<Set<Mapping>> altLists = new HashSet<>();
 
+        for (Term var : markedVariables) {
+            altLists.add(noneTrailLists(mapping, var));
         }
 
-        return null;
+        Set<Mapping> markedMappings = Mapping.joinAll(altLists);
+
+        for (Mapping m : markedMappings) {
+            m.put(unmarkedVariables, mapping.get(unmarkedVariables));
+        }
+
+        return markedMappings;
     }
 
-    private Set<Mapping> mappingPermutations(Mapping mapping) {
+    private Set<Mapping> noneTrailLists(Mapping mapping, Term var) {
         Set<Mapping> result = new HashSet<>();
+        Mapping original = new Mapping(var, mapping.get(var));
+        result.add(original);
 
-        //TODO: check if markedVariables is empty and deal with this case.
+        List<Term> termList = ((ListTerm) mapping.get(var)).asList();
 
-        int size = ((ListTerm) mapping.get(markedVariables.get(0))).asList().size();
+        for (int i = termList.size() - 1; i >= 0; i--) {
+            Term term = termList.get(i);
 
-        Set<List<Integer>> orders = permutedSublists(size);
-
-        for (List<Integer> order : orders) {
-            Mapping permutation = new Mapping();
-            for (Term var : mapping.domain()) {
-                Term term = mapping.get(var);
-                if (markedVariables.contains(var)) {
-                    List<Term> permutedList = applyOrder(order, ((ListTerm) term).asList());
-                    ListTerm permutedTerm = new ListTerm(permutedList);
-                    permutation.put(var, permutedTerm);
-
-                } else {
-                    permutation.put(var, term);
-                }
+            if (term instanceof NoneTerm) {
+                Mapping altMap = new Mapping();
+                List<Term> altList = new LinkedList<>(termList.subList(0, i));
+                ListTerm altListTerm = new ListTerm(altList);
+                altMap.put(var, altListTerm);
+                result.add(altMap);
+            } else {
+                break;
             }
-
-            result.add(permutation);
         }
 
         return result;
     }
 
-    private List<Term> applyOrder(List<Integer> order, List<Term> list) {
+    private <T> List<T> applyOrder(List<Integer> order, List<T> list) {
         return order.stream().map(list::get).collect(Collectors.toList());
-    }
-
-    private Set<List<Integer>> permutedSublists(int size) {
-        return permutations(size).stream().map(this::sublists)
-                .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
-                .orElse(null);
-    }
-
-    private Set<List<Integer>> sublists(List<Integer> list) {
-        Set<List<Integer>> result = new HashSet<>();
-
-        for (int i = 1; i <= list.size(); i++) {
-            List<Integer> sublist = new LinkedList<>(list.subList(0, i));
-            result.add(sublist);
-        }
-
-        return result;
     }
 
     private Set<List<Integer>> permutations(int size) {
@@ -193,56 +326,104 @@ public class ListUnexpander {
     }
 
     private Set<Mapping> unzip(Set<Mapping> mappings) {
-        Set<Mapping> resultMaps = new HashSet<>();
+        Set<Mapping> result = new HashSet<>();
 
-        for (Mapping map : mappings) {
-            Set<Mapping> compatibleMaps = findEqualForVars(mappings, map);
-            Mapping unzippedMap = semiUnzip(compatibleMaps);
-            Mapping GLB = compatibleMaps.stream().reduce(this::GLBMapping).orElse(null);
-            unzippedMap.put(unmarkedVariables, GLB.get(unmarkedVariables));
+        Set<Set<Mapping>> compSets = findCompatibleSets(mappings);
 
-            resultMaps.add(unzippedMap);
-        }
+        for (Set<Mapping> compSet : compSets) {
+            List<Mapping> compList = new LinkedList<>(compSet);
 
-        return resultMaps;
-    }
+            Set<List<Integer>> orders = permutations(compList.size())
+                    .stream().map(this::repeat)
+                    .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
+                    .orElse(null);
 
-    private Mapping semiUnzip(Set<Mapping> mappings) {
-        Map<Term, List<Term>> resultMap = new HashMap<>();
-
-        for (Mapping map : mappings) {
-            for (Term var : markedVariables) {
-                if (resultMap.containsKey(var)) {
-                    resultMap.get(var).add(map.get(var));
-
-                } else {
-                    List<Term> terms = new LinkedList<>();
-                    terms.add(map.get(var));
-                    resultMap.put(var, terms);
-                }
+            for (List<Integer> order : orders) {
+                result.add(unzipList(applyOrder(order, compList)));
             }
-        }
-
-        Mapping result = new Mapping();
-
-        for (Term var : resultMap.keySet()) {
-            result.put(var, new ListTerm(resultMap.get(var)));
         }
 
         return result;
     }
 
-    private Set<Mapping> findEqualForVars(Set<Mapping> mappings, Mapping map) {
-        Set<Mapping> result = new HashSet<>();
+    private <T> Set<List<T>> repeat(List<T> list) {
+        Set<List<T>> result = new HashSet<>();
+        result.add(list);
 
-        Mapping current = map;
+        for (T t : list) {
+            for (int i = 0; i < this.maxRepetitions; i++) {
+                List<T> other = new LinkedList<>();
 
-        for (Mapping other : mappings) {
-            Mapping GLB = GLBMapping(current, other);
-            if (GLB != null) {
+                for (List<T> resultList : result) {
+                    other = new LinkedList<>(resultList);
+                    other.add(t);
+                }
+
                 result.add(other);
-                current = GLB;
             }
+        }
+
+        return result;
+    }
+
+    private Mapping unzipList(List<Mapping> mappings) {
+        Map<Term, List<Term>> unzipMap = new HashMap<>();
+
+        for (Term var : markedVariables) {
+            List<Term> termList = new LinkedList<>();
+            unzipMap.put(var, termList);
+        }
+
+        for (Mapping mapping : mappings) {
+            for (Term var : markedVariables) {
+                unzipMap.get(var).add(mapping.get(var));
+            }
+        }
+
+        Mapping result = GLBSet(new HashSet<>(mappings));
+
+        for (Term var : markedVariables) {
+            ListTerm listTerm = new ListTerm(unzipMap.get(var));
+            result.put(var, listTerm);
+        }
+
+        return result;
+    }
+
+    private Set<Set<Mapping>> findCompatibleSets(Set<Mapping> mappings) {
+        Set<Set<Mapping>> result = new HashSet<>();
+
+        for (Mapping mapping : mappings) {
+            Set<Mapping> compSet = new HashSet<>();
+            compSet.add(mapping);
+            result.add(compSet);
+        }
+
+        for (Mapping mapping : mappings) {
+            Set<Set<Mapping>> workSet = new HashSet<>();
+            for (Set<Mapping> compSet : result) {
+                if (Mapping.compatible(GLBSet(compSet), mapping)) {
+                    Set<Mapping> fresh = new HashSet<>(compSet);
+                    fresh.add(mapping);
+                    workSet.add(fresh);
+                }
+            }
+
+            result.addAll(workSet);
+        }
+
+        return result;
+    }
+
+    private Mapping GLBSet(Set<Mapping> mappings) {
+        Mapping result = new Mapping();
+        for (Term var : unmarkedVariables) {
+            result.put(var, TermRegistry.any);
+        }
+
+        for (Mapping mapping : mappings) {
+            result = GLBMapping(result, mapping);
+            if (result == null) return null;
         }
 
         return result;
