@@ -1,6 +1,7 @@
 package reverseottr.model;
 
 import org.apache.jena.shared.PrefixMapping;
+import xyz.ottr.lutra.model.terms.BlankNodeTerm;
 import xyz.ottr.lutra.model.terms.ListTerm;
 import xyz.ottr.lutra.model.terms.NoneTerm;
 import xyz.ottr.lutra.model.terms.Term;
@@ -210,6 +211,9 @@ public class Mapping {
         if (arg instanceof ListTerm && term instanceof ListTerm) {
             return listCompatible(((ListTerm) term).asList(), ((ListTerm) arg).asList());
 
+        } else if (term instanceof BlankNodeTerm && arg instanceof BlankNodeTerm) {
+            return true;
+
         } else {
             return arg.isVariable() || TermRegistry.GLB(arg, term) != null;
         }
@@ -217,7 +221,6 @@ public class Mapping {
 
     public static boolean listCompatible(List<Term> termList, List<Term> argList) {
         int size = argList.size();
-
 
         if (termList.size() > 0 && termList.get(termList.size() - 1).equals(TermRegistry.any_trail)) {
             size = termList.size() - 1;
@@ -248,6 +251,7 @@ public class Mapping {
         if (!mapping.domain().equals(this.domain())) return false;
 
         for (Term var : this.domain()) {
+            // TODO: create separate method for the following.
             Term t1 = this.get(var);
             Term t2 = mapping.get(var);
 
@@ -291,14 +295,32 @@ public class Mapping {
 
     @Override
     public int hashCode() {
-        List<Object> list = new LinkedList<>();
+        int hash = 0;
         for (Term var : domain()) {
             Term term = get(var);
-            if (term instanceof ListTerm) list.add(((ListTerm) term).asList());
-            else list.add(term);
+            if (term instanceof ListTerm) {
+                List<Term> termList = ((ListTerm) term).asList();
+                hash += listHash(termList);
+            } else {
+                hash += term.hashCode();
+            }
         }
 
-        return Objects.hash(list);
+        return hash;
+    }
+
+    private int listHash(List<Term> termList) {
+        int hash = 0;
+
+        for (Term term : termList) {
+            if (term instanceof ListTerm) {
+                hash += listHash(((ListTerm) term).asList());
+            } else {
+                hash += term.hashCode();
+            }
+        }
+
+        return hash;
     }
 
     public String toString(PrefixMapping prefixes) {

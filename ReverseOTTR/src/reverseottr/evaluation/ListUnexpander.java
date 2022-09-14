@@ -43,16 +43,11 @@ public class ListUnexpander {
 
     private Set<Mapping> weaveAll(Set<Mapping> mappings) {
         Set<Map<Term, Set<Term>>> weaved = uncrossMin(mappings);
-        //System.out.println(weaved);
-        Set<Map<Term, Set<Term>>> prev = null;
-
         Set<Map<Term, Set<Term>>> tempResult = new HashSet<>();
 
-        while (!weaved.equals(prev)) {
+        while (!mapSetSubsumes(weaved, tempResult)) {
             tempResult.addAll(weaved);
-            prev = new HashSet<>(weaved);
             weaved = weave(weaved);
-            System.out.println(weaved);
         }
 
         Set<Mapping> result = new HashSet<>();
@@ -67,6 +62,50 @@ public class ListUnexpander {
         }
 
         return result;
+    }
+
+    private boolean mapSetSubsumes(Set<Map<Term, Set<Term>>> sub, Set<Map<Term, Set<Term>>> sup) {
+        for (Map<Term, Set<Term>> m : sub) {
+            if (!containsCompatibleMap(m, sup)) return false;
+        }
+        return true;
+    }
+
+    private boolean containsCompatibleMap(Map<Term, Set<Term>> m, Set<Map<Term, Set<Term>>> s) {
+        for (Map<Term, Set<Term>> other : s) {
+            if (compatible(m, other)) return true;
+        }
+
+        return false;
+    }
+
+    private boolean compatible(Map<Term, Set<Term>> m1, Map<Term, Set<Term>> m2) {
+        for (Term var : m1.keySet()) {
+            Set<Term> s1 = m1.get(var);
+            Set<Term> s2 = m2.get(var);
+            if (!termSetEquals(s1, s2)) return false;
+        }
+
+        return true;
+    }
+
+    private boolean termSetEquals(Set<Term> s1, Set<Term> s2) {
+        for (Term t1 : s1) {
+            if (!containsCompatibleTerm(t1, s2)) return false;
+        }
+
+        for (Term t2 : s2) {
+            if (!containsCompatibleTerm(t2, s1)) return false;
+        }
+
+        return true;
+    }
+
+    private boolean containsCompatibleTerm(Term t, Set<Term> s) {
+        for (Term other : s) {
+            if (TermRegistry.GLB(t, other) != null) return true;
+        }
+        return false;
     }
 
     private Set<Map<Term, Set<Term>>> weave(Set<Map<Term, Set<Term>>> set) {
@@ -84,16 +123,23 @@ public class ListUnexpander {
 
         for (Term var : markedVariables) {
             Map<Term, Set<Term>> combination = new HashMap<>();
-            combination.put(var, intersection(m1.get(var), m2.get(var)));
+            combination.put(var, union(m1.get(var), m2.get(var)));
             for (Term otherVar : markedVariables) {
                 if (!otherVar.equals(var)) {
-                    combination.put(otherVar, union(m1.get(otherVar), m2.get(otherVar)));
+                    combination.put(otherVar, intersection(m1.get(otherVar), m2.get(otherVar)));
                 }
             }
-            result.add(combination);
+            if (!hasEmptySet(combination)) result.add(combination);
         }
 
         return result;
+    }
+
+    private boolean hasEmptySet(Map<Term, Set<Term>> map) {
+        for (Term var : map.keySet()) {
+            if (map.get(var).isEmpty()) return true;
+        }
+        return false;
     }
 
     private Set<Term> intersection(Set<Term> s1, Set<Term> s2) {
@@ -147,87 +193,6 @@ public class ListUnexpander {
         }
 
         return result;
-    }
-
-    /* All combinations of sublists of the largest possible lists that are crossable, are also solutions
-    public Set<Mapping> uncross(Set<Mapping> mappings) {
-
-        Set<Mapping> resultSet = new HashSet<>();
-
-        for (Mapping pick : mappings) {
-            Map<Term, List<Term>> listMap = new HashMap<>();
-
-            for (Term var : markedVariables) {
-                List<Term> list = new LinkedList<>();
-                list.add(pick.get(var));
-                listMap.put(var, list);
-            }
-
-            /*
-            Set<Mapping> validMaps = findEqualForVars(mappings, pick, unmarkedVariables);
-            validMaps.remove(pick);
-
-            for (Term var : markedVariables) {
-                List<Term> fixedVars = new LinkedList<>(markedVariables);
-                fixedVars.remove(var);
-
-                for (Mapping map : findEqualForVars(validMaps, pick, fixedVars)) {
-                    listMap.get(var).add(map.get(var));
-
-
-                    check if map.get(var) works with all combinations of fixedVars.
-                    something like:
-                    combinations = new LinkedList<>(new LinkedList).
-                    for combination in combinations
-                        if combination is not empty
-                            blah blah
-
-
-                }
-            }
-
-
-            Mapping resultMap = new Mapping();
-
-            for (Term var : markedVariables) {
-                resultMap.put(var, new ListTerm(listMap.get(var)));
-            }
-
-            resultMap.put(unmarkedVariables, pick.get(unmarkedVariables));
-
-            resultSet.add(resultMap);
-        }
-
-        return resultSet;
-    }
-    */
-
-    private boolean hasUncrossedMap(Set<Mapping> mappings, Mapping mapFromUncross) {
-        for (Mapping map : mappings) {
-            for (Term var : map.domain()) {
-                Term term = mapFromUncross.get(var);
-                if (term instanceof ListTerm) {
-                    if (((ListTerm) term).asList().contains(map.get(var))) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private boolean isUncrossedMap(Mapping map, Mapping mapFromUncross) {
-        for (Term var : map.domain()) {
-            Term term = mapFromUncross.get(var);
-            if (term instanceof ListTerm) {
-                if (!((ListTerm) term).asList().contains(map.get(var))) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
     }
 
     public Set<Mapping> unzipMin(Set<Mapping> mappings) {

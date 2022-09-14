@@ -1,21 +1,32 @@
 @prefix ottr: <http://ns.ottr.xyz/0.4/> .
-@prefix test: <http://test.com/> .
+@prefix ex: <http://example.com/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-test:s test:p1 test:o1 .
-test:s test:p1 test:o2 .
+_:b0 ex:p1 ex:o1 .
+_:b0 ex:p1 ex:o2 .
+_:b0 ex:p2 ex:o1 .
+_:b0 ex:p2 ex:o2 .
 
-test:s test:p2 test:o1 .
-test:s test:p2 test:o2 .
+_:b1 ex:p1 ex:o1 .
+_:b1 ex:p1 ex:o2 .
+_:b1 ex:p2 ex:o1 .
+_:b1 ex:p2 ex:o2 .
 
-test:s test:p2 test:o3 .
-test:s test:p2 test:o4 .
+ex:s ex:p1 ex:o1 .
+ex:s ex:p1 ex:o2 .
 
-# test:s ottr:none test:o3 .
-# test:s ottr:none test:o4 .
+ex:s ex:p2 ex:o1 .
+ex:s ex:p2 ex:o2 .
+
+ex:s ex:p2 ex:o3 .
+ex:s ex:p2 ex:o4 .
+
+ex:s ottr:none ex:o3 .
+ex:s ottr:none ex:o4 .
 
 
-# test:s test:p test:o1 .
-# test:s test:p test:o2 .
-# test:s test:p test:o3 .
+ex:s ex:p ex:o1 .
+ex:s ex:p ex:o2 .
+ex:s ex:p ex:o3 .
 
-# ottr:none test:p test:o .
+ottr:none ex:p ex:o .

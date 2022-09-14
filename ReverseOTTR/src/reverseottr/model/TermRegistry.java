@@ -47,6 +47,12 @@ public enum TermRegistry {
 
         List<Term> resultList = new LinkedList<>();
 
+        if (l1.size() == 0 && l2.size() == 0) return t1;
+
+        if (l1.size() == 0 && !l2.get(l2.size() - 1).equals(any_trail)) return null;
+
+        if (l2.size() == 0 && !l1.get(l1.size() - 1).equals(any_trail)) return null;
+
         if ((l1.size() < l2.size() && !l1.get(l1.size() - 1).equals(any_trail)) ||
                 (l2.size() < l1.size() && !l2.get(l2.size() - 1).equals(any_trail)))
             return null;
@@ -113,7 +119,11 @@ public enum TermRegistry {
         List<Term> list1 = t1.asList();
         List<Term> list2 = t2.asList();
 
+        if (list1.isEmpty() && list2.isEmpty()) return true;
+
         if (list1.size() < list2.size()) return false;
+
+        if (list2.isEmpty() && !list1.isEmpty()) return false;
 
         if (list1.size() > list2.size() &&
                 !list2.get(list2.size() - 1).equals(any_trail))
@@ -135,9 +145,9 @@ public enum TermRegistry {
         } else if (parameter.isNonBlank()) {
             return any_nb;
         } else if (!parameter.isOptional()) {
-            return TermRegistry.any_no;
+            return any_no;
         } else {
-            return TermRegistry.any;
+            return any;
         }
     }
 

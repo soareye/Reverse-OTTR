@@ -96,7 +96,6 @@ public class Evaluator {
 
             } else {
                 templateResult = unexpander.uncross(templateResult);
-                System.out.println(templateResult);
             }
         }
 
@@ -234,7 +233,7 @@ public class Evaluator {
 
         Evaluator e = new Evaluator(model, templateManager);
 
-        String templateIRI = "http://test.com/Test";
+        String templateIRI = "http://example.com/Test";
 
         Set<Mapping> s = e.evaluateTemplate(
                 templateManager.getTemplateStore().getTemplate(templateIRI).get()
@@ -244,6 +243,29 @@ public class Evaluator {
         prefixes.setNsPrefix("ph", TermRegistry.ph_ns);
 
         s.forEach(m -> System.out.println(m.toString(prefixes)));
+
+        /*
+        for (Mapping m1 : s) {
+            for (Mapping m2 : s) {
+                StringBuilder sb = new StringBuilder();
+                for (Term x : m1.domain()) {
+                    if (m1.get(x) instanceof ListTerm && m2.get(x) instanceof ListTerm) {
+                        if (((ListTerm) m1.get(x)).asList().get(0) instanceof ListTerm) {
+                            sb.append(m1.get(x)).append(" == ").append(m2.get(x)).append(" ? ");
+                        }
+                    }
+                }
+                if (sb.length() > 0) {
+                    System.out.println(sb);
+                    System.out.println(m1.toString(prefixes) + " == " + m2.toString(prefixes)
+                            + " ? " + m1.equals(m2));
+                    System.out.println(m1.hashCode() == m2.hashCode());
+                    System.out.println();
+                }
+            }
+        }
+
+         */
 
         System.out.println(s.size());
     }
