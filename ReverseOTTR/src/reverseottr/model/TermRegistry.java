@@ -131,7 +131,7 @@ public enum TermRegistry {
 
         for (int i = 0; i < list2.size(); i++) {
             if (!lessOrEqual(list1.get(i), list2.get(i))) {
-                if (i != list2.size() - 1 || list2.get(i).equals(any_trail))
+                if (!list2.get(i).equals(any_trail))
                     return false;
             }
         }

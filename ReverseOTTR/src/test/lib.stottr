@@ -6,7 +6,7 @@ ex:Test8[?x] :: {
 }
 
 ex:Test[?x, ?y, ?z] :: {
-	cross | ottr:NullableTriple(++?x, ++?y, ++?z)
+	zipMax | ottr:NullableTriple(++?x, ++?y, ++?z)
 }
 
 ex:Test9[?x, ?y] :: {

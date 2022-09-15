@@ -55,7 +55,34 @@ public class Evaluator {
         result = defaultAlternativesAll(result, parameters);
         result = placeholderFilter(result, parameters);
         result.addAll(generateNonOptSolutions(parameters));
+        result = removeSubMappings(result);
         return result;
+    }
+
+    private Set<Mapping> removeSubMappings(Set<Mapping> mappings) {
+        Set<Mapping> result = new HashSet<>();
+        for (Mapping mapping : mappings) {
+            if (!containsGreater(mappings, mapping)) result.add(mapping);
+        }
+
+        return result;
+    }
+
+    private boolean containsGreater(Set<Mapping> mappings, Mapping mapping) {
+        for (Mapping other : mappings) {
+            if (lessOrEqualMapping(mapping, other) && !mapping.equals(other))
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean lessOrEqualMapping(Mapping m1, Mapping m2) {
+        for (Term var : m1.domain()) {
+            if (!TermRegistry.lessOrEqual(m1.get(var), m2.get(var)))
+                return false;
+        }
+        return true;
     }
 
     private Set<Mapping> placeholderFilter(Set<Mapping> mappings, List<Parameter> parameters) {

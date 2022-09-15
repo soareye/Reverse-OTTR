@@ -22,37 +22,73 @@ public class ListUnexpander {
         this.unmarkedVariables = getUnmarkedVars(parameters, arguments);
     }
 
+    public ListUnexpander(List<Parameter> parameters, List<Argument> arguments, int repetitions) {
+        this.markedVariables = getMarkedVars(parameters, arguments);
+        this.unmarkedVariables = getUnmarkedVars(parameters, arguments);
+        this.maxRepetitions = repetitions;
+    }
+
     public Set<Mapping> uncross(Set<Mapping> mappings) {
-        Set<Set<Mapping>> compSets = findCompatibleSets(mappings);
+        var compSets = findCompatibleSets(mappings);
 
         Set<Mapping> result = new HashSet<>();
 
         for (Set<Mapping> compSet : compSets) {
-            Set<Mapping> uncrossed = weaveAll(compSet);
+            var uncrossed = toMappings(compactifyAll(compSet));
 
             Mapping glb = GLBSet(compSet);
 
             for (Mapping mapping : uncrossed) {
-                Mapping resultMap = Mapping.union(glb, mapping);
-                result.add(resultMap);
+                for (Mapping mapPermutation : mapPermutations(mapping)) {
+                    Mapping resultMap = Mapping.union(glb, mapPermutation);
+                    result.add(resultMap);
+                }
             }
         }
 
         return result;
     }
 
-    private Set<Mapping> weaveAll(Set<Mapping> mappings) {
-        Set<Map<Term, Set<Term>>> weaved = uncrossMin(mappings);
-        Set<Map<Term, Set<Term>>> tempResult = new HashSet<>();
+    private Set<Mapping> mapPermutations(Mapping mapping) {
+        Set<Set<Mapping>> tempSet = new HashSet<>();
 
-        while (!mapSetSubsumes(weaved, tempResult)) {
-            tempResult.addAll(weaved);
-            weaved = weave(weaved);
+        for (Term var : mapping.domain()) {
+            Set<Mapping> varSet = new HashSet<>();
+
+            var list = ((ListTerm) mapping.get(var)).asList();
+
+            for (var sublist : sublists(list)) {
+                for (var repeated : repeat(sublist)) {
+                    for (var order : permutations(repeated.size())) {
+                        Mapping m = new Mapping();
+                        ListTerm term = new ListTerm(applyOrder(order, repeated));
+                        m.put(var, term);
+                        varSet.add(m);
+                    }
+                }
+            }
+
+            tempSet.add(varSet);
         }
 
-        Set<Mapping> result = new HashSet<>();
+        return Mapping.joinAll(tempSet);
+    }
 
-        for (Map<Term, Set<Term>> map : tempResult) {
+    private <T> Set<List<T>> sublists(List<T> list) {
+        Set<List<T>> result = new HashSet<>();
+        List<T> resultList = new LinkedList<>();
+        for (var t : list) {
+            resultList.add(t);
+            result.add(resultList);
+            resultList = new LinkedList<>(resultList);
+        }
+
+        return result;
+    }
+
+    private Set<Mapping> toMappings(Set<Map<Term, Set<Term>>> set) {
+        Set<Mapping> result = new HashSet<>();
+        for (Map<Term, Set<Term>> map : set) {
             Mapping mapping = new Mapping();
             for (Term var : map.keySet()) {
                 List<Term> termList = new LinkedList<>(map.get(var));
@@ -64,75 +100,40 @@ public class ListUnexpander {
         return result;
     }
 
-    private boolean mapSetSubsumes(Set<Map<Term, Set<Term>>> sub, Set<Map<Term, Set<Term>>> sup) {
-        for (Map<Term, Set<Term>> m : sub) {
-            if (!containsCompatibleMap(m, sup)) return false;
-        }
-        return true;
-    }
+    private Set<Map<Term, Set<Term>>> compactifyAll(Set<Mapping> mappings) {
+        Set<Map<Term, Set<Term>>> compacted = uncrossMin(mappings);
+        Set<Map<Term, Set<Term>>> nextCompacted = new HashSet<>();
 
-    private boolean containsCompatibleMap(Map<Term, Set<Term>> m, Set<Map<Term, Set<Term>>> s) {
-        for (Map<Term, Set<Term>> other : s) {
-            if (compatible(m, other)) return true;
-        }
-
-        return false;
-    }
-
-    private boolean compatible(Map<Term, Set<Term>> m1, Map<Term, Set<Term>> m2) {
-        for (Term var : m1.keySet()) {
-            Set<Term> s1 = m1.get(var);
-            Set<Term> s2 = m2.get(var);
-            if (!termSetEquals(s1, s2)) return false;
-        }
-
-        return true;
-    }
-
-    private boolean termSetEquals(Set<Term> s1, Set<Term> s2) {
-        for (Term t1 : s1) {
-            if (!containsCompatibleTerm(t1, s2)) return false;
-        }
-
-        for (Term t2 : s2) {
-            if (!containsCompatibleTerm(t2, s1)) return false;
-        }
-
-        return true;
-    }
-
-    private boolean containsCompatibleTerm(Term t, Set<Term> s) {
-        for (Term other : s) {
-            if (TermRegistry.GLB(t, other) != null) return true;
-        }
-        return false;
-    }
-
-    private Set<Map<Term, Set<Term>>> weave(Set<Map<Term, Set<Term>>> set) {
-        Set<Map<Term, Set<Term>>> result = new HashSet<>();
-        for (Map<Term, Set<Term>> m1 : set) {
-            for (Map<Term, Set<Term>> m2 : set) {
-                result.addAll(combine(m1, m2));
-            }
-        }
-        return result;
-    }
-
-    private Set<Map<Term, Set<Term>>> combine(Map<Term, Set<Term>> m1, Map<Term, Set<Term>> m2) {
-        Set<Map<Term, Set<Term>>> result = new HashSet<>();
-
-        for (Term var : markedVariables) {
-            Map<Term, Set<Term>> combination = new HashMap<>();
-            combination.put(var, union(m1.get(var), m2.get(var)));
-            for (Term otherVar : markedVariables) {
-                if (!otherVar.equals(var)) {
-                    combination.put(otherVar, intersection(m1.get(otherVar), m2.get(otherVar)));
+        for (Term markedVar : markedVariables) {
+            for (var m1 : compacted) {
+                var map = m1;
+                for (var m2 : compacted) {
+                    var temp = compactify(map, m2, markedVar);
+                    if (temp != null) {
+                        map = temp;
+                    }
                 }
+                nextCompacted.add(map);
             }
-            if (!hasEmptySet(combination)) result.add(combination);
+            compacted = nextCompacted;
+            nextCompacted = new HashSet<>();
         }
 
-        return result;
+        return compacted;
+    }
+
+    private Map<Term, Set<Term>> compactify(Map<Term, Set<Term>> m1, Map<Term, Set<Term>> m2, Term var) {
+        Map<Term, Set<Term>> combination = new HashMap<>();
+        combination.put(var, union(m1.get(var), m2.get(var)));
+        for (Term otherVar : markedVariables) {
+            if (!otherVar.equals(var)) {
+                combination.put(otherVar, intersection(m1.get(otherVar), m2.get(otherVar)));
+            }
+        }
+
+        if (hasEmptySet(combination)) return null;
+
+        return combination;
     }
 
     private boolean hasEmptySet(Map<Term, Set<Term>> map) {
@@ -144,21 +145,14 @@ public class ListUnexpander {
 
     private Set<Term> intersection(Set<Term> s1, Set<Term> s2) {
         Set<Term> result = new HashSet<>();
-
         for (Term t1 : s1) {
-            if (s2.contains(t1)) {
-                result.add(t1);
-
-            } else {
-                for (Term t2 : s2) {
-                    Term glb = TermRegistry.GLB(t1, t2);
-                    if (glb != null) {
-                        result.add(glb);
-                    }
+            for (Term t2 : s2) {
+                Term glb = TermRegistry.GLB(t1, t2);
+                if (glb != null) {
+                    result.add(glb);
                 }
             }
         }
-
         return result;
     }
 
@@ -297,14 +291,10 @@ public class ListUnexpander {
 
         for (Set<Mapping> compSet : compSets) {
             List<Mapping> compList = new LinkedList<>(compSet);
-
-            Set<List<Integer>> orders = permutations(compList.size())
-                    .stream().map(this::repeat)
-                    .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
-                    .orElse(null);
-
-            for (List<Integer> order : orders) {
-                result.add(unzipList(applyOrder(order, compList)));
+            for (List<Mapping> repeat : repeat(compList)) {
+                for (List<Integer> order : permutations(repeat.size())) {
+                    result.add(unzipList(applyOrder(order, repeat)));
+                }
             }
         }
 
