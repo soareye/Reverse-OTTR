@@ -30,7 +30,26 @@ public enum TermRegistry {
         if (lessOrEqual(t2, t1)) return t2;
 
         if (t1 instanceof ListTerm && t2 instanceof ListTerm) {
-            return GLBList((ListTerm) t1, (ListTerm) t2);
+            if (t1.getIdentifier().equals(t2.getIdentifier())) return t1;
+
+            List<Term> list = GLBList(((ListTerm) t1).asList(), ((ListTerm) t2).asList());
+            if (list == null) return null;
+
+            if ((t1 instanceof RListTerm && ((RListTerm) t1).isUnexpanded())
+                    && !(t2 instanceof RListTerm)) {
+                return t2;
+            }
+
+            if ((t2 instanceof RListTerm && ((RListTerm) t2).isUnexpanded())
+                    && !(t1 instanceof RListTerm)) {
+                return t1;
+            }
+
+            if ((t1 instanceof RListTerm && ((RListTerm) t1).isUnexpanded())
+                    && (t2 instanceof RListTerm && ((RListTerm) t2).isUnexpanded()))
+                return new RListTerm(list, true);
+
+            return null;
         }
 
         if ((t1.equals(any_nb) && t2.equals(any_nb)) ||
@@ -41,29 +60,25 @@ public enum TermRegistry {
         return null;
     }
 
-    private static Term GLBList(ListTerm t1, ListTerm t2) {
-        List<Term> l1 = t1.asList();
-        List<Term> l2 = t2.asList();
+    private static List<Term> GLBList(List<Term> l1, List<Term> l2) {
 
-        List<Term> resultList = new LinkedList<>();
+        if (l1.isEmpty() && l2.isEmpty()) return l1;
 
-        if (l1.size() == 0 && l2.size() == 0) return t1;
+        if (l1.isEmpty() && !l2.get(l2.size() - 1).equals(any_trail)) return null;
 
-        if (l1.size() == 0 && !l2.get(l2.size() - 1).equals(any_trail)) return null;
-
-        if (l2.size() == 0 && !l1.get(l1.size() - 1).equals(any_trail)) return null;
+        if (l2.isEmpty() && !l1.get(l1.size() - 1).equals(any_trail)) return null;
 
         if ((l1.size() < l2.size() && !l1.get(l1.size() - 1).equals(any_trail)) ||
                 (l2.size() < l1.size() && !l2.get(l2.size() - 1).equals(any_trail)))
             return null;
 
         int size = Math.min(l1.size(), l2.size());
+        List<Term> resultList = new LinkedList<>();
 
         for (int i = 0; i < size - 1; i++) {
-            Term currentResult = GLB(l1.get(i), l2.get(i));
-            if (currentResult == null) return null;
-
-            resultList.add(currentResult);
+            Term currentTerm = GLB(l1.get(i), l2.get(i));
+            if (currentTerm == null) return null;
+            resultList.add(currentTerm);
         }
 
         List<Term> longer = l1;
@@ -74,14 +89,16 @@ public enum TermRegistry {
             longer = l2;
 
         } else if (!l2.get(l2.size() - 1).equals(any_trail)) {
-            resultList.add(GLB(l1.get(l1.size() - 1), l2.get(l2.size() - 1)));
+            Term lastTerm = GLB(l1.get(l1.size() - 1), l2.get(l2.size() - 1));
+            if (lastTerm == null) return null;
+            resultList.add(lastTerm);
         }
 
         for (int i = shorter.size() - 1; i < longer.size(); i++) {
             resultList.add(longer.get(i));
         }
 
-        return new ListTerm(resultList);
+        return resultList;
     }
 
     public static boolean lessOrEqual(Term t1, Term t2) {
@@ -116,6 +133,10 @@ public enum TermRegistry {
     }
 
     private static boolean lessOrEqualList(ListTerm t1, ListTerm t2) {
+        if (t1.getIdentifier().equals(t2.getIdentifier())) return true;
+
+        if (!(t2 instanceof RListTerm && ((RListTerm) t2).isUnexpanded())) return false;
+
         List<Term> list1 = t1.asList();
         List<Term> list2 = t2.asList();
 
@@ -137,6 +158,10 @@ public enum TermRegistry {
         }
 
         return true;
+    }
+
+    public static boolean isUnexpanded(Term t) {
+        return t instanceof RListTerm && ((RListTerm) t).isUnexpanded();
     }
 
     public static Term paramPlaceholder(Parameter parameter) {

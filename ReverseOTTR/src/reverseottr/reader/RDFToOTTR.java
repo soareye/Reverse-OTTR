@@ -10,10 +10,11 @@ import java.util.*;
 
 public class RDFToOTTR {
 
-    // TODO: "asTriples" and "asNullableTriples".
+    // TODO: "asTripleMappings" and "asNullableMappings".
     public static Set<Mapping> asResultSet(Model model, boolean nullable) {
         List<Parameter> params = OTTR.BaseTemplate.Triple.getParameters();
-
+        // TODO: to make sure that lists have correct id,...
+        // ... first create terms from graph, then assign template vars from nullable and triple.
         if (nullable) {
             params = OTTR.BaseTemplate.NullableTriple.getParameters();
         }
@@ -40,6 +41,7 @@ public class RDFToOTTR {
 
             // TODO: Use of list predicates in templates
 
+            // Ensures no funny list-triples:
             if (predString.equals(first) || predString.equals(rest)) {
                 if (sub instanceof ListTerm && !((ListTerm) sub).asList().isEmpty()) {
                     sub = WTermParser.toBlankNodeTerm(

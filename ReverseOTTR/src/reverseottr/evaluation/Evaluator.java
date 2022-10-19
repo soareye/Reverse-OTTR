@@ -4,6 +4,7 @@ import org.apache.jena.rdf.model.Model;
 import org.apache.jena.shared.PrefixMapping;
 import reverseottr.model.Mapping;
 import reverseottr.model.Placeholder;
+import reverseottr.model.RListTerm;
 import reverseottr.model.TermRegistry;
 import reverseottr.reader.GraphReader;
 import reverseottr.reader.RDFToOTTR;
@@ -28,6 +29,33 @@ public class Evaluator {
         this.triples = RDFToOTTR.asResultSet(model, false);
         this.nullableTriples = RDFToOTTR.asResultSet(model, true);
         this.templateManager = templateManager;
+    }
+
+    public Set<Mapping> evaluateQuery(String IRI) {
+        Set<Mapping> result =
+                evaluateTemplate(this.templateManager
+                        .getTemplateStore().getTemplate(IRI).get());
+
+        return result.stream().filter(this::validIDs).collect(Collectors.toSet());
+    }
+
+    private <T> boolean validIDs(Mapping mapping) {
+        Set<T> ids = new HashSet<>();
+
+        for (Term var : mapping.domain()) {
+            Term term = mapping.get(var);
+            if (term instanceof ListTerm
+                    && !TermRegistry.isUnexpanded(term)) {
+                T id = (T) term.getIdentifier();
+                if (ids.contains(id)) {
+                    return false;
+                } else {
+                    ids.add(id);
+                }
+            }
+        }
+
+        return true;
     }
 
     public Set<Mapping> evaluateTemplate(Template template) {
@@ -55,10 +83,11 @@ public class Evaluator {
         result = defaultAlternativesAll(result, parameters);
         result = placeholderFilter(result, parameters);
         result.addAll(generateNonOptSolutions(parameters));
-        result = removeSubMappings(result);
-        return result;
+        return removeSubMappings(result);
     }
 
+    /** Removes mappings that are less than some other mapping in the input-set
+     * according to the partial order in TermRegistry **/
     private Set<Mapping> removeSubMappings(Set<Mapping> mappings) {
         Set<Mapping> result = new HashSet<>();
         for (Mapping mapping : mappings) {
@@ -113,7 +142,8 @@ public class Evaluator {
 
         if (instance.hasListExpander()) {
             ListUnexpander unexpander =
-                    new ListUnexpander(template.getParameters(), instance.getArguments());
+                    new ListUnexpander(template.getParameters(),
+                            instance.getArguments(), maxRepetitions);
 
             if (instance.getListExpander().equals(ListExpander.zipMin)) {
                 templateResult = unexpander.unzipMin(templateResult);
@@ -137,16 +167,16 @@ public class Evaluator {
         return argFilter(templateResult, argMap);
     }
 
-    private Set<Mapping> argFilter(Set<Mapping> maps, Mapping argMap) {
-        Set<Mapping> resultMaps = new HashSet<>();
+    private Set<Mapping> argFilter(Set<Mapping> mappings, Mapping argMap) {
+        Set<Mapping> result = new HashSet<>();
 
-        for (Mapping map : maps) {
+        for (Mapping map : mappings) {
             if (Mapping.innerCompatible(map, argMap)) {
-                resultMaps.add(Mapping.transform(map, argMap));
+                result.add(Mapping.transform(map, argMap));
             }
         }
 
-        return resultMaps;
+        return result;
     }
 
     /** Generates additional mappings which have ottr:none for non-optional vars
@@ -182,7 +212,8 @@ public class Evaluator {
                 .collect(Collectors.toSet());
     }
 
-    /** Checks if a mapping conforms to a list of parameters **/
+    /** Checks whether a mapping conforms to a list of parameters,
+     * where the mapping-variables are the same as the parameter-variables**/
     private boolean conforms(Mapping map, List<Parameter> parameters) {
         for (Parameter param : parameters) {
             Term var = param.getTerm();
@@ -250,8 +281,7 @@ public class Evaluator {
     }
 
     public static void main(String[] args) {
-
-        String graphPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/graph.ttl";
+        String graphPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/graph2.ttl";
         String libPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/lib.stottr";
 
         Model model = GraphReader.read(graphPath);
@@ -260,40 +290,14 @@ public class Evaluator {
 
         Evaluator e = new Evaluator(model, templateManager);
 
-        String templateIRI = "http://example.com/Test";
+        String templateIRI = "http://example.com/TestListIDZip2";
 
-        Set<Mapping> s = e.evaluateTemplate(
-                templateManager.getTemplateStore().getTemplate(templateIRI).get()
-        );
+        Set<Mapping> s = e.evaluateQuery(templateIRI);
 
         PrefixMapping prefixes = templateManager.getPrefixes();
         prefixes.setNsPrefix("ph", TermRegistry.ph_ns);
 
         s.forEach(m -> System.out.println(m.toString(prefixes)));
-
-        /*
-        for (Mapping m1 : s) {
-            for (Mapping m2 : s) {
-                StringBuilder sb = new StringBuilder();
-                for (Term x : m1.domain()) {
-                    if (m1.get(x) instanceof ListTerm && m2.get(x) instanceof ListTerm) {
-                        if (((ListTerm) m1.get(x)).asList().get(0) instanceof ListTerm) {
-                            sb.append(m1.get(x)).append(" == ").append(m2.get(x)).append(" ? ");
-                        }
-                    }
-                }
-                if (sb.length() > 0) {
-                    System.out.println(sb);
-                    System.out.println(m1.toString(prefixes) + " == " + m2.toString(prefixes)
-                            + " ? " + m1.equals(m2));
-                    System.out.println(m1.hashCode() == m2.hashCode());
-                    System.out.println();
-                }
-            }
-        }
-
-         */
-
         System.out.println(s.size());
     }
 }

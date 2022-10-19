@@ -1,6 +1,7 @@
 package reverseottr.evaluation;
 
 import reverseottr.model.Mapping;
+import reverseottr.model.RListTerm;
 import reverseottr.model.TermRegistry;
 import xyz.ottr.lutra.model.Argument;
 import xyz.ottr.lutra.model.Parameter;
@@ -15,12 +16,7 @@ public class ListUnexpander {
 
     private final List<Term> markedVariables;
     private final List<Term> unmarkedVariables;
-    private int maxRepetitions = 0;
-
-    public ListUnexpander(List<Parameter> parameters, List<Argument> arguments) {
-        this.markedVariables = getMarkedVars(parameters, arguments);
-        this.unmarkedVariables = getUnmarkedVars(parameters, arguments);
-    }
+    private final int maxRepetitions;
 
     public ListUnexpander(List<Parameter> parameters, List<Argument> arguments, int repetitions) {
         this.markedVariables = getMarkedVars(parameters, arguments);
@@ -46,9 +42,10 @@ public class ListUnexpander {
             }
         }
 
-        return result;
+        return result;//.stream().map(this::ListTermsToRListTerms).collect(Collectors.toSet());
     }
 
+    /** Generate all possible orderings for the uncrossed lists in a mapping **/
     private Set<Mapping> mapPermutations(Mapping mapping) {
         Set<Set<Mapping>> tempSet = new HashSet<>();
 
@@ -210,13 +207,14 @@ public class ListUnexpander {
             }
         }
 
-        return result;
+        return result.stream().map(this::ListTermsToRListTerms).collect(Collectors.toSet());
     }
 
     public Set<Mapping> unzipMax(Set<Mapping> mappings) {
         return unzip(mappings).stream().map(this::noneTrailAlternatives)
                 .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
-                .orElse(null);
+                .orElse(new HashSet<>());
+                //.stream().map(this::ListTermsToRListTerms).collect(Collectors.toSet());
     }
 
     private Set<Mapping> noneTrailAlternatives(Mapping mapping) {
@@ -357,10 +355,13 @@ public class ListUnexpander {
         for (Mapping mapping : mappings) {
             Set<Set<Mapping>> workSet = new HashSet<>();
             for (Set<Mapping> compSet : result) {
-                if (Mapping.compatible(GLBSet(compSet), mapping)) {
-                    Set<Mapping> fresh = new HashSet<>(compSet);
-                    fresh.add(mapping);
-                    workSet.add(fresh);
+                Mapping glb = GLBSet(compSet);
+                if (glb != null) {
+                    if (Mapping.compatible(glb, mapping)) {
+                        Set<Mapping> fresh = new HashSet<>(compSet);
+                        fresh.add(mapping);
+                        workSet.add(fresh);
+                    }
                 }
             }
 
@@ -415,6 +416,20 @@ public class ListUnexpander {
         for (int i = 0; i < parameters.size(); i++) {
             if (!arguments.get(i).isListExpander())
                 result.add(parameters.get(i).getTerm());
+        }
+
+        return result;
+    }
+
+    private Mapping ListTermsToRListTerms(Mapping mapping) {
+        Mapping result = new Mapping();
+        for (Term var : markedVariables) {
+            List<Term> termList = ((ListTerm) mapping.get(var)).asList();
+            result.put(var, new RListTerm(termList, true));
+        }
+
+        for (Term var : unmarkedVariables) {
+            result.put(var, mapping.get(var));
         }
 
         return result;

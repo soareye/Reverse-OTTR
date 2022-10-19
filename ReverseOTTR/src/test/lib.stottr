@@ -41,3 +41,18 @@ ex:Test6[?x] :: {
 ex:Test7[?x] :: {
 	zipMin | ex:Test6(++?x)
 } .
+
+ex:TestListID[?x, ?y] :: {
+	ottr:Triple(ex:s1, ex:p1, ?x),
+	ottr:Triple(ex:s2, ex:p2, ?y)
+} .
+
+ex:TestListIDZip[?x] :: {
+	ottr:Triple(ex:s1, ex:p1, ?x),
+	zipMin | ottr:Triple(ex:s2, ex:p2, ++?x)
+} .
+
+ex:TestListIDZip2[?x, ?y] :: {
+	ex:TestListIDZip(?x),
+	ottr:Triple(ex:s1, ex:p1, ?y)
+} .
