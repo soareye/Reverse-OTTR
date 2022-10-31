@@ -29,4 +29,10 @@ lutra.jar
 apache-jena-3.17.0/
 
 #ide
-.idea
+.idea/
+
+#out
+out/
+
+#iml
+*.iml
