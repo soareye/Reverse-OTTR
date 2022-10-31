@@ -1,0 +1,703 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.com/e147>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s99" ;
+        rdfs:isDefinedBy  <http://example.com/e149> ;
+        rdfs:label        "s98" ;
+        rdfs:seeAlso      <http://example.com/e148> .
+
+<http://example.com/e3>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s3" ;
+        rdfs:isDefinedBy  <http://example.com/e5> ;
+        rdfs:label        "s2" ;
+        rdfs:seeAlso      <http://example.com/e4> .
+
+<http://example.com/e213>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s143" ;
+        rdfs:isDefinedBy  <http://example.com/e215> ;
+        rdfs:label        "s142" ;
+        rdfs:seeAlso      <http://example.com/e214> .
+
+<http://example.com/e60>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s41" ;
+        rdfs:isDefinedBy  <http://example.com/e62> ;
+        rdfs:label        "s40" ;
+        rdfs:seeAlso      <http://example.com/e61> .
+
+<http://example.com/e282>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s189" ;
+        rdfs:isDefinedBy  <http://example.com/e284> ;
+        rdfs:label        "s188" ;
+        rdfs:seeAlso      <http://example.com/e283> .
+
+<http://example.com/e45>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s31" ;
+        rdfs:isDefinedBy  <http://example.com/e47> ;
+        rdfs:label        "s30" ;
+        rdfs:seeAlso      <http://example.com/e46> .
+
+<http://example.com/e141>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s95" ;
+        rdfs:isDefinedBy  <http://example.com/e143> ;
+        rdfs:label        "s94" ;
+        rdfs:seeAlso      <http://example.com/e142> .
+
+<http://example.com/e267>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s179" ;
+        rdfs:isDefinedBy  <http://example.com/e269> ;
+        rdfs:label        "s178" ;
+        rdfs:seeAlso      <http://example.com/e268> .
+
+<http://example.com/e126>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s85" ;
+        rdfs:isDefinedBy  <http://example.com/e128> ;
+        rdfs:label        "s84" ;
+        rdfs:seeAlso      <http://example.com/e127> .
+
+<http://example.com/e99>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s67" ;
+        rdfs:isDefinedBy  <http://example.com/e101> ;
+        rdfs:label        "s66" ;
+        rdfs:seeAlso      <http://example.com/e100> .
+
+<http://example.com/e195>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s131" ;
+        rdfs:isDefinedBy  <http://example.com/e197> ;
+        rdfs:label        "s130" ;
+        rdfs:seeAlso      <http://example.com/e196> .
+
+<http://example.com/e261>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s175" ;
+        rdfs:isDefinedBy  <http://example.com/e263> ;
+        rdfs:label        "s174" ;
+        rdfs:seeAlso      <http://example.com/e262> .
+
+<http://example.com/e246>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s165" ;
+        rdfs:isDefinedBy  <http://example.com/e248> ;
+        rdfs:label        "s164" ;
+        rdfs:seeAlso      <http://example.com/e247> .
+
+<http://example.com/e24>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s17" ;
+        rdfs:isDefinedBy  <http://example.com/e26> ;
+        rdfs:label        "s16" ;
+        rdfs:seeAlso      <http://example.com/e25> .
+
+<http://example.com/e120>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s81" ;
+        rdfs:isDefinedBy  <http://example.com/e122> ;
+        rdfs:label        "s80" ;
+        rdfs:seeAlso      <http://example.com/e121> .
+
+<http://example.com/e93>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s63" ;
+        rdfs:isDefinedBy  <http://example.com/e95> ;
+        rdfs:label        "s62" ;
+        rdfs:seeAlso      <http://example.com/e94> .
+
+<http://example.com/e105>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s71" ;
+        rdfs:isDefinedBy  <http://example.com/e107> ;
+        rdfs:label        "s70" ;
+        rdfs:seeAlso      <http://example.com/e106> .
+
+<http://example.com/e78>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s53" ;
+        rdfs:isDefinedBy  <http://example.com/e80> ;
+        rdfs:label        "s52" ;
+        rdfs:seeAlso      <http://example.com/e79> .
+
+<http://example.com/e174>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s117" ;
+        rdfs:isDefinedBy  <http://example.com/e176> ;
+        rdfs:label        "s116" ;
+        rdfs:seeAlso      <http://example.com/e175> .
+
+<http://example.com/e240>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s161" ;
+        rdfs:isDefinedBy  <http://example.com/e242> ;
+        rdfs:label        "s160" ;
+        rdfs:seeAlso      <http://example.com/e241> .
+
+<http://example.com/e159>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s107" ;
+        rdfs:isDefinedBy  <http://example.com/e161> ;
+        rdfs:label        "s106" ;
+        rdfs:seeAlso      <http://example.com/e160> .
+
+<http://example.com/e225>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s151" ;
+        rdfs:isDefinedBy  <http://example.com/e227> ;
+        rdfs:label        "s150" ;
+        rdfs:seeAlso      <http://example.com/e226> .
+
+<http://example.com/e72>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s49" ;
+        rdfs:isDefinedBy  <http://example.com/e74> ;
+        rdfs:label        "s48" ;
+        rdfs:seeAlso      <http://example.com/e73> .
+
+<http://example.com/e294>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s197" ;
+        rdfs:isDefinedBy  <http://example.com/e296> ;
+        rdfs:label        "s196" ;
+        rdfs:seeAlso      <http://example.com/e295> .
+
+<http://example.com/e57>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s39" ;
+        rdfs:isDefinedBy  <http://example.com/e59> ;
+        rdfs:label        "s38" ;
+        rdfs:seeAlso      <http://example.com/e58> .
+
+<http://example.com/e153>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s103" ;
+        rdfs:isDefinedBy  <http://example.com/e155> ;
+        rdfs:label        "s102" ;
+        rdfs:seeAlso      <http://example.com/e154> .
+
+<http://example.com/e279>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s187" ;
+        rdfs:isDefinedBy  <http://example.com/e281> ;
+        rdfs:label        "s186" ;
+        rdfs:seeAlso      <http://example.com/e280> .
+
+<http://example.com/e138>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s93" ;
+        rdfs:isDefinedBy  <http://example.com/e140> ;
+        rdfs:label        "s92" ;
+        rdfs:seeAlso      <http://example.com/e139> .
+
+<http://example.com/e204>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s137" ;
+        rdfs:isDefinedBy  <http://example.com/e206> ;
+        rdfs:label        "s136" ;
+        rdfs:seeAlso      <http://example.com/e205> .
+
+<http://example.com/e51>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s35" ;
+        rdfs:isDefinedBy  <http://example.com/e53> ;
+        rdfs:label        "s34" ;
+        rdfs:seeAlso      <http://example.com/e52> .
+
+<http://example.com/e273>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s183" ;
+        rdfs:isDefinedBy  <http://example.com/e275> ;
+        rdfs:label        "s182" ;
+        rdfs:seeAlso      <http://example.com/e274> .
+
+<http://example.com/e36>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s25" ;
+        rdfs:isDefinedBy  <http://example.com/e38> ;
+        rdfs:label        "s24" ;
+        rdfs:seeAlso      <http://example.com/e37> .
+
+<http://example.com/e132>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s89" ;
+        rdfs:isDefinedBy  <http://example.com/e134> ;
+        rdfs:label        "s88" ;
+        rdfs:seeAlso      <http://example.com/e133> .
+
+<http://example.com/e258>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s173" ;
+        rdfs:isDefinedBy  <http://example.com/e260> ;
+        rdfs:label        "s172" ;
+        rdfs:seeAlso      <http://example.com/e259> .
+
+<http://example.com/e117>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s79" ;
+        rdfs:isDefinedBy  <http://example.com/e119> ;
+        rdfs:label        "s78" ;
+        rdfs:seeAlso      <http://example.com/e118> .
+
+<http://example.com/e186>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s125" ;
+        rdfs:isDefinedBy  <http://example.com/e188> ;
+        rdfs:label        "s124" ;
+        rdfs:seeAlso      <http://example.com/e187> .
+
+<http://example.com/e30>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s21" ;
+        rdfs:isDefinedBy  <http://example.com/e32> ;
+        rdfs:label        "s20" ;
+        rdfs:seeAlso      <http://example.com/e31> .
+
+<http://example.com/e252>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s169" ;
+        rdfs:isDefinedBy  <http://example.com/e254> ;
+        rdfs:label        "s168" ;
+        rdfs:seeAlso      <http://example.com/e253> .
+
+<http://example.com/e237>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s159" ;
+        rdfs:isDefinedBy  <http://example.com/e239> ;
+        rdfs:label        "s158" ;
+        rdfs:seeAlso      <http://example.com/e238> .
+
+<http://example.com/e15>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s11" ;
+        rdfs:isDefinedBy  <http://example.com/e17> ;
+        rdfs:label        "s10" ;
+        rdfs:seeAlso      <http://example.com/e16> .
+
+<http://example.com/e111>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s75" ;
+        rdfs:isDefinedBy  <http://example.com/e113> ;
+        rdfs:label        "s74" ;
+        rdfs:seeAlso      <http://example.com/e112> .
+
+<http://example.com/e84>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s57" ;
+        rdfs:isDefinedBy  <http://example.com/e86> ;
+        rdfs:label        "s56" ;
+        rdfs:seeAlso      <http://example.com/e85> .
+
+<http://example.com/e180>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s121" ;
+        rdfs:isDefinedBy  <http://example.com/e182> ;
+        rdfs:label        "s120" ;
+        rdfs:seeAlso      <http://example.com/e181> .
+
+<http://example.com/e69>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s47" ;
+        rdfs:isDefinedBy  <http://example.com/e71> ;
+        rdfs:label        "s46" ;
+        rdfs:seeAlso      <http://example.com/e70> .
+
+<http://example.com/e165>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s111" ;
+        rdfs:isDefinedBy  <http://example.com/e167> ;
+        rdfs:label        "s110" ;
+        rdfs:seeAlso      <http://example.com/e166> .
+
+<http://example.com/e231>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s155" ;
+        rdfs:isDefinedBy  <http://example.com/e233> ;
+        rdfs:label        "s154" ;
+        rdfs:seeAlso      <http://example.com/e232> .
+
+<http://example.com/e6>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s5" ;
+        rdfs:isDefinedBy  <http://example.com/e8> ;
+        rdfs:label        "s4" ;
+        rdfs:seeAlso      <http://example.com/e7> .
+
+<http://example.com/e216>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s145" ;
+        rdfs:isDefinedBy  <http://example.com/e218> ;
+        rdfs:label        "s144" ;
+        rdfs:seeAlso      <http://example.com/e217> .
+
+<http://example.com/e63>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s43" ;
+        rdfs:isDefinedBy  <http://example.com/e65> ;
+        rdfs:label        "s42" ;
+        rdfs:seeAlso      <http://example.com/e64> .
+
+<http://example.com/e285>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s191" ;
+        rdfs:isDefinedBy  <http://example.com/e287> ;
+        rdfs:label        "s190" ;
+        rdfs:seeAlso      <http://example.com/e286> .
+
+<http://example.com/e48>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s33" ;
+        rdfs:isDefinedBy  <http://example.com/e50> ;
+        rdfs:label        "s32" ;
+        rdfs:seeAlso      <http://example.com/e49> .
+
+<http://example.com/e144>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s97" ;
+        rdfs:isDefinedBy  <http://example.com/e146> ;
+        rdfs:label        "s96" ;
+        rdfs:seeAlso      <http://example.com/e145> .
+
+<http://example.com/e0>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s1" ;
+        rdfs:isDefinedBy  <http://example.com/e2> ;
+        rdfs:label        "s0" ;
+        rdfs:seeAlso      <http://example.com/e1> .
+
+<http://example.com/e210>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s141" ;
+        rdfs:isDefinedBy  <http://example.com/e212> ;
+        rdfs:label        "s140" ;
+        rdfs:seeAlso      <http://example.com/e211> .
+
+<http://example.com/e129>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s87" ;
+        rdfs:isDefinedBy  <http://example.com/e131> ;
+        rdfs:label        "s86" ;
+        rdfs:seeAlso      <http://example.com/e130> .
+
+<http://example.com/e198>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s133" ;
+        rdfs:isDefinedBy  <http://example.com/e200> ;
+        rdfs:label        "s132" ;
+        rdfs:seeAlso      <http://example.com/e199> .
+
+<http://example.com/e42>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s29" ;
+        rdfs:isDefinedBy  <http://example.com/e44> ;
+        rdfs:label        "s28" ;
+        rdfs:seeAlso      <http://example.com/e43> .
+
+<http://example.com/e264>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s177" ;
+        rdfs:isDefinedBy  <http://example.com/e266> ;
+        rdfs:label        "s176" ;
+        rdfs:seeAlso      <http://example.com/e265> .
+
+<http://example.com/e249>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s167" ;
+        rdfs:isDefinedBy  <http://example.com/e251> ;
+        rdfs:label        "s166" ;
+        rdfs:seeAlso      <http://example.com/e250> .
+
+<http://example.com/e27>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s19" ;
+        rdfs:isDefinedBy  <http://example.com/e29> ;
+        rdfs:label        "s18" ;
+        rdfs:seeAlso      <http://example.com/e28> .
+
+<http://example.com/e123>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s83" ;
+        rdfs:isDefinedBy  <http://example.com/e125> ;
+        rdfs:label        "s82" ;
+        rdfs:seeAlso      <http://example.com/e124> .
+
+<http://example.com/e96>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s65" ;
+        rdfs:isDefinedBy  <http://example.com/e98> ;
+        rdfs:label        "s64" ;
+        rdfs:seeAlso      <http://example.com/e97> .
+
+<http://example.com/e192>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s129" ;
+        rdfs:isDefinedBy  <http://example.com/e194> ;
+        rdfs:label        "s128" ;
+        rdfs:seeAlso      <http://example.com/e193> .
+
+<http://example.com/e108>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s73" ;
+        rdfs:isDefinedBy  <http://example.com/e110> ;
+        rdfs:label        "s72" ;
+        rdfs:seeAlso      <http://example.com/e109> .
+
+<http://example.com/e177>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s119" ;
+        rdfs:isDefinedBy  <http://example.com/e179> ;
+        rdfs:label        "s118" ;
+        rdfs:seeAlso      <http://example.com/e178> .
+
+<http://example.com/e21>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s15" ;
+        rdfs:isDefinedBy  <http://example.com/e23> ;
+        rdfs:label        "s14" ;
+        rdfs:seeAlso      <http://example.com/e22> .
+
+<http://example.com/e243>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s163" ;
+        rdfs:isDefinedBy  <http://example.com/e245> ;
+        rdfs:label        "s162" ;
+        rdfs:seeAlso      <http://example.com/e244> .
+
+<http://example.com/e90>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s61" ;
+        rdfs:isDefinedBy  <http://example.com/e92> ;
+        rdfs:label        "s60" ;
+        rdfs:seeAlso      <http://example.com/e91> .
+
+<http://example.com/e228>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s153" ;
+        rdfs:isDefinedBy  <http://example.com/e230> ;
+        rdfs:label        "s152" ;
+        rdfs:seeAlso      <http://example.com/e229> .
+
+<http://example.com/e102>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s69" ;
+        rdfs:isDefinedBy  <http://example.com/e104> ;
+        rdfs:label        "s68" ;
+        rdfs:seeAlso      <http://example.com/e103> .
+
+<http://example.com/e75>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s51" ;
+        rdfs:isDefinedBy  <http://example.com/e77> ;
+        rdfs:label        "s50" ;
+        rdfs:seeAlso      <http://example.com/e76> .
+
+<http://example.com/e171>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s115" ;
+        rdfs:isDefinedBy  <http://example.com/e173> ;
+        rdfs:label        "s114" ;
+        rdfs:seeAlso      <http://example.com/e172> .
+
+<http://example.com/e297>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s199" ;
+        rdfs:isDefinedBy  <http://example.com/e299> ;
+        rdfs:label        "s198" ;
+        rdfs:seeAlso      <http://example.com/e298> .
+
+<http://example.com/e156>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s105" ;
+        rdfs:isDefinedBy  <http://example.com/e158> ;
+        rdfs:label        "s104" ;
+        rdfs:seeAlso      <http://example.com/e157> .
+
+<http://example.com/e222>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s149" ;
+        rdfs:isDefinedBy  <http://example.com/e224> ;
+        rdfs:label        "s148" ;
+        rdfs:seeAlso      <http://example.com/e223> .
+
+<http://example.com/e291>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s195" ;
+        rdfs:isDefinedBy  <http://example.com/e293> ;
+        rdfs:label        "s194" ;
+        rdfs:seeAlso      <http://example.com/e292> .
+
+<http://example.com/e207>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s139" ;
+        rdfs:isDefinedBy  <http://example.com/e209> ;
+        rdfs:label        "s138" ;
+        rdfs:seeAlso      <http://example.com/e208> .
+
+<http://example.com/e54>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s37" ;
+        rdfs:isDefinedBy  <http://example.com/e56> ;
+        rdfs:label        "s36" ;
+        rdfs:seeAlso      <http://example.com/e55> .
+
+<http://example.com/e150>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s101" ;
+        rdfs:isDefinedBy  <http://example.com/e152> ;
+        rdfs:label        "s100" ;
+        rdfs:seeAlso      <http://example.com/e151> .
+
+<http://example.com/e276>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s185" ;
+        rdfs:isDefinedBy  <http://example.com/e278> ;
+        rdfs:label        "s184" ;
+        rdfs:seeAlso      <http://example.com/e277> .
+
+<http://example.com/e39>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s27" ;
+        rdfs:isDefinedBy  <http://example.com/e41> ;
+        rdfs:label        "s26" ;
+        rdfs:seeAlso      <http://example.com/e40> .
+
+<http://example.com/e135>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s91" ;
+        rdfs:isDefinedBy  <http://example.com/e137> ;
+        rdfs:label        "s90" ;
+        rdfs:seeAlso      <http://example.com/e136> .
+
+<http://example.com/e201>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s135" ;
+        rdfs:isDefinedBy  <http://example.com/e203> ;
+        rdfs:label        "s134" ;
+        rdfs:seeAlso      <http://example.com/e202> .
+
+<http://example.com/e270>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s181" ;
+        rdfs:isDefinedBy  <http://example.com/e272> ;
+        rdfs:label        "s180" ;
+        rdfs:seeAlso      <http://example.com/e271> .
+
+<http://example.com/e189>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s127" ;
+        rdfs:isDefinedBy  <http://example.com/e191> ;
+        rdfs:label        "s126" ;
+        rdfs:seeAlso      <http://example.com/e190> .
+
+<http://example.com/e33>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s23" ;
+        rdfs:isDefinedBy  <http://example.com/e35> ;
+        rdfs:label        "s22" ;
+        rdfs:seeAlso      <http://example.com/e34> .
+
+<http://example.com/e255>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s171" ;
+        rdfs:isDefinedBy  <http://example.com/e257> ;
+        rdfs:label        "s170" ;
+        rdfs:seeAlso      <http://example.com/e256> .
+
+<http://example.com/e18>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s13" ;
+        rdfs:isDefinedBy  <http://example.com/e20> ;
+        rdfs:label        "s12" ;
+        rdfs:seeAlso      <http://example.com/e19> .
+
+<http://example.com/e114>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s77" ;
+        rdfs:isDefinedBy  <http://example.com/e116> ;
+        rdfs:label        "s76" ;
+        rdfs:seeAlso      <http://example.com/e115> .
+
+<http://example.com/e87>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s59" ;
+        rdfs:isDefinedBy  <http://example.com/e89> ;
+        rdfs:label        "s58" ;
+        rdfs:seeAlso      <http://example.com/e88> .
+
+<http://example.com/e183>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s123" ;
+        rdfs:isDefinedBy  <http://example.com/e185> ;
+        rdfs:label        "s122" ;
+        rdfs:seeAlso      <http://example.com/e184> .
+
+<http://example.com/e168>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s113" ;
+        rdfs:isDefinedBy  <http://example.com/e170> ;
+        rdfs:label        "s112" ;
+        rdfs:seeAlso      <http://example.com/e169> .
+
+<http://example.com/e12>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s9" ;
+        rdfs:isDefinedBy  <http://example.com/e14> ;
+        rdfs:label        "s8" ;
+        rdfs:seeAlso      <http://example.com/e13> .
+
+<http://example.com/e234>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s157" ;
+        rdfs:isDefinedBy  <http://example.com/e236> ;
+        rdfs:label        "s156" ;
+        rdfs:seeAlso      <http://example.com/e235> .
+
+<http://example.com/e81>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s55" ;
+        rdfs:isDefinedBy  <http://example.com/e83> ;
+        rdfs:label        "s54" ;
+        rdfs:seeAlso      <http://example.com/e82> .
+
+<http://example.com/e9>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s7" ;
+        rdfs:isDefinedBy  <http://example.com/e11> ;
+        rdfs:label        "s6" ;
+        rdfs:seeAlso      <http://example.com/e10> .
+
+<http://example.com/e219>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s147" ;
+        rdfs:isDefinedBy  <http://example.com/e221> ;
+        rdfs:label        "s146" ;
+        rdfs:seeAlso      <http://example.com/e220> .
+
+<http://example.com/e66>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s45" ;
+        rdfs:isDefinedBy  <http://example.com/e68> ;
+        rdfs:label        "s44" ;
+        rdfs:seeAlso      <http://example.com/e67> .
+
+<http://example.com/e162>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s109" ;
+        rdfs:isDefinedBy  <http://example.com/e164> ;
+        rdfs:label        "s108" ;
+        rdfs:seeAlso      <http://example.com/e163> .
+
+<http://example.com/e288>
+        a                 owl:ObjectProperty ;
+        rdfs:comment      "s193" ;
+        rdfs:isDefinedBy  <http://example.com/e290> ;
+        rdfs:label        "s192" ;
+        rdfs:seeAlso      <http://example.com/e289> .

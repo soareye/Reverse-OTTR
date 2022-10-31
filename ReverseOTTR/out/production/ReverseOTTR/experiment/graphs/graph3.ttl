@@ -1,0 +1,803 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.com/e147>
+        a                owl:Ontology ;
+        rdfs:comment     "s149" ;
+        rdfs:label       "s148" ;
+        rdfs:seeAlso     <http://example.com/e148> ;
+        owl:imports      <http://example.com/e149> ;
+        owl:versionInfo  "s147" .
+
+<http://example.com/e3>
+        a                owl:Ontology ;
+        rdfs:comment     "s5" ;
+        rdfs:label       "s4" ;
+        rdfs:seeAlso     <http://example.com/e4> ;
+        owl:imports      <http://example.com/e5> ;
+        owl:versionInfo  "s3" .
+
+<http://example.com/e213>
+        a                owl:Ontology ;
+        rdfs:comment     "s215" ;
+        rdfs:label       "s214" ;
+        rdfs:seeAlso     <http://example.com/e214> ;
+        owl:imports      <http://example.com/e215> ;
+        owl:versionInfo  "s213" .
+
+<http://example.com/e60>
+        a                owl:Ontology ;
+        rdfs:comment     "s62" ;
+        rdfs:label       "s61" ;
+        rdfs:seeAlso     <http://example.com/e61> ;
+        owl:imports      <http://example.com/e62> ;
+        owl:versionInfo  "s60" .
+
+<http://example.com/e282>
+        a                owl:Ontology ;
+        rdfs:comment     "s284" ;
+        rdfs:label       "s283" ;
+        rdfs:seeAlso     <http://example.com/e283> ;
+        owl:imports      <http://example.com/e284> ;
+        owl:versionInfo  "s282" .
+
+<http://example.com/e45>
+        a                owl:Ontology ;
+        rdfs:comment     "s47" ;
+        rdfs:label       "s46" ;
+        rdfs:seeAlso     <http://example.com/e46> ;
+        owl:imports      <http://example.com/e47> ;
+        owl:versionInfo  "s45" .
+
+<http://example.com/e141>
+        a                owl:Ontology ;
+        rdfs:comment     "s143" ;
+        rdfs:label       "s142" ;
+        rdfs:seeAlso     <http://example.com/e142> ;
+        owl:imports      <http://example.com/e143> ;
+        owl:versionInfo  "s141" .
+
+<http://example.com/e267>
+        a                owl:Ontology ;
+        rdfs:comment     "s269" ;
+        rdfs:label       "s268" ;
+        rdfs:seeAlso     <http://example.com/e268> ;
+        owl:imports      <http://example.com/e269> ;
+        owl:versionInfo  "s267" .
+
+<http://example.com/e126>
+        a                owl:Ontology ;
+        rdfs:comment     "s128" ;
+        rdfs:label       "s127" ;
+        rdfs:seeAlso     <http://example.com/e127> ;
+        owl:imports      <http://example.com/e128> ;
+        owl:versionInfo  "s126" .
+
+<http://example.com/e99>
+        a                owl:Ontology ;
+        rdfs:comment     "s101" ;
+        rdfs:label       "s100" ;
+        rdfs:seeAlso     <http://example.com/e100> ;
+        owl:imports      <http://example.com/e101> ;
+        owl:versionInfo  "s99" .
+
+<http://example.com/e195>
+        a                owl:Ontology ;
+        rdfs:comment     "s197" ;
+        rdfs:label       "s196" ;
+        rdfs:seeAlso     <http://example.com/e196> ;
+        owl:imports      <http://example.com/e197> ;
+        owl:versionInfo  "s195" .
+
+<http://example.com/e261>
+        a                owl:Ontology ;
+        rdfs:comment     "s263" ;
+        rdfs:label       "s262" ;
+        rdfs:seeAlso     <http://example.com/e262> ;
+        owl:imports      <http://example.com/e263> ;
+        owl:versionInfo  "s261" .
+
+<http://example.com/e246>
+        a                owl:Ontology ;
+        rdfs:comment     "s248" ;
+        rdfs:label       "s247" ;
+        rdfs:seeAlso     <http://example.com/e247> ;
+        owl:imports      <http://example.com/e248> ;
+        owl:versionInfo  "s246" .
+
+<http://example.com/e24>
+        a                owl:Ontology ;
+        rdfs:comment     "s26" ;
+        rdfs:label       "s25" ;
+        rdfs:seeAlso     <http://example.com/e25> ;
+        owl:imports      <http://example.com/e26> ;
+        owl:versionInfo  "s24" .
+
+<http://example.com/e120>
+        a                owl:Ontology ;
+        rdfs:comment     "s122" ;
+        rdfs:label       "s121" ;
+        rdfs:seeAlso     <http://example.com/e121> ;
+        owl:imports      <http://example.com/e122> ;
+        owl:versionInfo  "s120" .
+
+<http://example.com/e93>
+        a                owl:Ontology ;
+        rdfs:comment     "s95" ;
+        rdfs:label       "s94" ;
+        rdfs:seeAlso     <http://example.com/e94> ;
+        owl:imports      <http://example.com/e95> ;
+        owl:versionInfo  "s93" .
+
+<http://example.com/e105>
+        a                owl:Ontology ;
+        rdfs:comment     "s107" ;
+        rdfs:label       "s106" ;
+        rdfs:seeAlso     <http://example.com/e106> ;
+        owl:imports      <http://example.com/e107> ;
+        owl:versionInfo  "s105" .
+
+<http://example.com/e78>
+        a                owl:Ontology ;
+        rdfs:comment     "s80" ;
+        rdfs:label       "s79" ;
+        rdfs:seeAlso     <http://example.com/e79> ;
+        owl:imports      <http://example.com/e80> ;
+        owl:versionInfo  "s78" .
+
+<http://example.com/e174>
+        a                owl:Ontology ;
+        rdfs:comment     "s176" ;
+        rdfs:label       "s175" ;
+        rdfs:seeAlso     <http://example.com/e175> ;
+        owl:imports      <http://example.com/e176> ;
+        owl:versionInfo  "s174" .
+
+<http://example.com/e240>
+        a                owl:Ontology ;
+        rdfs:comment     "s242" ;
+        rdfs:label       "s241" ;
+        rdfs:seeAlso     <http://example.com/e241> ;
+        owl:imports      <http://example.com/e242> ;
+        owl:versionInfo  "s240" .
+
+<http://example.com/e159>
+        a                owl:Ontology ;
+        rdfs:comment     "s161" ;
+        rdfs:label       "s160" ;
+        rdfs:seeAlso     <http://example.com/e160> ;
+        owl:imports      <http://example.com/e161> ;
+        owl:versionInfo  "s159" .
+
+<http://example.com/e225>
+        a                owl:Ontology ;
+        rdfs:comment     "s227" ;
+        rdfs:label       "s226" ;
+        rdfs:seeAlso     <http://example.com/e226> ;
+        owl:imports      <http://example.com/e227> ;
+        owl:versionInfo  "s225" .
+
+<http://example.com/e72>
+        a                owl:Ontology ;
+        rdfs:comment     "s74" ;
+        rdfs:label       "s73" ;
+        rdfs:seeAlso     <http://example.com/e73> ;
+        owl:imports      <http://example.com/e74> ;
+        owl:versionInfo  "s72" .
+
+<http://example.com/e294>
+        a                owl:Ontology ;
+        rdfs:comment     "s296" ;
+        rdfs:label       "s295" ;
+        rdfs:seeAlso     <http://example.com/e295> ;
+        owl:imports      <http://example.com/e296> ;
+        owl:versionInfo  "s294" .
+
+<http://example.com/e57>
+        a                owl:Ontology ;
+        rdfs:comment     "s59" ;
+        rdfs:label       "s58" ;
+        rdfs:seeAlso     <http://example.com/e58> ;
+        owl:imports      <http://example.com/e59> ;
+        owl:versionInfo  "s57" .
+
+<http://example.com/e153>
+        a                owl:Ontology ;
+        rdfs:comment     "s155" ;
+        rdfs:label       "s154" ;
+        rdfs:seeAlso     <http://example.com/e154> ;
+        owl:imports      <http://example.com/e155> ;
+        owl:versionInfo  "s153" .
+
+<http://example.com/e279>
+        a                owl:Ontology ;
+        rdfs:comment     "s281" ;
+        rdfs:label       "s280" ;
+        rdfs:seeAlso     <http://example.com/e280> ;
+        owl:imports      <http://example.com/e281> ;
+        owl:versionInfo  "s279" .
+
+<http://example.com/e138>
+        a                owl:Ontology ;
+        rdfs:comment     "s140" ;
+        rdfs:label       "s139" ;
+        rdfs:seeAlso     <http://example.com/e139> ;
+        owl:imports      <http://example.com/e140> ;
+        owl:versionInfo  "s138" .
+
+<http://example.com/e204>
+        a                owl:Ontology ;
+        rdfs:comment     "s206" ;
+        rdfs:label       "s205" ;
+        rdfs:seeAlso     <http://example.com/e205> ;
+        owl:imports      <http://example.com/e206> ;
+        owl:versionInfo  "s204" .
+
+<http://example.com/e51>
+        a                owl:Ontology ;
+        rdfs:comment     "s53" ;
+        rdfs:label       "s52" ;
+        rdfs:seeAlso     <http://example.com/e52> ;
+        owl:imports      <http://example.com/e53> ;
+        owl:versionInfo  "s51" .
+
+<http://example.com/e273>
+        a                owl:Ontology ;
+        rdfs:comment     "s275" ;
+        rdfs:label       "s274" ;
+        rdfs:seeAlso     <http://example.com/e274> ;
+        owl:imports      <http://example.com/e275> ;
+        owl:versionInfo  "s273" .
+
+<http://example.com/e36>
+        a                owl:Ontology ;
+        rdfs:comment     "s38" ;
+        rdfs:label       "s37" ;
+        rdfs:seeAlso     <http://example.com/e37> ;
+        owl:imports      <http://example.com/e38> ;
+        owl:versionInfo  "s36" .
+
+<http://example.com/e132>
+        a                owl:Ontology ;
+        rdfs:comment     "s134" ;
+        rdfs:label       "s133" ;
+        rdfs:seeAlso     <http://example.com/e133> ;
+        owl:imports      <http://example.com/e134> ;
+        owl:versionInfo  "s132" .
+
+<http://example.com/e258>
+        a                owl:Ontology ;
+        rdfs:comment     "s260" ;
+        rdfs:label       "s259" ;
+        rdfs:seeAlso     <http://example.com/e259> ;
+        owl:imports      <http://example.com/e260> ;
+        owl:versionInfo  "s258" .
+
+<http://example.com/e117>
+        a                owl:Ontology ;
+        rdfs:comment     "s119" ;
+        rdfs:label       "s118" ;
+        rdfs:seeAlso     <http://example.com/e118> ;
+        owl:imports      <http://example.com/e119> ;
+        owl:versionInfo  "s117" .
+
+<http://example.com/e186>
+        a                owl:Ontology ;
+        rdfs:comment     "s188" ;
+        rdfs:label       "s187" ;
+        rdfs:seeAlso     <http://example.com/e187> ;
+        owl:imports      <http://example.com/e188> ;
+        owl:versionInfo  "s186" .
+
+<http://example.com/e30>
+        a                owl:Ontology ;
+        rdfs:comment     "s32" ;
+        rdfs:label       "s31" ;
+        rdfs:seeAlso     <http://example.com/e31> ;
+        owl:imports      <http://example.com/e32> ;
+        owl:versionInfo  "s30" .
+
+<http://example.com/e252>
+        a                owl:Ontology ;
+        rdfs:comment     "s254" ;
+        rdfs:label       "s253" ;
+        rdfs:seeAlso     <http://example.com/e253> ;
+        owl:imports      <http://example.com/e254> ;
+        owl:versionInfo  "s252" .
+
+<http://example.com/e237>
+        a                owl:Ontology ;
+        rdfs:comment     "s239" ;
+        rdfs:label       "s238" ;
+        rdfs:seeAlso     <http://example.com/e238> ;
+        owl:imports      <http://example.com/e239> ;
+        owl:versionInfo  "s237" .
+
+<http://example.com/e15>
+        a                owl:Ontology ;
+        rdfs:comment     "s17" ;
+        rdfs:label       "s16" ;
+        rdfs:seeAlso     <http://example.com/e16> ;
+        owl:imports      <http://example.com/e17> ;
+        owl:versionInfo  "s15" .
+
+<http://example.com/e111>
+        a                owl:Ontology ;
+        rdfs:comment     "s113" ;
+        rdfs:label       "s112" ;
+        rdfs:seeAlso     <http://example.com/e112> ;
+        owl:imports      <http://example.com/e113> ;
+        owl:versionInfo  "s111" .
+
+<http://example.com/e84>
+        a                owl:Ontology ;
+        rdfs:comment     "s86" ;
+        rdfs:label       "s85" ;
+        rdfs:seeAlso     <http://example.com/e85> ;
+        owl:imports      <http://example.com/e86> ;
+        owl:versionInfo  "s84" .
+
+<http://example.com/e180>
+        a                owl:Ontology ;
+        rdfs:comment     "s182" ;
+        rdfs:label       "s181" ;
+        rdfs:seeAlso     <http://example.com/e181> ;
+        owl:imports      <http://example.com/e182> ;
+        owl:versionInfo  "s180" .
+
+<http://example.com/e69>
+        a                owl:Ontology ;
+        rdfs:comment     "s71" ;
+        rdfs:label       "s70" ;
+        rdfs:seeAlso     <http://example.com/e70> ;
+        owl:imports      <http://example.com/e71> ;
+        owl:versionInfo  "s69" .
+
+<http://example.com/e165>
+        a                owl:Ontology ;
+        rdfs:comment     "s167" ;
+        rdfs:label       "s166" ;
+        rdfs:seeAlso     <http://example.com/e166> ;
+        owl:imports      <http://example.com/e167> ;
+        owl:versionInfo  "s165" .
+
+<http://example.com/e231>
+        a                owl:Ontology ;
+        rdfs:comment     "s233" ;
+        rdfs:label       "s232" ;
+        rdfs:seeAlso     <http://example.com/e232> ;
+        owl:imports      <http://example.com/e233> ;
+        owl:versionInfo  "s231" .
+
+<http://example.com/e6>
+        a                owl:Ontology ;
+        rdfs:comment     "s8" ;
+        rdfs:label       "s7" ;
+        rdfs:seeAlso     <http://example.com/e7> ;
+        owl:imports      <http://example.com/e8> ;
+        owl:versionInfo  "s6" .
+
+<http://example.com/e216>
+        a                owl:Ontology ;
+        rdfs:comment     "s218" ;
+        rdfs:label       "s217" ;
+        rdfs:seeAlso     <http://example.com/e217> ;
+        owl:imports      <http://example.com/e218> ;
+        owl:versionInfo  "s216" .
+
+<http://example.com/e63>
+        a                owl:Ontology ;
+        rdfs:comment     "s65" ;
+        rdfs:label       "s64" ;
+        rdfs:seeAlso     <http://example.com/e64> ;
+        owl:imports      <http://example.com/e65> ;
+        owl:versionInfo  "s63" .
+
+<http://example.com/e285>
+        a                owl:Ontology ;
+        rdfs:comment     "s287" ;
+        rdfs:label       "s286" ;
+        rdfs:seeAlso     <http://example.com/e286> ;
+        owl:imports      <http://example.com/e287> ;
+        owl:versionInfo  "s285" .
+
+<http://example.com/e48>
+        a                owl:Ontology ;
+        rdfs:comment     "s50" ;
+        rdfs:label       "s49" ;
+        rdfs:seeAlso     <http://example.com/e49> ;
+        owl:imports      <http://example.com/e50> ;
+        owl:versionInfo  "s48" .
+
+<http://example.com/e144>
+        a                owl:Ontology ;
+        rdfs:comment     "s146" ;
+        rdfs:label       "s145" ;
+        rdfs:seeAlso     <http://example.com/e145> ;
+        owl:imports      <http://example.com/e146> ;
+        owl:versionInfo  "s144" .
+
+<http://example.com/e0>
+        a                owl:Ontology ;
+        rdfs:comment     "s2" ;
+        rdfs:label       "s1" ;
+        rdfs:seeAlso     <http://example.com/e1> ;
+        owl:imports      <http://example.com/e2> ;
+        owl:versionInfo  "s0" .
+
+<http://example.com/e210>
+        a                owl:Ontology ;
+        rdfs:comment     "s212" ;
+        rdfs:label       "s211" ;
+        rdfs:seeAlso     <http://example.com/e211> ;
+        owl:imports      <http://example.com/e212> ;
+        owl:versionInfo  "s210" .
+
+<http://example.com/e129>
+        a                owl:Ontology ;
+        rdfs:comment     "s131" ;
+        rdfs:label       "s130" ;
+        rdfs:seeAlso     <http://example.com/e130> ;
+        owl:imports      <http://example.com/e131> ;
+        owl:versionInfo  "s129" .
+
+<http://example.com/e198>
+        a                owl:Ontology ;
+        rdfs:comment     "s200" ;
+        rdfs:label       "s199" ;
+        rdfs:seeAlso     <http://example.com/e199> ;
+        owl:imports      <http://example.com/e200> ;
+        owl:versionInfo  "s198" .
+
+<http://example.com/e42>
+        a                owl:Ontology ;
+        rdfs:comment     "s44" ;
+        rdfs:label       "s43" ;
+        rdfs:seeAlso     <http://example.com/e43> ;
+        owl:imports      <http://example.com/e44> ;
+        owl:versionInfo  "s42" .
+
+<http://example.com/e264>
+        a                owl:Ontology ;
+        rdfs:comment     "s266" ;
+        rdfs:label       "s265" ;
+        rdfs:seeAlso     <http://example.com/e265> ;
+        owl:imports      <http://example.com/e266> ;
+        owl:versionInfo  "s264" .
+
+<http://example.com/e249>
+        a                owl:Ontology ;
+        rdfs:comment     "s251" ;
+        rdfs:label       "s250" ;
+        rdfs:seeAlso     <http://example.com/e250> ;
+        owl:imports      <http://example.com/e251> ;
+        owl:versionInfo  "s249" .
+
+<http://example.com/e27>
+        a                owl:Ontology ;
+        rdfs:comment     "s29" ;
+        rdfs:label       "s28" ;
+        rdfs:seeAlso     <http://example.com/e28> ;
+        owl:imports      <http://example.com/e29> ;
+        owl:versionInfo  "s27" .
+
+<http://example.com/e123>
+        a                owl:Ontology ;
+        rdfs:comment     "s125" ;
+        rdfs:label       "s124" ;
+        rdfs:seeAlso     <http://example.com/e124> ;
+        owl:imports      <http://example.com/e125> ;
+        owl:versionInfo  "s123" .
+
+<http://example.com/e96>
+        a                owl:Ontology ;
+        rdfs:comment     "s98" ;
+        rdfs:label       "s97" ;
+        rdfs:seeAlso     <http://example.com/e97> ;
+        owl:imports      <http://example.com/e98> ;
+        owl:versionInfo  "s96" .
+
+<http://example.com/e192>
+        a                owl:Ontology ;
+        rdfs:comment     "s194" ;
+        rdfs:label       "s193" ;
+        rdfs:seeAlso     <http://example.com/e193> ;
+        owl:imports      <http://example.com/e194> ;
+        owl:versionInfo  "s192" .
+
+<http://example.com/e108>
+        a                owl:Ontology ;
+        rdfs:comment     "s110" ;
+        rdfs:label       "s109" ;
+        rdfs:seeAlso     <http://example.com/e109> ;
+        owl:imports      <http://example.com/e110> ;
+        owl:versionInfo  "s108" .
+
+<http://example.com/e177>
+        a                owl:Ontology ;
+        rdfs:comment     "s179" ;
+        rdfs:label       "s178" ;
+        rdfs:seeAlso     <http://example.com/e178> ;
+        owl:imports      <http://example.com/e179> ;
+        owl:versionInfo  "s177" .
+
+<http://example.com/e21>
+        a                owl:Ontology ;
+        rdfs:comment     "s23" ;
+        rdfs:label       "s22" ;
+        rdfs:seeAlso     <http://example.com/e22> ;
+        owl:imports      <http://example.com/e23> ;
+        owl:versionInfo  "s21" .
+
+<http://example.com/e243>
+        a                owl:Ontology ;
+        rdfs:comment     "s245" ;
+        rdfs:label       "s244" ;
+        rdfs:seeAlso     <http://example.com/e244> ;
+        owl:imports      <http://example.com/e245> ;
+        owl:versionInfo  "s243" .
+
+<http://example.com/e90>
+        a                owl:Ontology ;
+        rdfs:comment     "s92" ;
+        rdfs:label       "s91" ;
+        rdfs:seeAlso     <http://example.com/e91> ;
+        owl:imports      <http://example.com/e92> ;
+        owl:versionInfo  "s90" .
+
+<http://example.com/e228>
+        a                owl:Ontology ;
+        rdfs:comment     "s230" ;
+        rdfs:label       "s229" ;
+        rdfs:seeAlso     <http://example.com/e229> ;
+        owl:imports      <http://example.com/e230> ;
+        owl:versionInfo  "s228" .
+
+<http://example.com/e102>
+        a                owl:Ontology ;
+        rdfs:comment     "s104" ;
+        rdfs:label       "s103" ;
+        rdfs:seeAlso     <http://example.com/e103> ;
+        owl:imports      <http://example.com/e104> ;
+        owl:versionInfo  "s102" .
+
+<http://example.com/e75>
+        a                owl:Ontology ;
+        rdfs:comment     "s77" ;
+        rdfs:label       "s76" ;
+        rdfs:seeAlso     <http://example.com/e76> ;
+        owl:imports      <http://example.com/e77> ;
+        owl:versionInfo  "s75" .
+
+<http://example.com/e171>
+        a                owl:Ontology ;
+        rdfs:comment     "s173" ;
+        rdfs:label       "s172" ;
+        rdfs:seeAlso     <http://example.com/e172> ;
+        owl:imports      <http://example.com/e173> ;
+        owl:versionInfo  "s171" .
+
+<http://example.com/e297>
+        a                owl:Ontology ;
+        rdfs:comment     "s299" ;
+        rdfs:label       "s298" ;
+        rdfs:seeAlso     <http://example.com/e298> ;
+        owl:imports      <http://example.com/e299> ;
+        owl:versionInfo  "s297" .
+
+<http://example.com/e156>
+        a                owl:Ontology ;
+        rdfs:comment     "s158" ;
+        rdfs:label       "s157" ;
+        rdfs:seeAlso     <http://example.com/e157> ;
+        owl:imports      <http://example.com/e158> ;
+        owl:versionInfo  "s156" .
+
+<http://example.com/e222>
+        a                owl:Ontology ;
+        rdfs:comment     "s224" ;
+        rdfs:label       "s223" ;
+        rdfs:seeAlso     <http://example.com/e223> ;
+        owl:imports      <http://example.com/e224> ;
+        owl:versionInfo  "s222" .
+
+<http://example.com/e291>
+        a                owl:Ontology ;
+        rdfs:comment     "s293" ;
+        rdfs:label       "s292" ;
+        rdfs:seeAlso     <http://example.com/e292> ;
+        owl:imports      <http://example.com/e293> ;
+        owl:versionInfo  "s291" .
+
+<http://example.com/e207>
+        a                owl:Ontology ;
+        rdfs:comment     "s209" ;
+        rdfs:label       "s208" ;
+        rdfs:seeAlso     <http://example.com/e208> ;
+        owl:imports      <http://example.com/e209> ;
+        owl:versionInfo  "s207" .
+
+<http://example.com/e54>
+        a                owl:Ontology ;
+        rdfs:comment     "s56" ;
+        rdfs:label       "s55" ;
+        rdfs:seeAlso     <http://example.com/e55> ;
+        owl:imports      <http://example.com/e56> ;
+        owl:versionInfo  "s54" .
+
+<http://example.com/e150>
+        a                owl:Ontology ;
+        rdfs:comment     "s152" ;
+        rdfs:label       "s151" ;
+        rdfs:seeAlso     <http://example.com/e151> ;
+        owl:imports      <http://example.com/e152> ;
+        owl:versionInfo  "s150" .
+
+<http://example.com/e276>
+        a                owl:Ontology ;
+        rdfs:comment     "s278" ;
+        rdfs:label       "s277" ;
+        rdfs:seeAlso     <http://example.com/e277> ;
+        owl:imports      <http://example.com/e278> ;
+        owl:versionInfo  "s276" .
+
+<http://example.com/e39>
+        a                owl:Ontology ;
+        rdfs:comment     "s41" ;
+        rdfs:label       "s40" ;
+        rdfs:seeAlso     <http://example.com/e40> ;
+        owl:imports      <http://example.com/e41> ;
+        owl:versionInfo  "s39" .
+
+<http://example.com/e135>
+        a                owl:Ontology ;
+        rdfs:comment     "s137" ;
+        rdfs:label       "s136" ;
+        rdfs:seeAlso     <http://example.com/e136> ;
+        owl:imports      <http://example.com/e137> ;
+        owl:versionInfo  "s135" .
+
+<http://example.com/e201>
+        a                owl:Ontology ;
+        rdfs:comment     "s203" ;
+        rdfs:label       "s202" ;
+        rdfs:seeAlso     <http://example.com/e202> ;
+        owl:imports      <http://example.com/e203> ;
+        owl:versionInfo  "s201" .
+
+<http://example.com/e270>
+        a                owl:Ontology ;
+        rdfs:comment     "s272" ;
+        rdfs:label       "s271" ;
+        rdfs:seeAlso     <http://example.com/e271> ;
+        owl:imports      <http://example.com/e272> ;
+        owl:versionInfo  "s270" .
+
+<http://example.com/e189>
+        a                owl:Ontology ;
+        rdfs:comment     "s191" ;
+        rdfs:label       "s190" ;
+        rdfs:seeAlso     <http://example.com/e190> ;
+        owl:imports      <http://example.com/e191> ;
+        owl:versionInfo  "s189" .
+
+<http://example.com/e33>
+        a                owl:Ontology ;
+        rdfs:comment     "s35" ;
+        rdfs:label       "s34" ;
+        rdfs:seeAlso     <http://example.com/e34> ;
+        owl:imports      <http://example.com/e35> ;
+        owl:versionInfo  "s33" .
+
+<http://example.com/e255>
+        a                owl:Ontology ;
+        rdfs:comment     "s257" ;
+        rdfs:label       "s256" ;
+        rdfs:seeAlso     <http://example.com/e256> ;
+        owl:imports      <http://example.com/e257> ;
+        owl:versionInfo  "s255" .
+
+<http://example.com/e18>
+        a                owl:Ontology ;
+        rdfs:comment     "s20" ;
+        rdfs:label       "s19" ;
+        rdfs:seeAlso     <http://example.com/e19> ;
+        owl:imports      <http://example.com/e20> ;
+        owl:versionInfo  "s18" .
+
+<http://example.com/e114>
+        a                owl:Ontology ;
+        rdfs:comment     "s116" ;
+        rdfs:label       "s115" ;
+        rdfs:seeAlso     <http://example.com/e115> ;
+        owl:imports      <http://example.com/e116> ;
+        owl:versionInfo  "s114" .
+
+<http://example.com/e87>
+        a                owl:Ontology ;
+        rdfs:comment     "s89" ;
+        rdfs:label       "s88" ;
+        rdfs:seeAlso     <http://example.com/e88> ;
+        owl:imports      <http://example.com/e89> ;
+        owl:versionInfo  "s87" .
+
+<http://example.com/e183>
+        a                owl:Ontology ;
+        rdfs:comment     "s185" ;
+        rdfs:label       "s184" ;
+        rdfs:seeAlso     <http://example.com/e184> ;
+        owl:imports      <http://example.com/e185> ;
+        owl:versionInfo  "s183" .
+
+<http://example.com/e168>
+        a                owl:Ontology ;
+        rdfs:comment     "s170" ;
+        rdfs:label       "s169" ;
+        rdfs:seeAlso     <http://example.com/e169> ;
+        owl:imports      <http://example.com/e170> ;
+        owl:versionInfo  "s168" .
+
+<http://example.com/e12>
+        a                owl:Ontology ;
+        rdfs:comment     "s14" ;
+        rdfs:label       "s13" ;
+        rdfs:seeAlso     <http://example.com/e13> ;
+        owl:imports      <http://example.com/e14> ;
+        owl:versionInfo  "s12" .
+
+<http://example.com/e234>
+        a                owl:Ontology ;
+        rdfs:comment     "s236" ;
+        rdfs:label       "s235" ;
+        rdfs:seeAlso     <http://example.com/e235> ;
+        owl:imports      <http://example.com/e236> ;
+        owl:versionInfo  "s234" .
+
+<http://example.com/e81>
+        a                owl:Ontology ;
+        rdfs:comment     "s83" ;
+        rdfs:label       "s82" ;
+        rdfs:seeAlso     <http://example.com/e82> ;
+        owl:imports      <http://example.com/e83> ;
+        owl:versionInfo  "s81" .
+
+<http://example.com/e9>
+        a                owl:Ontology ;
+        rdfs:comment     "s11" ;
+        rdfs:label       "s10" ;
+        rdfs:seeAlso     <http://example.com/e10> ;
+        owl:imports      <http://example.com/e11> ;
+        owl:versionInfo  "s9" .
+
+<http://example.com/e219>
+        a                owl:Ontology ;
+        rdfs:comment     "s221" ;
+        rdfs:label       "s220" ;
+        rdfs:seeAlso     <http://example.com/e220> ;
+        owl:imports      <http://example.com/e221> ;
+        owl:versionInfo  "s219" .
+
+<http://example.com/e66>
+        a                owl:Ontology ;
+        rdfs:comment     "s68" ;
+        rdfs:label       "s67" ;
+        rdfs:seeAlso     <http://example.com/e67> ;
+        owl:imports      <http://example.com/e68> ;
+        owl:versionInfo  "s66" .
+
+<http://example.com/e162>
+        a                owl:Ontology ;
+        rdfs:comment     "s164" ;
+        rdfs:label       "s163" ;
+        rdfs:seeAlso     <http://example.com/e163> ;
+        owl:imports      <http://example.com/e164> ;
+        owl:versionInfo  "s162" .
+
+<http://example.com/e288>
+        a                owl:Ontology ;
+        rdfs:comment     "s290" ;
+        rdfs:label       "s289" ;
+        rdfs:seeAlso     <http://example.com/e289> ;
+        owl:imports      <http://example.com/e290> ;
+        owl:versionInfo  "s288" .
