@@ -1,0 +1,1102 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+
+<http://example.com/e140>
+        a       owl:Class .
+
+<http://example.com/e119>
+        a       owl:Class .
+
+<http://example.com/e282>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e284> ;
+        owl:onProperty     <http://example.com/e283> .
+
+<http://example.com/e99>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e101> ;
+        owl:onProperty     <http://example.com/e100> .
+
+<http://example.com/e261>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e263> ;
+        owl:onProperty     <http://example.com/e262> .
+
+<http://example.com/e78>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e80> ;
+        owl:onProperty     <http://example.com/e79> .
+
+<http://example.com/e240>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e242> ;
+        owl:onProperty     <http://example.com/e241> .
+
+<http://example.com/e57>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e59> ;
+        owl:onProperty     <http://example.com/e58> .
+
+<http://example.com/e36>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e38> ;
+        owl:onProperty     <http://example.com/e37> .
+
+<http://example.com/e219>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e221> ;
+        owl:onProperty     <http://example.com/e220> .
+
+<http://example.com/e15>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e17> ;
+        owl:onProperty     <http://example.com/e16> .
+
+<http://example.com/e190>
+        a       owl:ObjectProperty .
+
+<http://example.com/e169>
+        a       owl:ObjectProperty .
+
+<http://example.com/e148>
+        a       owl:ObjectProperty .
+
+<http://example.com/e127>
+        a       owl:ObjectProperty .
+
+<http://example.com/e290>
+        a       owl:Class .
+
+<http://example.com/e106>
+        a       owl:ObjectProperty .
+
+<http://example.com/e86>
+        a       owl:Class .
+
+<http://example.com/e269>
+        a       owl:Class .
+
+<http://example.com/e65>
+        a       owl:Class .
+
+<http://example.com/e248>
+        a       owl:Class .
+
+<http://example.com/e44>
+        a       owl:Class .
+
+<http://example.com/e227>
+        a       owl:Class .
+
+<http://example.com/e23>
+        a       owl:Class .
+
+<http://example.com/e206>
+        a       owl:Class .
+
+<http://example.com/e198>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e200> ;
+        owl:onProperty     <http://example.com/e199> .
+
+<http://example.com/e3>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e5> ;
+        owl:onProperty     <http://example.com/e4> .
+
+<http://example.com/e177>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e179> ;
+        owl:onProperty     <http://example.com/e178> .
+
+<http://example.com/e156>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e158> ;
+        owl:onProperty     <http://example.com/e157> .
+
+<http://example.com/e135>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e137> ;
+        owl:onProperty     <http://example.com/e136> .
+
+<http://example.com/e114>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e116> ;
+        owl:onProperty     <http://example.com/e115> .
+
+<http://example.com/e298>
+        a       owl:ObjectProperty .
+
+<http://example.com/e94>
+        a       owl:ObjectProperty .
+
+<http://example.com/e277>
+        a       owl:ObjectProperty .
+
+<http://example.com/e73>
+        a       owl:ObjectProperty .
+
+<http://example.com/e256>
+        a       owl:ObjectProperty .
+
+<http://example.com/e52>
+        a       owl:ObjectProperty .
+
+<http://example.com/e235>
+        a       owl:ObjectProperty .
+
+<http://example.com/e31>
+        a       owl:ObjectProperty .
+
+<http://example.com/e214>
+        a       owl:ObjectProperty .
+
+<http://example.com/e10>
+        a       owl:ObjectProperty .
+
+<http://example.com/e185>
+        a       owl:Class .
+
+<http://example.com/e164>
+        a       owl:Class .
+
+<http://example.com/e143>
+        a       owl:Class .
+
+<http://example.com/e122>
+        a       owl:Class .
+
+<http://example.com/e101>
+        a       owl:Class .
+
+<http://example.com/e285>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e287> ;
+        owl:onProperty     <http://example.com/e286> .
+
+<http://example.com/e81>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e83> ;
+        owl:onProperty     <http://example.com/e82> .
+
+<http://example.com/e264>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e266> ;
+        owl:onProperty     <http://example.com/e265> .
+
+<http://example.com/e60>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e62> ;
+        owl:onProperty     <http://example.com/e61> .
+
+<http://example.com/e243>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e245> ;
+        owl:onProperty     <http://example.com/e244> .
+
+<http://example.com/e222>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e224> ;
+        owl:onProperty     <http://example.com/e223> .
+
+<http://example.com/e39>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e41> ;
+        owl:onProperty     <http://example.com/e40> .
+
+<http://example.com/e201>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e203> ;
+        owl:onProperty     <http://example.com/e202> .
+
+<http://example.com/e18>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e20> ;
+        owl:onProperty     <http://example.com/e19> .
+
+<http://example.com/e193>
+        a       owl:ObjectProperty .
+
+<http://example.com/e172>
+        a       owl:ObjectProperty .
+
+<http://example.com/e151>
+        a       owl:ObjectProperty .
+
+<http://example.com/e130>
+        a       owl:ObjectProperty .
+
+<http://example.com/e293>
+        a       owl:Class .
+
+<http://example.com/e109>
+        a       owl:ObjectProperty .
+
+<http://example.com/e272>
+        a       owl:Class .
+
+<http://example.com/e89>
+        a       owl:Class .
+
+<http://example.com/e251>
+        a       owl:Class .
+
+<http://example.com/e68>
+        a       owl:Class .
+
+<http://example.com/e230>
+        a       owl:Class .
+
+<http://example.com/e47>
+        a       owl:Class .
+
+<http://example.com/e26>
+        a       owl:Class .
+
+<http://example.com/e209>
+        a       owl:Class .
+
+<http://example.com/e180>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e182> ;
+        owl:onProperty     <http://example.com/e181> .
+
+<http://example.com/e6>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e8> ;
+        owl:onProperty     <http://example.com/e7> .
+
+<http://example.com/e159>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e161> ;
+        owl:onProperty     <http://example.com/e160> .
+
+<http://example.com/e138>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e140> ;
+        owl:onProperty     <http://example.com/e139> .
+
+<http://example.com/e117>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e119> ;
+        owl:onProperty     <http://example.com/e118> .
+
+<http://example.com/e280>
+        a       owl:ObjectProperty .
+
+<http://example.com/e97>
+        a       owl:ObjectProperty .
+
+<http://example.com/e76>
+        a       owl:ObjectProperty .
+
+<http://example.com/e259>
+        a       owl:ObjectProperty .
+
+<http://example.com/e55>
+        a       owl:ObjectProperty .
+
+<http://example.com/e238>
+        a       owl:ObjectProperty .
+
+<http://example.com/e34>
+        a       owl:ObjectProperty .
+
+<http://example.com/e217>
+        a       owl:ObjectProperty .
+
+<http://example.com/e13>
+        a       owl:ObjectProperty .
+
+<http://example.com/e188>
+        a       owl:Class .
+
+<http://example.com/e167>
+        a       owl:Class .
+
+<http://example.com/e146>
+        a       owl:Class .
+
+<http://example.com/e125>
+        a       owl:Class .
+
+<http://example.com/e104>
+        a       owl:Class .
+
+<http://example.com/e288>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e290> ;
+        owl:onProperty     <http://example.com/e289> .
+
+<http://example.com/e84>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e86> ;
+        owl:onProperty     <http://example.com/e85> .
+
+<http://example.com/e267>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e269> ;
+        owl:onProperty     <http://example.com/e268> .
+
+<http://example.com/e63>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e65> ;
+        owl:onProperty     <http://example.com/e64> .
+
+<http://example.com/e246>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e248> ;
+        owl:onProperty     <http://example.com/e247> .
+
+<http://example.com/e42>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e44> ;
+        owl:onProperty     <http://example.com/e43> .
+
+<http://example.com/e225>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e227> ;
+        owl:onProperty     <http://example.com/e226> .
+
+<http://example.com/e21>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e23> ;
+        owl:onProperty     <http://example.com/e22> .
+
+<http://example.com/e204>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e206> ;
+        owl:onProperty     <http://example.com/e205> .
+
+<http://example.com/e196>
+        a       owl:ObjectProperty .
+
+<http://example.com/e1>
+        a       owl:ObjectProperty .
+
+<http://example.com/e175>
+        a       owl:ObjectProperty .
+
+<http://example.com/e154>
+        a       owl:ObjectProperty .
+
+<http://example.com/e133>
+        a       owl:ObjectProperty .
+
+<http://example.com/e112>
+        a       owl:ObjectProperty .
+
+<http://example.com/e296>
+        a       owl:Class .
+
+<http://example.com/e92>
+        a       owl:Class .
+
+<http://example.com/e275>
+        a       owl:Class .
+
+<http://example.com/e71>
+        a       owl:Class .
+
+<http://example.com/e254>
+        a       owl:Class .
+
+<http://example.com/e50>
+        a       owl:Class .
+
+<http://example.com/e233>
+        a       owl:Class .
+
+<http://example.com/e212>
+        a       owl:Class .
+
+<http://example.com/e29>
+        a       owl:Class .
+
+<http://example.com/e183>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e185> ;
+        owl:onProperty     <http://example.com/e184> .
+
+<http://example.com/e9>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e11> ;
+        owl:onProperty     <http://example.com/e10> .
+
+<http://example.com/e162>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e164> ;
+        owl:onProperty     <http://example.com/e163> .
+
+<http://example.com/e141>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e143> ;
+        owl:onProperty     <http://example.com/e142> .
+
+<http://example.com/e120>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e122> ;
+        owl:onProperty     <http://example.com/e121> .
+
+<http://example.com/e283>
+        a       owl:ObjectProperty .
+
+<http://example.com/e262>
+        a       owl:ObjectProperty .
+
+<http://example.com/e79>
+        a       owl:ObjectProperty .
+
+<http://example.com/e241>
+        a       owl:ObjectProperty .
+
+<http://example.com/e58>
+        a       owl:ObjectProperty .
+
+<http://example.com/e220>
+        a       owl:ObjectProperty .
+
+<http://example.com/e37>
+        a       owl:ObjectProperty .
+
+<http://example.com/e16>
+        a       owl:ObjectProperty .
+
+<http://example.com/e191>
+        a       owl:Class .
+
+<http://example.com/e170>
+        a       owl:Class .
+
+<http://example.com/e149>
+        a       owl:Class .
+
+<http://example.com/e128>
+        a       owl:Class .
+
+<http://example.com/e291>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e293> ;
+        owl:onProperty     <http://example.com/e292> .
+
+<http://example.com/e107>
+        a       owl:Class .
+
+<http://example.com/e270>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e272> ;
+        owl:onProperty     <http://example.com/e271> .
+
+<http://example.com/e87>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e89> ;
+        owl:onProperty     <http://example.com/e88> .
+
+<http://example.com/e66>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e68> ;
+        owl:onProperty     <http://example.com/e67> .
+
+<http://example.com/e249>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e251> ;
+        owl:onProperty     <http://example.com/e250> .
+
+<http://example.com/e45>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e47> ;
+        owl:onProperty     <http://example.com/e46> .
+
+<http://example.com/e228>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e230> ;
+        owl:onProperty     <http://example.com/e229> .
+
+<http://example.com/e24>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e26> ;
+        owl:onProperty     <http://example.com/e25> .
+
+<http://example.com/e207>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e209> ;
+        owl:onProperty     <http://example.com/e208> .
+
+<http://example.com/e199>
+        a       owl:ObjectProperty .
+
+<http://example.com/e4>
+        a       owl:ObjectProperty .
+
+<http://example.com/e178>
+        a       owl:ObjectProperty .
+
+<http://example.com/e157>
+        a       owl:ObjectProperty .
+
+<http://example.com/e136>
+        a       owl:ObjectProperty .
+
+<http://example.com/e115>
+        a       owl:ObjectProperty .
+
+<http://example.com/e299>
+        a       owl:Class .
+
+<http://example.com/e95>
+        a       owl:Class .
+
+<http://example.com/e278>
+        a       owl:Class .
+
+<http://example.com/e74>
+        a       owl:Class .
+
+<http://example.com/e257>
+        a       owl:Class .
+
+<http://example.com/e53>
+        a       owl:Class .
+
+<http://example.com/e236>
+        a       owl:Class .
+
+<http://example.com/e32>
+        a       owl:Class .
+
+<http://example.com/e215>
+        a       owl:Class .
+
+<http://example.com/e11>
+        a       owl:Class .
+
+<http://example.com/e186>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e188> ;
+        owl:onProperty     <http://example.com/e187> .
+
+<http://example.com/e165>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e167> ;
+        owl:onProperty     <http://example.com/e166> .
+
+<http://example.com/e144>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e146> ;
+        owl:onProperty     <http://example.com/e145> .
+
+<http://example.com/e123>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e125> ;
+        owl:onProperty     <http://example.com/e124> .
+
+<http://example.com/e102>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e104> ;
+        owl:onProperty     <http://example.com/e103> .
+
+<http://example.com/e286>
+        a       owl:ObjectProperty .
+
+<http://example.com/e82>
+        a       owl:ObjectProperty .
+
+<http://example.com/e265>
+        a       owl:ObjectProperty .
+
+<http://example.com/e61>
+        a       owl:ObjectProperty .
+
+<http://example.com/e244>
+        a       owl:ObjectProperty .
+
+<http://example.com/e40>
+        a       owl:ObjectProperty .
+
+<http://example.com/e223>
+        a       owl:ObjectProperty .
+
+<http://example.com/e202>
+        a       owl:ObjectProperty .
+
+<http://example.com/e19>
+        a       owl:ObjectProperty .
+
+<http://example.com/e194>
+        a       owl:Class .
+
+<http://example.com/e173>
+        a       owl:Class .
+
+<http://example.com/e152>
+        a       owl:Class .
+
+<http://example.com/e131>
+        a       owl:Class .
+
+<http://example.com/e110>
+        a       owl:Class .
+
+<http://example.com/e294>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e296> ;
+        owl:onProperty     <http://example.com/e295> .
+
+<http://example.com/e90>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e92> ;
+        owl:onProperty     <http://example.com/e91> .
+
+<http://example.com/e273>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e275> ;
+        owl:onProperty     <http://example.com/e274> .
+
+<http://example.com/e252>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e254> ;
+        owl:onProperty     <http://example.com/e253> .
+
+<http://example.com/e69>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e71> ;
+        owl:onProperty     <http://example.com/e70> .
+
+<http://example.com/e231>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e233> ;
+        owl:onProperty     <http://example.com/e232> .
+
+<http://example.com/e48>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e50> ;
+        owl:onProperty     <http://example.com/e49> .
+
+<http://example.com/e210>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e212> ;
+        owl:onProperty     <http://example.com/e211> .
+
+<http://example.com/e27>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e29> ;
+        owl:onProperty     <http://example.com/e28> .
+
+<http://example.com/e181>
+        a       owl:ObjectProperty .
+
+<http://example.com/e7>
+        a       owl:ObjectProperty .
+
+<http://example.com/e160>
+        a       owl:ObjectProperty .
+
+<http://example.com/e139>
+        a       owl:ObjectProperty .
+
+<http://example.com/e118>
+        a       owl:ObjectProperty .
+
+<http://example.com/e281>
+        a       owl:Class .
+
+<http://example.com/e98>
+        a       owl:Class .
+
+<http://example.com/e260>
+        a       owl:Class .
+
+<http://example.com/e77>
+        a       owl:Class .
+
+<http://example.com/e56>
+        a       owl:Class .
+
+<http://example.com/e239>
+        a       owl:Class .
+
+<http://example.com/e35>
+        a       owl:Class .
+
+<http://example.com/e218>
+        a       owl:Class .
+
+<http://example.com/e14>
+        a       owl:Class .
+
+<http://example.com/e189>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e191> ;
+        owl:onProperty     <http://example.com/e190> .
+
+<http://example.com/e168>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e170> ;
+        owl:onProperty     <http://example.com/e169> .
+
+<http://example.com/e147>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e149> ;
+        owl:onProperty     <http://example.com/e148> .
+
+<http://example.com/e126>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e128> ;
+        owl:onProperty     <http://example.com/e127> .
+
+<http://example.com/e105>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e107> ;
+        owl:onProperty     <http://example.com/e106> .
+
+<http://example.com/e289>
+        a       owl:ObjectProperty .
+
+<http://example.com/e85>
+        a       owl:ObjectProperty .
+
+<http://example.com/e268>
+        a       owl:ObjectProperty .
+
+<http://example.com/e64>
+        a       owl:ObjectProperty .
+
+<http://example.com/e247>
+        a       owl:ObjectProperty .
+
+<http://example.com/e43>
+        a       owl:ObjectProperty .
+
+<http://example.com/e226>
+        a       owl:ObjectProperty .
+
+<http://example.com/e22>
+        a       owl:ObjectProperty .
+
+<http://example.com/e205>
+        a       owl:ObjectProperty .
+
+<http://example.com/e197>
+        a       owl:Class .
+
+<http://example.com/e2>
+        a       owl:Class .
+
+<http://example.com/e176>
+        a       owl:Class .
+
+<http://example.com/e155>
+        a       owl:Class .
+
+<http://example.com/e134>
+        a       owl:Class .
+
+<http://example.com/e113>
+        a       owl:Class .
+
+<http://example.com/e297>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e299> ;
+        owl:onProperty     <http://example.com/e298> .
+
+<http://example.com/e93>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e95> ;
+        owl:onProperty     <http://example.com/e94> .
+
+<http://example.com/e276>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e278> ;
+        owl:onProperty     <http://example.com/e277> .
+
+<http://example.com/e72>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e74> ;
+        owl:onProperty     <http://example.com/e73> .
+
+<http://example.com/e255>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e257> ;
+        owl:onProperty     <http://example.com/e256> .
+
+<http://example.com/e51>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e53> ;
+        owl:onProperty     <http://example.com/e52> .
+
+<http://example.com/e234>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e236> ;
+        owl:onProperty     <http://example.com/e235> .
+
+<http://example.com/e30>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e32> ;
+        owl:onProperty     <http://example.com/e31> .
+
+<http://example.com/e213>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e215> ;
+        owl:onProperty     <http://example.com/e214> .
+
+<http://example.com/e184>
+        a       owl:ObjectProperty .
+
+<http://example.com/e163>
+        a       owl:ObjectProperty .
+
+<http://example.com/e142>
+        a       owl:ObjectProperty .
+
+<http://example.com/e121>
+        a       owl:ObjectProperty .
+
+<http://example.com/e100>
+        a       owl:ObjectProperty .
+
+<http://example.com/e284>
+        a       owl:Class .
+
+<http://example.com/e80>
+        a       owl:Class .
+
+<http://example.com/e263>
+        a       owl:Class .
+
+<http://example.com/e242>
+        a       owl:Class .
+
+<http://example.com/e59>
+        a       owl:Class .
+
+<http://example.com/e221>
+        a       owl:Class .
+
+<http://example.com/e38>
+        a       owl:Class .
+
+<http://example.com/e200>
+        a       owl:Class .
+
+<http://example.com/e17>
+        a       owl:Class .
+
+<http://example.com/e192>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e194> ;
+        owl:onProperty     <http://example.com/e193> .
+
+<http://example.com/e171>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e173> ;
+        owl:onProperty     <http://example.com/e172> .
+
+<http://example.com/e150>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e152> ;
+        owl:onProperty     <http://example.com/e151> .
+
+<http://example.com/e129>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e131> ;
+        owl:onProperty     <http://example.com/e130> .
+
+<http://example.com/e292>
+        a       owl:ObjectProperty .
+
+<http://example.com/e108>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e110> ;
+        owl:onProperty     <http://example.com/e109> .
+
+<http://example.com/e271>
+        a       owl:ObjectProperty .
+
+<http://example.com/e88>
+        a       owl:ObjectProperty .
+
+<http://example.com/e250>
+        a       owl:ObjectProperty .
+
+<http://example.com/e67>
+        a       owl:ObjectProperty .
+
+<http://example.com/e46>
+        a       owl:ObjectProperty .
+
+<http://example.com/e229>
+        a       owl:ObjectProperty .
+
+<http://example.com/e25>
+        a       owl:ObjectProperty .
+
+<http://example.com/e208>
+        a       owl:ObjectProperty .
+
+<http://example.com/e5>
+        a       owl:Class .
+
+<http://example.com/e179>
+        a       owl:Class .
+
+<http://example.com/e158>
+        a       owl:Class .
+
+<http://example.com/e137>
+        a       owl:Class .
+
+<http://example.com/e116>
+        a       owl:Class .
+
+<http://example.com/e96>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e98> ;
+        owl:onProperty     <http://example.com/e97> .
+
+<http://example.com/e279>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e281> ;
+        owl:onProperty     <http://example.com/e280> .
+
+<http://example.com/e75>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e77> ;
+        owl:onProperty     <http://example.com/e76> .
+
+<http://example.com/e258>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e260> ;
+        owl:onProperty     <http://example.com/e259> .
+
+<http://example.com/e54>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e56> ;
+        owl:onProperty     <http://example.com/e55> .
+
+<http://example.com/e237>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e239> ;
+        owl:onProperty     <http://example.com/e238> .
+
+<http://example.com/e33>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e35> ;
+        owl:onProperty     <http://example.com/e34> .
+
+<http://example.com/e216>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e218> ;
+        owl:onProperty     <http://example.com/e217> .
+
+<http://example.com/e12>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e14> ;
+        owl:onProperty     <http://example.com/e13> .
+
+<http://example.com/e187>
+        a       owl:ObjectProperty .
+
+<http://example.com/e166>
+        a       owl:ObjectProperty .
+
+<http://example.com/e145>
+        a       owl:ObjectProperty .
+
+<http://example.com/e124>
+        a       owl:ObjectProperty .
+
+<http://example.com/e103>
+        a       owl:ObjectProperty .
+
+<http://example.com/e287>
+        a       owl:Class .
+
+<http://example.com/e83>
+        a       owl:Class .
+
+<http://example.com/e266>
+        a       owl:Class .
+
+<http://example.com/e62>
+        a       owl:Class .
+
+<http://example.com/e245>
+        a       owl:Class .
+
+<http://example.com/e41>
+        a       owl:Class .
+
+<http://example.com/e224>
+        a       owl:Class .
+
+<http://example.com/e20>
+        a       owl:Class .
+
+<http://example.com/e203>
+        a       owl:Class .
+
+<http://example.com/e195>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e197> ;
+        owl:onProperty     <http://example.com/e196> .
+
+<http://example.com/e0>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e2> ;
+        owl:onProperty     <http://example.com/e1> .
+
+<http://example.com/e174>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e176> ;
+        owl:onProperty     <http://example.com/e175> .
+
+<http://example.com/e153>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e155> ;
+        owl:onProperty     <http://example.com/e154> .
+
+<http://example.com/e132>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e134> ;
+        owl:onProperty     <http://example.com/e133> .
+
+<http://example.com/e111>
+        a                  owl:Restriction ;
+        owl:allValuesFrom  <http://example.com/e113> ;
+        owl:onProperty     <http://example.com/e112> .
+
+<http://example.com/e295>
+        a       owl:ObjectProperty .
+
+<http://example.com/e91>
+        a       owl:ObjectProperty .
+
+<http://example.com/e274>
+        a       owl:ObjectProperty .
+
+<http://example.com/e70>
+        a       owl:ObjectProperty .
+
+<http://example.com/e253>
+        a       owl:ObjectProperty .
+
+<http://example.com/e232>
+        a       owl:ObjectProperty .
+
+<http://example.com/e49>
+        a       owl:ObjectProperty .
+
+<http://example.com/e211>
+        a       owl:ObjectProperty .
+
+<http://example.com/e28>
+        a       owl:ObjectProperty .
+
+<http://example.com/e182>
+        a       owl:Class .
+
+<http://example.com/e8>
+        a       owl:Class .
+
+<http://example.com/e161>
+        a       owl:Class .

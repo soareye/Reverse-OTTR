@@ -22,23 +22,22 @@ public class Evaluator {
 
     private final Set<Mapping> triples;
     private final Set<Mapping> nullableTriples;
-    private final TemplateManager templateManager;
+    private final StandardTemplateManager templateManager;
     private int maxRepetitions = 0;
 
-    public Evaluator(Model model, TemplateManager templateManager) {
+    public Evaluator(Model model, StandardTemplateManager templateManager, int maxRepetitions) {
         this.triples = RDFToOTTR.asResultSet(model, false);
         this.nullableTriples = RDFToOTTR.asResultSet(model, true);
         this.templateManager = templateManager;
+        this.maxRepetitions = maxRepetitions;
     }
 
     public Set<Mapping> evaluateQuery(String IRI) {
-        Set<Mapping> result =
-                evaluateTemplate(this.templateManager
-                        .getTemplateStore().getTemplate(IRI).get());
-
+        Set<Mapping> result = evaluateTemplate(getTemplate(IRI));
         return result.stream().filter(this::validIDs).collect(Collectors.toSet());
     }
 
+    // A mapping has valid IDs if no list ID is repeated in the mapping.
     private <T> boolean validIDs(Mapping mapping) {
         Set<T> ids = new HashSet<>();
 
@@ -78,7 +77,6 @@ public class Evaluator {
 
         List<Parameter> parameters = template.getParameters();
 
-        // TODO: maybe "streamline" this process.
         Set<Mapping> result = paramFilter(templateMappings, parameters);
         result = defaultAlternativesAll(result, parameters);
         result = placeholderFilter(result, parameters);
@@ -135,8 +133,7 @@ public class Evaluator {
     }
 
     public Set<Mapping> evaluateInstance(Instance instance) {
-        Template template = templateManager.getTemplateStore()
-                .getTemplate(instance.getIri()).get();
+        Template template = getTemplate(instance.getIri());
 
         Set<Mapping> templateResult = evaluateTemplate(template);
 
@@ -280,18 +277,25 @@ public class Evaluator {
         return Mapping.joinAll(combinations);
     }
 
+    private Template getTemplate(String templateIRI) {
+        if (templateManager.getTemplateStore().containsTemplate(templateIRI)) {
+            return templateManager.getTemplateStore().getTemplate(templateIRI).get();
+        }
+        return templateManager.getStandardLibrary().getTemplate(templateIRI).get();
+    }
+
     public static void main(String[] args) {
         String graphPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/graph2.ttl";
         String libPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/lib.stottr";
 
         Model model = GraphReader.read(graphPath);
-        TemplateManager templateManager = new StandardTemplateManager();
+        StandardTemplateManager templateManager = new StandardTemplateManager();
+        templateManager.loadStandardTemplateLibrary();
         templateManager.readLibrary(templateManager.getFormat(StandardFormat.stottr.name()), libPath);
 
-        Evaluator e = new Evaluator(model, templateManager);
+        Evaluator e = new Evaluator(model, templateManager, 0);
 
-        String templateIRI = "http://example.com/TestListIDZip2";
-
+        String templateIRI = "http://tpl.ottr.xyz/rdfs/0.2/TypedResourceDescription";
         Set<Mapping> s = e.evaluateQuery(templateIRI);
 
         PrefixMapping prefixes = templateManager.getPrefixes();

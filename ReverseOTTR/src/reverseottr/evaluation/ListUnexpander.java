@@ -42,7 +42,9 @@ public class ListUnexpander {
             }
         }
 
-        return result;//.stream().map(this::ListTermsToRListTerms).collect(Collectors.toSet());
+        return result.stream()
+                .map(this::ListTermsToRListTerms)
+                .collect(Collectors.toSet());
     }
 
     /** Generate all possible orderings for the uncrossed lists in a mapping **/
@@ -213,10 +215,13 @@ public class ListUnexpander {
     public Set<Mapping> unzipMax(Set<Mapping> mappings) {
         return unzip(mappings).stream().map(this::noneTrailAlternatives)
                 .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
-                .orElse(new HashSet<>());
-                //.stream().map(this::ListTermsToRListTerms).collect(Collectors.toSet());
+                .orElse(new HashSet<>())
+                .stream().map(this::ListTermsToRListTerms)
+                .collect(Collectors.toSet());
     }
 
+    /** One or more trailing NoneTerm may be removed to produce another solution to unzipMax.
+     * This method finds all such solutions. **/
     private Set<Mapping> noneTrailAlternatives(Mapping mapping) {
         Set<Set<Mapping>> altLists = new HashSet<>();
 
