@@ -285,7 +285,7 @@ public class Evaluator {
     }
 
     public static void main(String[] args) {
-        String graphPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/graph2.ttl";
+        String graphPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/graph.ttl";
         String libPath = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/lib.stottr";
 
         Model model = GraphReader.read(graphPath);
@@ -293,9 +293,9 @@ public class Evaluator {
         templateManager.loadStandardTemplateLibrary();
         templateManager.readLibrary(templateManager.getFormat(StandardFormat.stottr.name()), libPath);
 
-        Evaluator e = new Evaluator(model, templateManager, 0);
+        Evaluator e = new Evaluator(model, templateManager, 3);
 
-        String templateIRI = "http://tpl.ottr.xyz/rdfs/0.2/TypedResourceDescription";
+        String templateIRI = "http://example.com/Test";
         Set<Mapping> s = e.evaluateQuery(templateIRI);
 
         PrefixMapping prefixes = templateManager.getPrefixes();

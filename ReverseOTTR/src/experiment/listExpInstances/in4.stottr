@@ -1,0 +1,13 @@
+@prefix o-owl-dec:  <http://tpl.ottr.xyz/owl/declaration/0.1/> .
+@prefix ex: <http://example.com/> .
+
+o-owl-dec:ObjectProperty(ex:e0,"s0","s1",(ex:e1),ex:e2) .
+o-owl-dec:ObjectProperty(ex:e3,"s2","s3",(ex:e4),ex:e5) .
+o-owl-dec:ObjectProperty(ex:e6,"s4","s5",(ex:e7),ex:e8) .
+o-owl-dec:ObjectProperty(ex:e9,"s6","s7",(ex:e10),ex:e11) .
+o-owl-dec:ObjectProperty(ex:e12,"s8","s9",(ex:e13),ex:e14) .
+o-owl-dec:ObjectProperty(ex:e15,"s10","s11",(ex:e16),ex:e17) .
+o-owl-dec:ObjectProperty(ex:e18,"s12","s13",(ex:e19),ex:e20) .
+o-owl-dec:ObjectProperty(ex:e21,"s14","s15",(ex:e22),ex:e23) .
+o-owl-dec:ObjectProperty(ex:e24,"s16","s17",(ex:e25),ex:e26) .
+o-owl-dec:ObjectProperty(ex:e27,"s18","s19",(ex:e28),ex:e29) .

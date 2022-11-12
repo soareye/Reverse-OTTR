@@ -1,0 +1,13 @@
+@prefix o-rdfs:     <http://tpl.ottr.xyz/rdfs/0.2/>.
+@prefix ex: <http://example.com/> .
+
+o-rdfs:TypedResourceDescription(ex:e0,ex:e1,"s0","s1",(ex:e2),ex:e3) .
+o-rdfs:TypedResourceDescription(ex:e4,ex:e5,"s2","s3",(ex:e6),ex:e7) .
+o-rdfs:TypedResourceDescription(ex:e8,ex:e9,"s4","s5",(ex:e10),ex:e11) .
+o-rdfs:TypedResourceDescription(ex:e12,ex:e13,"s6","s7",(ex:e14),ex:e15) .
+o-rdfs:TypedResourceDescription(ex:e16,ex:e17,"s8","s9",(ex:e18),ex:e19) .
+o-rdfs:TypedResourceDescription(ex:e20,ex:e21,"s10","s11",(ex:e22),ex:e23) .
+o-rdfs:TypedResourceDescription(ex:e24,ex:e25,"s12","s13",(ex:e26),ex:e27) .
+o-rdfs:TypedResourceDescription(ex:e28,ex:e29,"s14","s15",(ex:e30),ex:e31) .
+o-rdfs:TypedResourceDescription(ex:e32,ex:e33,"s16","s17",(ex:e34),ex:e35) .
+o-rdfs:TypedResourceDescription(ex:e36,ex:e37,"s18","s19",(ex:e38),ex:e39) .

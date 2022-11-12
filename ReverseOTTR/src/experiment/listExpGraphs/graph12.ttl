@@ -1,0 +1,21 @@
+@prefix ex:    <http://example.com/> .
+
+ex:e0   ex:e1   ex:e2 .
+
+ex:e12  ex:e13  ex:e14 .
+
+ex:e3   ex:e4   ex:e5 .
+
+ex:e21  ex:e22  ex:e23 .
+
+ex:e15  ex:e16  ex:e17 .
+
+ex:e6   ex:e7   ex:e8 .
+
+ex:e24  ex:e25  ex:e26 .
+
+ex:e18  ex:e19  ex:e20 .
+
+ex:e9   ex:e10  ex:e11 .
+
+ex:e27  ex:e28  ex:e29 .

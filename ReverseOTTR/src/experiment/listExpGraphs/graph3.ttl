@@ -1,0 +1,74 @@
+@prefix ex:    <http://example.com/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:e0   a                owl:Ontology ;
+        rdfs:comment     "s2" ;
+        rdfs:label       "s1" ;
+        rdfs:seeAlso     ex:e1 ;
+        owl:imports      ex:e2 ;
+        owl:versionInfo  "s0" .
+
+ex:e12  a                owl:Ontology ;
+        rdfs:comment     "s14" ;
+        rdfs:label       "s13" ;
+        rdfs:seeAlso     ex:e13 ;
+        owl:imports      ex:e14 ;
+        owl:versionInfo  "s12" .
+
+ex:e3   a                owl:Ontology ;
+        rdfs:comment     "s5" ;
+        rdfs:label       "s4" ;
+        rdfs:seeAlso     ex:e4 ;
+        owl:imports      ex:e5 ;
+        owl:versionInfo  "s3" .
+
+ex:e21  a                owl:Ontology ;
+        rdfs:comment     "s23" ;
+        rdfs:label       "s22" ;
+        rdfs:seeAlso     ex:e22 ;
+        owl:imports      ex:e23 ;
+        owl:versionInfo  "s21" .
+
+ex:e15  a                owl:Ontology ;
+        rdfs:comment     "s17" ;
+        rdfs:label       "s16" ;
+        rdfs:seeAlso     ex:e16 ;
+        owl:imports      ex:e17 ;
+        owl:versionInfo  "s15" .
+
+ex:e6   a                owl:Ontology ;
+        rdfs:comment     "s8" ;
+        rdfs:label       "s7" ;
+        rdfs:seeAlso     ex:e7 ;
+        owl:imports      ex:e8 ;
+        owl:versionInfo  "s6" .
+
+ex:e24  a                owl:Ontology ;
+        rdfs:comment     "s26" ;
+        rdfs:label       "s25" ;
+        rdfs:seeAlso     ex:e25 ;
+        owl:imports      ex:e26 ;
+        owl:versionInfo  "s24" .
+
+ex:e18  a                owl:Ontology ;
+        rdfs:comment     "s20" ;
+        rdfs:label       "s19" ;
+        rdfs:seeAlso     ex:e19 ;
+        owl:imports      ex:e20 ;
+        owl:versionInfo  "s18" .
+
+ex:e9   a                owl:Ontology ;
+        rdfs:comment     "s11" ;
+        rdfs:label       "s10" ;
+        rdfs:seeAlso     ex:e10 ;
+        owl:imports      ex:e11 ;
+        owl:versionInfo  "s9" .
+
+ex:e27  a                owl:Ontology ;
+        rdfs:comment     "s29" ;
+        rdfs:label       "s28" ;
+        rdfs:seeAlso     ex:e28 ;
+        owl:imports      ex:e29 ;
+        owl:versionInfo  "s27" .

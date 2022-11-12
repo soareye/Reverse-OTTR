@@ -35,18 +35,13 @@ public enum TermRegistry {
             List<Term> list = GLBList(((ListTerm) t1).asList(), ((ListTerm) t2).asList());
             if (list == null) return null;
 
-            if ((t1 instanceof RListTerm && ((RListTerm) t1).isUnexpanded())
-                    && !(t2 instanceof RListTerm)) {
+            if (isUnexpanded(t1) && !isUnexpanded(t2))
                 return t2;
-            }
 
-            if ((t2 instanceof RListTerm && ((RListTerm) t2).isUnexpanded())
-                    && !(t1 instanceof RListTerm)) {
+            if (isUnexpanded(t2) && !isUnexpanded(t1))
                 return t1;
-            }
 
-            if ((t1 instanceof RListTerm && ((RListTerm) t1).isUnexpanded())
-                    && (t2 instanceof RListTerm && ((RListTerm) t2).isUnexpanded()))
+            if (isUnexpanded(t1) && isUnexpanded(t2))
                 return new RListTerm(list, true);
 
             return null;
@@ -135,7 +130,7 @@ public enum TermRegistry {
     private static boolean lessOrEqualList(ListTerm t1, ListTerm t2) {
         if (t1.getIdentifier().equals(t2.getIdentifier())) return true;
 
-        if (!(t2 instanceof RListTerm && ((RListTerm) t2).isUnexpanded())) return false;
+        if (!isUnexpanded(t2)) return false;
 
         List<Term> list1 = t1.asList();
         List<Term> list2 = t2.asList();

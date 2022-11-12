@@ -35,21 +35,9 @@ public class RTemplateReader {
 
         Format format = templateManager.getFormat(formatName);
 
-        var msg = templateManager.readLibrary(format, path);
-        System.out.println(msg.getMostSevere());
-
-        System.out.println(templateManager.getPrefixes());
-
         List<Template> result = new LinkedList<>();
         templateManager.getTemplateStore().getAllTemplates().innerForEach(result::add);
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        String fileName = "C:/Users/Erik/Documents/revottr/Reverse-OTTR/ReverseOTTR/src/test/lib.stottr";
-        String formatName = StandardFormat.stottr.name();
-        check(fileName);
-        read(formatName, fileName).forEach(System.out::println);
     }
 }

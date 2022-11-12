@@ -1,0 +1,13 @@
+@prefix o-owl-dec:  <http://tpl.ottr.xyz/owl/declaration/0.1/>.
+@prefix ex: <http://example.com/> .
+
+o-owl-dec:Ontology(ex:e0,"s0","s1","s2",(ex:e1),(ex:e2)) .
+o-owl-dec:Ontology(ex:e3,"s3","s4","s5",(ex:e4),(ex:e5)) .
+o-owl-dec:Ontology(ex:e6,"s6","s7","s8",(ex:e7),(ex:e8)) .
+o-owl-dec:Ontology(ex:e9,"s9","s10","s11",(ex:e10),(ex:e11)) .
+o-owl-dec:Ontology(ex:e12,"s12","s13","s14",(ex:e13),(ex:e14)) .
+o-owl-dec:Ontology(ex:e15,"s15","s16","s17",(ex:e16),(ex:e17)) .
+o-owl-dec:Ontology(ex:e18,"s18","s19","s20",(ex:e19),(ex:e20)) .
+o-owl-dec:Ontology(ex:e21,"s21","s22","s23",(ex:e22),(ex:e23)) .
+o-owl-dec:Ontology(ex:e24,"s24","s25","s26",(ex:e25),(ex:e26)) .
+o-owl-dec:Ontology(ex:e27,"s27","s28","s29",(ex:e28),(ex:e29)) .

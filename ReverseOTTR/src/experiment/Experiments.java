@@ -42,13 +42,16 @@ public class Experiments {
             "http://tpl.ottr.xyz/owl/axiom/0.1/SubObjectPropertyOf",
             "http://tpl.ottr.xyz/owl/axiom/0.1/EquivalentObjectProperty",
             "http://tpl.ottr.xyz/owl/axiom/0.1/EquivalentDataProperty",
-            "http://tpl.ottr.xyz/owl/axiom/0.1/EquivalentClass"};
+            "http://tpl.ottr.xyz/owl/axiom/0.1/EquivalentClass",
+            ns + "Min",
+            ns + "Max",
+            ns + "Cross"};
 
     private static void run(Model model, StandardTemplateManager manager, String queryIRI, int repetitions) {
         int n = 0;
         long time = 0;
 
-        Model testModel = model;
+        Model testModel = ModelFactory.createDefaultModel().add(model);
 
         while (time < 60000) {
             System.out.println("Iteration: " + n);
@@ -59,26 +62,16 @@ public class Experiments {
             long t1 = System.currentTimeMillis();
             Set<Mapping> result = evaluator.evaluateQuery(queryIRI);
             long t2 = System.currentTimeMillis();
+            //result.forEach(m -> System.out.println(m.toString(manager.getPrefixes())));
 
             time = t2 - t1;
             System.out.println("Execution time: " + time + " ms");
             System.out.println("Result size: " + result.size());
+            System.out.println();
 
-            //PrefixMapping prefixes = manager.getPrefixes();
-            //prefixes.setNsPrefix("ph", TermRegistry.ph_ns);
-            //result.forEach(m -> System.out.println(m.toString(prefixes)));
-
-            testModel = scramble(testModel);
-            model.add(testModel);
+            model.add(scramble(testModel));
             n++;
         }
-    }
-
-    private static Model generateTestGraph(Model model, int n) {
-        if (n > 0) {
-            model.add(generateTestGraph(scramble(model), n - 1));
-        }
-        return model;
     }
 
     private static Model scramble(Model model) {
@@ -186,42 +179,47 @@ public class Experiments {
         return WOTTR.none.inModel(model);
     }
 
+
+
     private static void printInstances() {
         int e = 0;
         int s = 0;
         int n = 0;
         for (int i = 0; i < 100; i++) {
             StringBuilder sb = new StringBuilder();
-            sb.append("o-owl-ut:ObjectCardinality(");
+            sb.append("ex:Cross(");
+            sb.append("(ex:e").append(e++).append("),");
             sb.append("ex:e").append(e++).append(",");
-            sb.append("ex:e").append(e++).append(",");
+            sb.append("(ex:e").append(e++).append(")");
             //sb.append("\"s").append(s++).append("\",");
             //sb.append("(ex:e").append(e++).append("),");
-            sb.append("\"").append(n++).append("\"^^xsd:nonNegativeInteger,");
-            sb.append("ex:e").append(e++).append(",");
-            sb.append("ex:e").append(e++);
+            //sb.append("\"").append(n++).append("\"^^xsd:nonNegativeInteger,");
+            //sb.append("ex:e").append(e++).append(",");
+            //sb.append("ex:e").append(e++);
             sb.append(") .");
             System.out.println(sb);
         }
     }
 
     public static void main(String[] args) {
-        for (int i = 3; i < templateIRIs.length; i++) {
-            String relGraphPath = "graphs/graph" + (i + 1) + ".ttl";
-            URL url = Experiments.class.getResource(relGraphPath);
-            String graphPath = url.getPath();
+        int tnr = 1;
 
-            StandardTemplateManager templateManager = new StandardTemplateManager();
-            templateManager.loadStandardTemplateLibrary();
-            String templateIRI = templateIRIs[i];
+        String relGraphPath = "listExpGraphs/graph" + (tnr) + ".ttl";
+        String graphPath = Experiments.class.getResource(relGraphPath).getPath();
+        String libPath = Experiments.class.getResource("templates/lib.stottr").getPath().substring(1);
 
-            Model model = GraphReader.read(graphPath);
-            model.setNsPrefixes(templateManager.getPrefixes());
-            model.setNsPrefix("ex", ns);
+        StandardTemplateManager templateManager = new StandardTemplateManager();
+        templateManager.readLibrary(templateManager.getFormat(StandardFormat.stottr.name()), libPath);
 
-            System.out.println(templateIRI);
-            run(model, templateManager, templateIRI, 1);
-            System.out.println();
-        }
+        templateManager.loadStandardTemplateLibrary();
+        String templateIRI = templateIRIs[tnr - 1];
+
+        Model model = GraphReader.read(graphPath);
+        model.setNsPrefixes(templateManager.getPrefixes());
+        model.setNsPrefix("ex", ns);
+
+        System.out.println(templateIRI);
+        run(model, templateManager, templateIRI, 1);
+        //printInstances();
     }
 }

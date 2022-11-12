@@ -11,16 +11,21 @@ import xyz.ottr.lutra.model.terms.Term;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ListUnexpander {
 
     private final List<Term> markedVariables;
     private final List<Term> unmarkedVariables;
+    private final Set<Mapping> minEmpty;
+    private final Set<Mapping> maxEmpty;
     private final int maxRepetitions;
 
     public ListUnexpander(List<Parameter> parameters, List<Argument> arguments, int repetitions) {
         this.markedVariables = getMarkedVars(parameters, arguments);
         this.unmarkedVariables = getUnmarkedVars(parameters, arguments);
+        this.minEmpty = minUnfltr();
+        this.maxEmpty = maxUnfltr();
         this.maxRepetitions = repetitions;
     }
 
@@ -42,19 +47,21 @@ public class ListUnexpander {
             }
         }
 
+        result.addAll(this.minEmpty);
+
         return result.stream()
                 .map(this::ListTermsToRListTerms)
                 .collect(Collectors.toSet());
     }
 
-    /** Generate all possible orderings for the uncrossed lists in a mapping **/
+    /** Generate all possible orderings and sublists for the uncrossed lists in a mapping **/
     private Set<Mapping> mapPermutations(Mapping mapping) {
         Set<Set<Mapping>> tempSet = new HashSet<>();
 
         for (Term var : mapping.domain()) {
             Set<Mapping> varSet = new HashSet<>();
 
-            var list = ((ListTerm) mapping.get(var)).asList();
+            List<Term> list = ((ListTerm) mapping.get(var)).asList();
 
             for (var sublist : sublists(list)) {
                 for (var repeated : repeat(sublist)) {
@@ -209,15 +216,20 @@ public class ListUnexpander {
             }
         }
 
+        result.addAll(this.minEmpty);
+
         return result.stream().map(this::ListTermsToRListTerms).collect(Collectors.toSet());
     }
 
     public Set<Mapping> unzipMax(Set<Mapping> mappings) {
-        return unzip(mappings).stream().map(this::noneTrailAlternatives)
+        Set<Mapping> result = unzip(mappings).stream().map(this::noneTrailAlternatives)
                 .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
                 .orElse(new HashSet<>())
                 .stream().map(this::ListTermsToRListTerms)
                 .collect(Collectors.toSet());
+
+        result.addAll(maxEmpty);
+        return result;
     }
 
     /** One or more trailing NoneTerm may be removed to produce another solution to unzipMax.
@@ -310,6 +322,26 @@ public class ListUnexpander {
 
         for (T t : list) {
             for (int i = 0; i < this.maxRepetitions; i++) {
+                Set<List<T>> temp = new HashSet<>();
+                for (List<T> resultList : result) {
+                    List<T> other = new LinkedList<>(resultList);
+                    other.add(t);
+                    temp.add(other);
+                }
+                result.addAll(temp);
+            }
+        }
+
+        return result;
+    }
+
+    /*
+    private <T> Set<List<T>> repeat(List<T> list) {
+        Set<List<T>> result = new HashSet<>();
+        result.add(list);
+
+        for (T t : list) {
+            for (int i = 0; i < this.maxRepetitions; i++) {
                 List<T> other = new LinkedList<>();
 
                 for (List<T> resultList : result) {
@@ -323,6 +355,8 @@ public class ListUnexpander {
 
         return result;
     }
+
+     */
 
     private Mapping unzipList(List<Mapping> mappings) {
         Map<Term, List<Term>> unzipMap = new HashMap<>();
@@ -438,5 +472,63 @@ public class ListUnexpander {
         }
 
         return result;
+    }
+
+    private Set<Mapping> minUnfltr() {
+        Set<Mapping> result = new HashSet<>();
+
+        for (Term marked : this.markedVariables) {
+            Mapping mapping = new Mapping();
+            mapping.put(marked, new RListTerm(new LinkedList<>(), true));
+            for (Term other : this.markedVariables) {
+                if (!other.equals(marked)) {
+                    List<Term> list = new LinkedList<>();
+                    list.add(TermRegistry.any_trail);
+                    mapping.put(other, new RListTerm(list, true));
+                }
+            }
+
+            for (Term unmarked : this.unmarkedVariables) {
+                mapping.put(unmarked, TermRegistry.any);
+            }
+
+            result.add(mapping);
+        }
+
+        return result;
+    }
+
+    private Set<Mapping> maxUnfltr() {
+        Set<Mapping> result = new HashSet<>();
+        Mapping mapping = new Mapping();
+
+        for (Term unmarked : this.unmarkedVariables) {
+            mapping.put(unmarked, TermRegistry.any);
+        }
+
+        for (Term marked : this.markedVariables) {
+            mapping.put(marked, new RListTerm(new LinkedList<>(), true));
+        }
+
+        result.add(mapping);
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        ListUnexpander l = new ListUnexpander(new LinkedList<>(), new LinkedList<>(), 2);
+        List<Integer> list = IntStream.range(1,4).boxed().collect(Collectors.toList());
+        Set<List<Integer>> repeated = l.repeat(list);
+        System.out.println(l.permutations(3));
+        int i = 1;
+        for (List<Integer> repeat : repeated) {
+            System.out.println(repeat);
+            for (List<Integer> order : l.permutations(repeat.size())) {
+                //System.out.println(l.applyOrder(order, repeat));
+                i++;
+            }
+        }
+
+        System.out.println(i);
     }
 }

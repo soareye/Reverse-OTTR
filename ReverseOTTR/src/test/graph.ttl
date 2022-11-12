@@ -39,6 +39,16 @@
 #ottr:none ex:p ex:o .
 
 ex:s1 ex:p1 ex:o1 .
+ex:s1 ex:p1 ex:o2 .
+ex:s1 ex:p2 ex:o1 .
+ex:s1 ex:p2 ex:o2 .
+
+ex:s2 ex:p1 ex:o1 .
+ex:s2 ex:p1 ex:o2 .
+ex:s2 ex:p2 ex:o1 .
 ex:s2 ex:p2 ex:o2 .
-ex:s3 ex:p3 ex:o3 .
+
+ex:s3 ex:p1 ex:o1 .
+ex:s3 ex:p1 ex:o2 .
+
 ex:s4 ex:p4 ex:o4 .

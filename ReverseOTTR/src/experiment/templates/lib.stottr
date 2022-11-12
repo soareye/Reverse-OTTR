@@ -1,0 +1,14 @@
+@prefix ex: <http://example.com/> .
+@prefix ottr: <http://ns.ottr.xyz/0.4/> .
+
+ex:Min[?x, ! ?y, ?z] :: {
+	zipMin | ottr:Triple(++?x, ?y, ++?z)
+} .
+
+ex:Max[?x, ! ?y, ?z] :: {
+	zipMax | ottr:Triple(++?x, ?y, ++?z)
+} .
+
+ex:Cross[?x, ! ?y, ?z] :: {
+	cross | ottr:Triple(++?x, ?y, ++?z)
+} .

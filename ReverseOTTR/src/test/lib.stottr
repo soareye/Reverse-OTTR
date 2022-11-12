@@ -3,11 +3,11 @@
 
 ex:Test8[?x] :: {
 	ex:Test(ex:s, (ex:p, ex:p), ?x)
-}
+} .
 
 ex:Test[?x, ?y, ?z] :: {
-	zipMax | ottr:NullableTriple(++?x, ++?y, ++?z)
-}
+	cross | ottr:NullableTriple(?x, ?y, ++?z)
+} .
 
 ex:Test9[?x, ?y] :: {
 	ottr:Triple(?x, ex:predicate, ?y)

@@ -1,0 +1,64 @@
+@prefix ex:    <http://example.com/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:e0   a                 owl:ObjectProperty ;
+        rdfs:comment      "s1" ;
+        rdfs:isDefinedBy  ex:e2 ;
+        rdfs:label        "s0" ;
+        rdfs:seeAlso      ex:e1 .
+
+ex:e12  a                 owl:ObjectProperty ;
+        rdfs:comment      "s9" ;
+        rdfs:isDefinedBy  ex:e14 ;
+        rdfs:label        "s8" ;
+        rdfs:seeAlso      ex:e13 .
+
+ex:e3   a                 owl:ObjectProperty ;
+        rdfs:comment      "s3" ;
+        rdfs:isDefinedBy  ex:e5 ;
+        rdfs:label        "s2" ;
+        rdfs:seeAlso      ex:e4 .
+
+ex:e21  a                 owl:ObjectProperty ;
+        rdfs:comment      "s15" ;
+        rdfs:isDefinedBy  ex:e23 ;
+        rdfs:label        "s14" ;
+        rdfs:seeAlso      ex:e22 .
+
+ex:e15  a                 owl:ObjectProperty ;
+        rdfs:comment      "s11" ;
+        rdfs:isDefinedBy  ex:e17 ;
+        rdfs:label        "s10" ;
+        rdfs:seeAlso      ex:e16 .
+
+ex:e6   a                 owl:ObjectProperty ;
+        rdfs:comment      "s5" ;
+        rdfs:isDefinedBy  ex:e8 ;
+        rdfs:label        "s4" ;
+        rdfs:seeAlso      ex:e7 .
+
+ex:e24  a                 owl:ObjectProperty ;
+        rdfs:comment      "s17" ;
+        rdfs:isDefinedBy  ex:e26 ;
+        rdfs:label        "s16" ;
+        rdfs:seeAlso      ex:e25 .
+
+ex:e18  a                 owl:ObjectProperty ;
+        rdfs:comment      "s13" ;
+        rdfs:isDefinedBy  ex:e20 ;
+        rdfs:label        "s12" ;
+        rdfs:seeAlso      ex:e19 .
+
+ex:e9   a                 owl:ObjectProperty ;
+        rdfs:comment      "s7" ;
+        rdfs:isDefinedBy  ex:e11 ;
+        rdfs:label        "s6" ;
+        rdfs:seeAlso      ex:e10 .
+
+ex:e27  a                 owl:ObjectProperty ;
+        rdfs:comment      "s19" ;
+        rdfs:isDefinedBy  ex:e29 ;
+        rdfs:label        "s18" ;
+        rdfs:seeAlso      ex:e28 .
