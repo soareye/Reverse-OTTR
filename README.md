@@ -8,13 +8,13 @@ Reasonable Ontology Templates (OTTR) encapsulates Resource Description Framework
 ## Dependencies
 
 - Java 11
-- lutra.jar (version 0.6.10)
+- Lutra (version 0.6.10)
 
-Lutra .jar-files for different versions can be found at https://ottr.xyz/downloads/lutra/.
+This project is compiled and executed using Lutra release 0.6.10 as a .jar-file. Lutra .jar-files for different versions can be found at https://ottr.xyz/downloads/lutra/.
 
 ## Execution
 
-This implementation offers no standard method of execution, but functions simply as API to be imported into other Java projects. The main entry-point is the evaluateQuery-method in the Evaluator-class. Given a file Test.java that imports the packages of this repository, and Lutra version 0.6.10 in lutra.jar, then Test.java can be combiled and executed from the commandline as follows, assuming Java is properly installed.
+This implementation offers no standard method of execution, but functions simply as API to be imported into other Java projects. The main entry-point is the evaluateQuery-method in the Evaluator-class. Given a file Test.java that imports the packages of this repository, and Lutra version 0.6.10 in lutra.jar, then Test.java can be compiled and executed from the commandline as follows, assuming Java is properly installed.
 
 ```
 javac -jar lutra.jar Test.java
