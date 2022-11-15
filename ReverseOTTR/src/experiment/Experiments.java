@@ -179,32 +179,10 @@ public class Experiments {
         return WOTTR.none.inModel(model);
     }
 
-
-
-    private static void printInstances() {
-        int e = 0;
-        int s = 0;
-        int n = 0;
-        for (int i = 0; i < 100; i++) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("ex:Cross(");
-            sb.append("(ex:e").append(e++).append("),");
-            sb.append("ex:e").append(e++).append(",");
-            sb.append("(ex:e").append(e++).append(")");
-            //sb.append("\"s").append(s++).append("\",");
-            //sb.append("(ex:e").append(e++).append("),");
-            //sb.append("\"").append(n++).append("\"^^xsd:nonNegativeInteger,");
-            //sb.append("ex:e").append(e++).append(",");
-            //sb.append("ex:e").append(e++);
-            sb.append(") .");
-            System.out.println(sb);
-        }
-    }
-
     public static void main(String[] args) {
-        int tnr = 1;
+        int tnr = 9;
 
-        String relGraphPath = "listExpGraphs/graph" + (tnr) + ".ttl";
+        String relGraphPath = "graphs/graph" + (tnr) + ".ttl";
         String graphPath = Experiments.class.getResource(relGraphPath).getPath();
         String libPath = Experiments.class.getResource("templates/lib.stottr").getPath().substring(1);
 
@@ -219,7 +197,6 @@ public class Experiments {
         model.setNsPrefix("ex", ns);
 
         System.out.println(templateIRI);
-        run(model, templateManager, templateIRI, 1);
-        //printInstances();
+        run(model, templateManager, templateIRI, 0);
     }
 }
