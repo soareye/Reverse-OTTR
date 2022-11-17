@@ -22,10 +22,10 @@ java -jar lutra.jar Test
 ```
 
 ## Structure
-The main package reverseottr contains three sub-packages evaluator, model and reader.
-- evaluator contains the main evaluation functions of Reverse OTTR, as well as an implementation of reverse list expansion,
-- model encodes placeholders as terms, as well as the partial order on ground terms and provides methods for computing the greatest lower bound of two ground terms and to check whether two terms are less than or equal to each other.
-- reader contains helper-classes for reading graphs and template libraries. The reader.RDFToOTTR-class provides a method for translating a graph into mappings that represent instances of the Triple and NullableTriple base templates.
+The main package reverseottr contains three sub-packages evaluation, model and reader.
+- The evaluation-package contains the main evaluation functions of Reverse OTTR, as well as an implementation of reverse list expansion,
+- the model-package encodes placeholders as terms, as well as the partial order on ground terms and provides methods for computing the greatest lower bound of two ground terms and to check whether two terms are less than or equal to each other.
+- the reader-package contains helper-classes for reading graphs and template libraries. The reader.RDFToOTTR-class provides a method for translating a graph into mappings that represent instances of the Triple and NullableTriple base templates.
 
 The following UML Package diagram gives an overview of the package system of this repository and shows its dependence on the overarching package of Lutra.
 
