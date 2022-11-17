@@ -28,7 +28,9 @@ The main package reverseottr contains three sub-packages evaluator, model and re
 - reader contains helper-classes for reading graphs and template libraries. The reader.RDFToOTTR-class provides a method for translating a graph into mappings that represent instances of the Triple and NullableTriple base templates.
 
 The following UML Package diagram gives an overview of the package system of this repository and shows its dependence on the overarching package of Lutra.
+
 ![UML Package diagram for the reverseottr-package](https://github.com/soareye/Reverse-OTTR/blob/main/package.jpg)
 
 The following UML Class diagram gives an overview of the different classes in this repository and how they depend on each other.
+
 ![UML Class diagram for the reverseottr-package](https://github.com/soareye/Reverse-OTTR/blob/main/class.jpg)
