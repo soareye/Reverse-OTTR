@@ -9,6 +9,7 @@ import xyz.ottr.lutra.model.types.TypeRegistry;
 import java.util.Objects;
 import java.util.Optional;
 
+/**Placeholders are used to represent infinite classes of terms. **/
 public class Placeholder implements Term {
 
     private final String identifier;
