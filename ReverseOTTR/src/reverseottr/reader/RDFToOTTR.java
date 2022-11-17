@@ -8,6 +8,9 @@ import xyz.ottr.lutra.model.terms.*;
 import xyz.ottr.lutra.wottr.parser.WTermParser;
 import java.util.*;
 
+/** Provides a method of statically converting a graph, i.e., a set of triples, into
+ * a set of mappings from the variables of the Triple or NullableTriple templates to
+ * the corresponding subject, predicate or object in triples in the graph.**/
 public class RDFToOTTR {
 
     private static final String rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";

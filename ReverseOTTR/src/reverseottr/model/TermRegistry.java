@@ -6,6 +6,8 @@ import xyz.ottr.lutra.model.terms.*;
 
 import java.util.*;
 
+/**
+ * Encodes the partial order on ground terms, as defined in the Reverse OTTR semantics.**/
 public enum TermRegistry {
     ;
 

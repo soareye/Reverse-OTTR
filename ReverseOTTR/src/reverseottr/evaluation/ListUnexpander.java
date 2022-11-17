@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Implements the reverse of OTTR list expansion.**/
 public class ListUnexpander {
 
     private final List<Term> markedVariables;
@@ -29,6 +31,12 @@ public class ListUnexpander {
         this.maxRepetitions = repetitions;
     }
 
+    /**
+     * The reverse of OTTR cross.
+     *
+     * @param mappings Takes a set of mappings that is the result of evaluating a template as a query.
+     * @return all lists that could be crossed in OTTR to produce the input-set of mappings,
+     * limited by the maximum number of repetitions.**/
     public Set<Mapping> uncross(Set<Mapping> mappings) {
         var compSets = findCompatibleSets(mappings);
 
@@ -54,7 +62,11 @@ public class ListUnexpander {
                 .collect(Collectors.toSet());
     }
 
-    /** Generate all possible orderings and sublists for the uncrossed lists in a mapping **/
+    /** Generate all possible orderings and sublists for the uncrossed lists in a mapping.
+     *
+     * @param mapping A mapping that is a solution to uncross.
+     * @return All permutations of the lists in the range of the input-mapping, such that these
+     * are also solutions to uncross.**/
     private Set<Mapping> mapPermutations(Mapping mapping) {
         Set<Set<Mapping>> tempSet = new HashSet<>();
 
@@ -106,6 +118,13 @@ public class ListUnexpander {
         return result;
     }
 
+    /** The main function of uncross, where elements of possible lists in the solution
+     * are determined.
+     *
+     * @param mappings A set of mappings that are compatible for the unmarked variables.
+     * @return A set of mappings from terms to sets of terms. The sets contain elements
+     * that may be present in list-solutions for uncross.
+     * @see "compactify-method" **/
     private Set<Map<Term, Set<Term>>> compactifyAll(Set<Mapping> mappings) {
         Set<Map<Term, Set<Term>>> compacted = uncrossMin(mappings);
         Set<Map<Term, Set<Term>>> nextCompacted = new HashSet<>();
@@ -128,6 +147,17 @@ public class ListUnexpander {
         return compacted;
     }
 
+    /**
+     * Combines two mappings that are potential solutions to uncross to create another potential solution.
+     *
+     * This method is based on idea that two mappings from terms to sets of terms, that represents solutions
+     * to uncross, with the same domain i.e. terms that represent variables, can be combined by the union of
+     * of one variable and the disjunction of the other variables in their domain.
+     *
+     * @param m1 A mapping from terms to sets of terms, which represents a solution to uncross.
+     * @param m2 A mapping from terms to sets of terms, which represents a solution to uncross.
+     * @param var The selected variable to combine m1 and m2 over.
+     * @return The combination of the two mappings that must also represent a solution to uncross.**/
     private Map<Term, Set<Term>> compactify(Map<Term, Set<Term>> m1, Map<Term, Set<Term>> m2, Term var) {
         Map<Term, Set<Term>> combination = new HashMap<>();
         combination.put(var, union(m1.get(var), m2.get(var)));
@@ -180,6 +210,11 @@ public class ListUnexpander {
         return result;
     }
 
+    /**
+     * The smallest mappings that represents solutions to uncross.
+     *
+     * @param mappings A set of mappings that compatible over the unmarked variables.
+     * @return The smallest mappings that represents solutions to uncross.**/
     private Set<Map<Term, Set<Term>>> uncrossMin(Set<Mapping> mappings) {
         Set<Map<Term, Set<Term>>> result = new HashSet<>();
         for (Mapping mapping : mappings) {
@@ -195,6 +230,17 @@ public class ListUnexpander {
         return result;
     }
 
+    /**
+     * The reverse of zipMin in OTTR.
+     *
+     * Generates mappings with lists, such that applying zipMin re-obtains the input-set.
+     * Since zipMin ignores elements in lists past the index of the last element of the
+     * shortest list, unzipMin appends the placeholder TermRegistry.any_trail, to signify
+     * that the remaining elements of lists other than the shortest could be anything.
+     *
+     * @param mappings A set of mappings that were obtained from the evaluateTemplate-method
+     *                 in the Evaluator-class.
+     * @return A set of mappings that could be zipMined to produce the input-set.**/
     public Set<Mapping> unzipMin(Set<Mapping> mappings) {
         Set<Mapping> result = new HashSet<>();
 
@@ -221,6 +267,11 @@ public class ListUnexpander {
         return result.stream().map(this::ListTermsToRListTerms).collect(Collectors.toSet());
     }
 
+    /**
+     * The reverse of zipMax in OTTR.
+     *
+     * @param mappings A set of mappings that were obtained from evaluating a template as a query.
+     * @return A set of mappings that could be zipMaxed to produce the input-set.**/
     public Set<Mapping> unzipMax(Set<Mapping> mappings) {
         Set<Mapping> result = unzip(mappings).stream().map(this::noneTrailAlternatives)
                 .reduce((s1, s2) -> {s1.addAll(s2); return s1;})
@@ -233,7 +284,11 @@ public class ListUnexpander {
     }
 
     /** One or more trailing NoneTerm may be removed to produce another solution to unzipMax.
-     * This method finds all such solutions. **/
+     * This method finds all such solutions.
+     *
+     * @param mapping A mapping that is a solution to unzipMax.
+     * @return A set of mappings that are also solutions to unzipMax, obtained by removing
+     * trailing none-values**/
     private Set<Mapping> noneTrailAlternatives(Mapping mapping) {
         Set<Set<Mapping>> altLists = new HashSet<>();
 
@@ -299,6 +354,20 @@ public class ListUnexpander {
         return result;
     }
 
+    /**
+     * Finds the relevant lists for unzipMin and unzipMax.
+     *
+     * It finds the mappings with lists, such that when either of zipMin or zipMax
+     * are applied, the input-set of mappings is re-obtained. These mappings must
+     * be compatible over the unmarked variables.
+     *
+     * Additionally, it generates all possible orders of such lists, because order
+     * doesn't matter for zipMin and zipMax.
+     *
+     * @param mappings A set of mappings obtained from the evaluateTemplate-method
+     *                 in the Evaluator-class.
+     * @return A set of mappings with solutions for both unzipMin and unzipMax.
+     * **/
     private Set<Mapping> unzip(Set<Mapping> mappings) {
         Set<Mapping> result = new HashSet<>();
 
@@ -334,29 +403,6 @@ public class ListUnexpander {
 
         return result;
     }
-
-    /*
-    private <T> Set<List<T>> repeat(List<T> list) {
-        Set<List<T>> result = new HashSet<>();
-        result.add(list);
-
-        for (T t : list) {
-            for (int i = 0; i < this.maxRepetitions; i++) {
-                List<T> other = new LinkedList<>();
-
-                for (List<T> resultList : result) {
-                    other = new LinkedList<>(resultList);
-                    other.add(t);
-                }
-
-                result.add(other);
-            }
-        }
-
-        return result;
-    }
-
-     */
 
     private Mapping unzipList(List<Mapping> mappings) {
         Map<Term, List<Term>> unzipMap = new HashMap<>();
@@ -513,22 +559,5 @@ public class ListUnexpander {
         result.add(mapping);
 
         return result;
-    }
-
-    public static void main(String[] args) {
-        ListUnexpander l = new ListUnexpander(new LinkedList<>(), new LinkedList<>(), 2);
-        List<Integer> list = IntStream.range(1,4).boxed().collect(Collectors.toList());
-        Set<List<Integer>> repeated = l.repeat(list);
-        System.out.println(l.permutations(3));
-        int i = 1;
-        for (List<Integer> repeat : repeated) {
-            System.out.println(repeat);
-            for (List<Integer> order : l.permutations(repeat.size())) {
-                //System.out.println(l.applyOrder(order, repeat));
-                i++;
-            }
-        }
-
-        System.out.println(i);
     }
 }
