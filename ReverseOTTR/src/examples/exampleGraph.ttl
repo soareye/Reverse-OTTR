@@ -1,0 +1,9 @@
+@prefix : <http://example.org/example/> .
+
+:john :hasName "John" .
+:john :hasAge 41 .
+
+:jane :hasName "Jane" .
+:jane :hasAge 42 .
+
+:jill :hasName "Jill" .

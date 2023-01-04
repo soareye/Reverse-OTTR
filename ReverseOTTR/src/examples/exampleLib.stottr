@@ -1,0 +1,7 @@
+@prefix : <http://example.org/example/> .
+@prefix ottr: <http://ns.ottr.xyz/0.4/> .
+
+:Person[ ?person, ?name, ?age ] :: {
+    ottr:Triple(?person, :hasName, ?name),
+    ottr:Triple(?person, :hasAge, ?age)
+} .
